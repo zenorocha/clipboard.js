@@ -28,10 +28,18 @@ class Clipboard {
             var targetSelector = e.currentTarget.getAttribute('for');
             var target = document.getElementById(targetSelector);
 
-            target.select();
+            if (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA') {
+                target.select();
+            }
+            else {
+                var range = document.createRange();
+                range.selectNode(target);
+                window.getSelection().addRange(range);
+            }
 
             try {
                 document.execCommand('copy');
+                window.getSelection().removeAllRanges();
             }
             catch (err) {
                 console.error(err);

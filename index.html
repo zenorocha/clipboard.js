@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clipboard.js</title>
+</head>
+<body>
+    <p id="paragraph">Lorem ipsum dolor.</p>
+    <button class="btn" for="paragraph" type="button">Copy</button>
+
+    <form>
+        <input id="target" type="text" value="qwe">
+        <button class="btn" for="target" type="button">Copy</button>
+    </form>
+
+    <script src="dist/clipboard.js"></script>
+
+    <script>
+        new Clipboard('.btn');
+    </script>
+</body>
+</html>
