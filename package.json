@@ -1,0 +1,13 @@
+{
+  "name": "clipboard.js",
+  "version": "0.0.0",
+  "description": "A modern approach to copy to the clipboard",
+  "main": "src/clipboard.js",
+  "dependencies": {
+    "babel": "^5.8.23"
+  },
+  "scripts": {
+    "build": "babel src/clipboard.js --out-file dist/clipboard.js",
+    "watch": "babel src/clipboard.js --out-file dist/clipboard.js --watch"
+  }
+}
