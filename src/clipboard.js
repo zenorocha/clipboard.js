@@ -25,21 +25,40 @@ class Clipboard {
 
     bind(trigger) {
         trigger.addEventListener('click', e => {
+            var value = e.currentTarget.getAttribute('value');
             var targetSelector = e.currentTarget.getAttribute('for');
             var target = document.getElementById(targetSelector);
 
-            if (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA') {
-                target.select();
+            if (value) {
+                var fake = document.createElement('input');
+
+                fake.value = value;
+                fake.style.opacity = 0;
+                fake.style.zIndex = -1;
+
+                document.body.appendChild(fake);
+
+                fake.select();
             }
-            else {
-                var range = document.createRange();
-                range.selectNode(target);
-                window.getSelection().addRange(range);
+
+            if (target) {
+                if (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA') {
+                    target.select();
+                }
+                else {
+                    var range = document.createRange();
+                    range.selectNode(target);
+                    window.getSelection().addRange(range);
+                }
             }
 
             try {
                 document.execCommand('copy');
                 window.getSelection().removeAllRanges();
+
+                if (value) {
+                    document.body.removeChild(fake);
+                }
             }
             catch (err) {
                 console.error(err);
