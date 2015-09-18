@@ -4,10 +4,13 @@
   "description": "A modern approach to copy to the clipboard",
   "main": "src/clipboard.js",
   "dependencies": {
-    "babel": "^5.8.23"
+    "babel": "^5.8.23",
+    "uglify": "^0.1.5"
   },
   "scripts": {
-    "build": "babel src/clipboard.js --out-file dist/clipboard.js",
-    "watch": "babel src/clipboard.js --out-file dist/clipboard.js --watch"
+    "start" : "npm run build && npm run minify",
+    "build" : "babel src/clipboard.js --out-file dist/clipboard.min.js",
+    "watch" : "babel src/clipboard.js --out-file dist/clipboard.min.js --watch",
+    "minify": "uglify -s dist/clipboard.min.js -o dist/clipboard.min.js"
   }
 }

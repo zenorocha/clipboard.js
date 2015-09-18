@@ -13,10 +13,12 @@
         <button class="btn" for="target" type="button">Copy</button>
     </form>
 
-    <script src="dist/clipboard.js"></script>
+    <script src="dist/clipboard.min.js"></script>
 
     <script>
+    document.addEventListener('DOMContentLoaded', function() {
         new Clipboard('.btn');
+    });
     </script>
 </body>
 </html>
