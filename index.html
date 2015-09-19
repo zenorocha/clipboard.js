@@ -5,12 +5,14 @@
     <title>Clipboard.js</title>
 </head>
 <body>
+    <button class="btn" type="copy" value="lorem ipsum">Copy</button>
+
     <p id="paragraph">Lorem ipsum dolor.</p>
-    <button class="btn" for="paragraph" type="button">Copy</button>
+    <button class="btn" type="copy" for="paragraph">Copy</button>
 
     <form>
         <input id="target" type="text" value="qwe">
-        <button class="btn" for="target" type="button">Copy</button>
+        <button class="btn" type="copy" for="target">Cut</button>
     </form>
 
     <script src="dist/clipboard.min.js"></script>

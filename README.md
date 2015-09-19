@@ -14,7 +14,7 @@ Or [download as ZIP](https://github.com/zenorocha/clipboard.js/archive/master.zi
 
 ## Usage
 
-First, you need to instantiate it using a selector. This selector corresponds to the trigger element (usually a `<button>`).
+First, you need to instantiate it using a selector. This selector corresponds to the trigger element, usually a `<button>`.
 
 ```js
 new Clipboard('.btn');
@@ -23,15 +23,24 @@ new Clipboard('.btn');
 The easiest way to copy some content to the clipboard, is to include a `value` attribute in your trigger element.
 
 ```html
-<button class="btn" value="lorem ipsum">Copy</button>
+<button class="btn" value="Lorem ipsum">Copy</button>
 ```
 
-Another way of doing it is to copy the content from an `<input>` or `<textarea`>. You can do that by adding a `for` attribute in your trigger element. The value you include in this `for` attribute needs to match another's element `id` attribute.
+Another way of doing it, is to copy the content from an another element. You can do that by adding a `for` attribute in your trigger element. The value you include on this attribute needs to match another's element `id` attribute.
 
 ```html
-<input id="target" value="Lorem ipsum">
+<p id="target">Lorem ipsum</p>
 <button class="btn" for="target">Copy</button>
 ```
+
+Additionally, you can define a `type` attribute to specify if you want to either `copy` or `cut` content. If you omit this attribute, `copy` will be used.
+
+```html
+<input id="target" value="Lorem ipsum"></inpu>
+<button class="btn" type="cut" for="target">Copy</button>
+```
+
+As you may expect, the `cut` action only works on `<input>` or `<textarea>` elements.
 
 ## Browser Support
 

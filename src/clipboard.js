@@ -28,24 +28,25 @@ class Clipboard {
     }
 
     select(e) {
-        var valueAttr  = e.currentTarget.getAttribute('value');
-        var targetAttr = e.currentTarget.getAttribute('for');
+        let targetAttr = e.currentTarget.getAttribute('for');
+        let typeAttr   = e.currentTarget.getAttribute('type') || 'copy';
+        let valueAttr  = e.currentTarget.getAttribute('value');
 
         if (valueAttr) {
-            this.selectValue(valueAttr);
+            this.selectValue(valueAttr, typeAttr);
         }
         else if (targetAttr) {
-            this.selectTarget(targetAttr);
+            this.selectTarget(targetAttr, typeAttr);
         }
         else {
-            console.error('Missing "for" or "value" attribute');
+            throw new Error('Missing "for" or "value" attribute');
         }
 
         e.preventDefault();
     }
 
-    selectValue(valueAttr) {
-        var fake = document.createElement('input');
+    selectValue(valueAttr, typeAttr) {
+        let fake = document.createElement('input');
 
         fake.value = valueAttr;
         fake.style.opacity = 0;
@@ -54,33 +55,36 @@ class Clipboard {
         document.body.appendChild(fake);
 
         fake.select();
-        this.copy();
+        this.copy(typeAttr);
 
         document.body.removeChild(fake);
     }
 
-    selectTarget(targetAttr) {
-        var target = document.getElementById(targetAttr);
+    selectTarget(targetAttr, typeAttr) {
+        let target = document.getElementById(targetAttr);
 
         if (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA') {
             target.select();
         }
         else {
-            var range = document.createRange();
+            let range = document.createRange();
             range.selectNode(target);
             window.getSelection().addRange(range);
         }
 
-        this.copy();
+        this.copy(typeAttr);
     }
 
-    copy() {
+    copy(typeAttr) {
         try {
-            document.execCommand('copy');
+            let successful = document.execCommand(typeAttr);
+            if (!successful) throw 'Invalid "type" attribute';
+
             window.getSelection().removeAllRanges();
         }
         catch (err) {
-            console.error(err);
+            console.log(err);
+            throw new Error(err);
         }
     }
 }
