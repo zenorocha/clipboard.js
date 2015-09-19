@@ -21,6 +21,9 @@
 
         <button class="btn" data-action="copy" data-value="Just because you can doesn't mean you should — clipboard.js">Copy to the clipboard</button>
 
+        <pre><code class="html">&lt;!-- Trigger --&gt;
+&lt;button class="btn" data-value="Heya!"&gt;Copy&lt;/button&gt;</code></pre>
+
         <h3>Copy text from another element</h3>
 
         <form>
@@ -34,6 +37,12 @@
             </div>
         </form>
 
+        <pre><code class="html">&lt;!-- Target --&gt;
+&lt;input id="foo" value="https://git.io/vn3cM"&gt;
+
+&lt;!-- Trigger --&gt;
+&lt;button class="btn" data-target="foo"&gt;Copy&lt;/button&gt;</code></pre>
+
         <h3>Cut text from another element</h3>
 
         <form>
@@ -46,14 +55,29 @@
                 </button>
             </div>
         </form>
+
+        <pre><code class="html">&lt;!-- Target --&gt;
+&lt;textarea id="bar"&gt;clipboard.js rocks!&lt;/textarea&gt;
+
+&lt;!-- Trigger --&gt;
+&lt;button class="btn" data-action="cut" data-target="bar"&gt;
+    Copy
+&lt;/button&gt;</code></pre>
     </main>
 
     <script src="dist/clipboard.min.js"></script>
 
+    <!-- Clipboard.js -->
+    <script src="dist/clipboard.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         new Clipboard('.btn');
     });
     </script>
+
+    <!-- Highlight.js -->
+    <link rel="stylesheet" href="bower_components/highlightjs/styles/github.css">
+    <script src="bower_components/highlightjs/highlight.pack.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>

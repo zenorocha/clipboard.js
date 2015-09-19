@@ -59,3 +59,9 @@ textarea {
     box-sizing: border-box;
     width: 100%;
 }
+
+pre code {
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 15px;
+}

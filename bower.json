@@ -10,7 +10,8 @@
     "cut"
   ],
   "devDependencies": {
-    "primer-css": "~2.3.3",
-    "octicons": "~3.1.0"
+    "highlightjs": "~8.8.0",
+    "octicons": "~3.1.0",
+    "primer-css": "~2.3.3"
   }
 }
