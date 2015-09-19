@@ -24,7 +24,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
     </header>
 
     <main class="wrap">
-        <h1>Install</h1>
+        <h1 id="install">Install</h1>
 
         <p>You can get it on npm.</p>
 
@@ -36,7 +36,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 
         <p>If you're not into package management, just <a href="https://github.com/zenorocha/clipboard.js/archive/master.zip">download a ZIP</a> file.</p>
 
-        <h1>Setup</h1>
+        <h1 id="setup">Setup</h1>
 
         <p>First, include the script located on the <code>dist</code> folder</p>
 
@@ -46,7 +46,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 
         <pre><code class="js">new Clipboard('.btn');</code></pre>
 
-        <h1>Usage</h1>
+        <h1 id="usage">Usage</h1>
 
         <p>We're living a <em>declarative renaissance</em>, that's why we decided to take advantage of <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Using_data_attributes">HTML5 data attributes</a> for better usability.</p>
 
@@ -55,6 +55,10 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
         <p>The easiest way to copy some content to the clipboard, is to include a <code>data-text</code> attribute in your trigger element.</p>
 
         <div class="example">
+            <div class="flash flash-error hidden">
+              Sorry, your browser do not support copy &amp; cut to the clipboard.
+            </div>
+
             <button class="btn" data-action="copy" data-text="Just because you can doesn't mean you should — clipboard.js">Copy to the clipboard</button>
         </div>
 
@@ -67,6 +71,10 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
         <p>The value you include on this attribute needs to match another's element <code>id</code> attribute.</p>
 
         <div class="example">
+            <div class="flash flash-error hidden">
+              Sorry, your browser do not support copy &amp; cut to the clipboard.
+            </div>
+
             <div class="input-group">
                 <input id="foo" type="text" value="https://github.com/zenorocha/clipboard.js.git">
                 <span class="input-group-button">
@@ -89,6 +97,10 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
         <p>If you omit this attribute, <code>copy</code> will be used by default.</p>
 
         <div class="example">
+            <div class="flash flash-error hidden">
+              Sorry, your browser do not support copy &amp; cut to the clipboard.
+            </div>
+
             <div class="input-group">
                 <textarea id="bar" cols="62" rows="4" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga.</textarea>
             </div>
@@ -109,9 +121,11 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 
         <p>As you may expect, the <code>cut</code> action only works on <code>&lt;input&gt;</code> or <code>&lt;textarea&gt;</code> elements.</p>
 
-        <h1>Events</h1>
+        <h1 id="events">Events</h1>
 
-        <p>There are cases where you'd like to capture what has been copied/cut. That's why we fire custom events such as <code>copy</code> and <code>cut</code> for you to listen and implement your custom logic.</p>
+        <p>There are cases where you'd like to capture what has been copied/cut or even check if this API is supported.</p>
+
+        <p>That's why we fire custom events such as <code>copy</code>, <code>cut</code>, and <code>no-support</code> for you to listen and implement your custom logic.</p>
 
         <p>But to achieve that, first you need to access the <code>triggers</code> property from your clipboard instance.</p>
 
@@ -125,12 +139,16 @@ var btns = clipboard.triggers;</code></pre>
         console.info('Event:', e.type);
         console.info('Text:', e.detail);
     });
+
+    btns[i].addEventListener('no-support', function(e) {
+        alert('Sorry, your browser sucks :P');
+    });
 }
 </code></pre>
 
         <p>For a live demonstration, just open your console :)</p>
 
-        <h1>Browser Support</h1>
+        <h1 id="browser-support">Browser Support</h1>
 
         <p>This library relies on both <a href="https://developer.mozilla.org/en-US/docs/Web/API/Selection">Selection</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand">execCommand</a> APIs. When combined, they're supported in the following browsers.</p>
 
@@ -155,6 +173,7 @@ var btns = clipboard.triggers;</code></pre>
                 <p>Safari ✘</p>
             </li>
         </ul>
+        <p>For instructions on how to detect support, check <a href="#events">Events</a> section.</p>
     </main>
 
     <footer class="footer gradient text-center">
@@ -179,6 +198,15 @@ var btns = clipboard.triggers;</code></pre>
             btns[i].addEventListener('cut', function(e) {
                 console.info('Event:', e.type);
                 console.info('Text:', e.detail);
+            });
+
+            btns[i].addEventListener('no-support', function(e) {
+                var flashes = document.querySelectorAll('.flash');
+
+                for (var j = 0; j < btns.length; j++) {
+                    btns[j].disabled = true;
+                    flashes[j].classList.remove('hidden');
+                }
             });
         }
     });

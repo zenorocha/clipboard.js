@@ -113,6 +113,10 @@ code {
 /* Example
    ========================================================================== */
 
+.flash {
+    margin-bottom: 15px;
+}
+
 .example {
     position: relative;
     margin: 15px 0 0;
