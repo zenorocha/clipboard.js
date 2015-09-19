@@ -88,24 +88,33 @@ class Clipboard {
     }
 
     copy(actionAttr, selectedText, currentTrigger) {
+        let supported = document.queryCommandSupported(actionAttr);
+
         try {
             let successful = document.execCommand(actionAttr);
 
-            if (!successful) throw 'Invalid "data-action" attribute';
+            if (!successful) throw new Error('Invalid "data-action" attribute');
 
             this.dispatchEvent(actionAttr, selectedText, currentTrigger);
             window.getSelection().removeAllRanges();
         }
         catch (err) {
-            throw new Error(err);
+            supported = false;
         }
+
+        if (!supported) this.notSupported(currentTrigger);
     }
 
     dispatchEvent(actionAttr, selectedText, currentTrigger) {
-        var event = new CustomEvent(actionAttr, {
+        let event = new CustomEvent(actionAttr, {
             detail: selectedText
         });
 
+        currentTrigger.dispatchEvent(event);
+    }
+
+    notSupported(currentTrigger) {
+        let event = new CustomEvent('no-support');
         currentTrigger.dispatchEvent(event);
     }
 }
