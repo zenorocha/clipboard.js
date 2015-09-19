@@ -8,14 +8,17 @@
     "copy",
     "cut"
   ],
+  "dependencies": {
+    "custom-event": "^1.0.0"
+  },
   "devDependencies": {
     "babel": "^5.8.23",
     "uglify": "^0.1.5"
   },
   "scripts": {
-    "start" : "npm run build && npm run minify",
-    "build" : "babel src/clipboard.js --out-file dist/clipboard.min.js",
-    "watch" : "babel src/clipboard.js --out-file dist/clipboard.min.js --watch",
-    "minify": "uglify -s dist/clipboard.min.js -o dist/clipboard.min.js"
+    "start": "npm run build && npm run minify",
+    "build": "babel src/clipboard.js --out-file dist/clipboard.min.js",
+    "watch": "babel src/clipboard.js --out-file dist/clipboard.min.js --watch",
+    "minify": "uglify -s dist/clipboard.min.js,node_modules/custom-event/index.js -o dist/clipboard.min.js"
   }
 }
