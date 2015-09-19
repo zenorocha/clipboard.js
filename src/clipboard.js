@@ -38,10 +38,10 @@ class Clipboard {
         let textAttr   = e.currentTarget.getAttribute('data-text');
 
         if (textAttr) {
-            this.selectValue(textAttr, actionAttr);
+            this.selectValue(actionAttr, textAttr, e.currentTarget);
         }
         else if (targetAttr) {
-            this.selectTarget(targetAttr, actionAttr);
+            this.selectTarget(actionAttr, targetAttr, e.currentTarget);
         }
         else {
             throw new Error('Missing "data-target" or "data-text" attribute');
@@ -50,7 +50,7 @@ class Clipboard {
         e.preventDefault();
     }
 
-    selectValue(textAttr, actionAttr) {
+    selectValue(actionAttr, textAttr, currentTrigger) {
         let fake = document.createElement('input');
 
         fake.value = textAttr;
@@ -60,35 +60,50 @@ class Clipboard {
         document.body.appendChild(fake);
 
         fake.select();
-        this.copy(actionAttr);
+        this.copy(actionAttr, textAttr, currentTrigger);
 
         document.body.removeChild(fake);
     }
 
-    selectTarget(targetAttr, actionAttr) {
+    selectTarget(actionAttr, targetAttr, currentTrigger) {
+        let selectedText = '';
         let target = document.getElementById(targetAttr);
 
         if (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA') {
             target.select();
+            selectedText = target.value;
         }
         else {
             let range = document.createRange();
+            let selection = window.getSelection();
+
             range.selectNode(target);
-            window.getSelection().addRange(range);
+            selection.addRange(range);
+            selectedText = selection.toString();
         }
 
-        this.copy(actionAttr);
+        this.copy(actionAttr, selectedText, currentTrigger);
     }
 
-    copy(actionAttr) {
+    copy(actionAttr, selectedText, currentTrigger) {
         try {
             let successful = document.execCommand(actionAttr);
+
             if (!successful) throw 'Invalid "data-action" attribute';
 
+            this.dispatchEvent(actionAttr, selectedText, currentTrigger);
             window.getSelection().removeAllRanges();
         }
         catch (err) {
             throw new Error(err);
         }
+    }
+
+    dispatchEvent(actionAttr, selectedText, currentTrigger) {
+        var event = new CustomEvent(actionAttr, {
+            detail: selectedText
+        });
+
+        currentTrigger.dispatchEvent(event);
     }
 }
