@@ -33,9 +33,9 @@ class Clipboard {
     }
 
     select(e) {
-        let actionAttr = e.currentTarget.dataset.action || 'copy';
-        let targetAttr = e.currentTarget.dataset.target;
-        let valueAttr  = e.currentTarget.dataset.value;
+        let actionAttr = e.currentTarget.getAttribute('action') || 'copy';
+        let targetAttr = e.currentTarget.getAttribute('target');
+        let valueAttr  = e.currentTarget.getAttribute('value');
 
         if (valueAttr) {
             this.selectValue(valueAttr, actionAttr);
