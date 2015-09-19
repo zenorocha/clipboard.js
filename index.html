@@ -18,11 +18,31 @@
     </header>
 
     <main class="wrap">
+        <h1>Install</h1>
+
+        <p>You can get it on npm.</p>
+
+        <pre><code class="js">npm install clipboard --save</code></pre>
+
+        <p>Or bower, too.</p>
+
+        <pre><code class="js">bower install clipboard --save</code></pre>
+
+        <p>If you're not into package management, just <a href="https://github.com/zenorocha/clipboard.js/archive/master.zip">download a ZIP</a> file.</p>
+
+        <h1>Setup</h1>
+
+        <p>First, include the script located on the <code>dist</code> folder</p>
+
+        <pre><code class="html">&lt;script src="dist/clipboard.min.js"&gt;&lt;/script&gt;</code></pre>
+
+        <p>Now, you need to instantiate it using a DOM selector. This selector corresponds to the trigger element, i.e. <code>&lt;button&gt;</code>.</p>
+
+        <pre><code class="html">&lt;script&gt; new Clipboard('.btn'); &lt;/script&gt;</code></pre>
+
         <h1>Usage</h1>
 
-        <p>First, you need to instantiate it using a DOM selector. This selector corresponds to the trigger element, i.e. <code>&lt;button&gt;</code>.</p>
-
-        <pre><code class="js">new Clipboard('.btn');</code></pre>
+        <p>There are different options for you to use and they all take advantage of <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Using_data_attributes">HTML5 data attributes</a>.</p>
 
         <h3>Copy text from attribute</h3>
 
@@ -82,6 +102,32 @@
 &lt;/button&gt;</code></pre>
 
         <p>As you may expect, the <code>cut</code> action only works on <code>&lt;input&gt;</code> or <code>&lt;textarea&gt;</code> elements.</p>
+
+        <h1>Browser Support</h1>
+
+        <p>This library relies on both <a href="https://developer.mozilla.org/en-US/docs/Web/API/Selection">Selection</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand">execCommand</a> APIs. When combined, they're supported in the following browsers.</p>
+
+        <ul class="support">
+            <li>
+                <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/chrome/chrome_128x128.png" width="64" height="64" alt="Chrome logo">
+                <p>Chrome 42+</p>
+            <li>
+                <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/firefox/firefox_128x128.png" width="64" height="64" alt="Firefox logo">
+                <p>Firefox 41+</p>
+            </li>
+            <li>
+                <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/internet-explorer/internet-explorer_128x128.png" width="64" height="64" alt="Internet Explorer logo">
+                <p>IE 9+</p>
+            </li>
+            <li>
+                <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/opera/opera_128x128.png" width="64" height="64" alt="Opera logo">
+                <p>Opera 29+</p>
+            </li>
+            <li>
+                <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/safari/safari_128x128.png" width="64" height="64" alt="Safari logo">
+                <p>Safari ✘</p>
+            </li>
+        </ul>
     </main>
 
     <footer class="gradient text-center">

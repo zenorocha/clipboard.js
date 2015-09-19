@@ -40,14 +40,17 @@ body {
    ========================================================================== */
 
 .wrap {
-    margin: 0 auto 30px;
+    margin: 0 auto 60px;
     width: 500px;
+}
+
+h1 {
+    margin-top: 80px;
 }
 
 h3 {
     color: #333;
-    margin-top: 30px;
-    text-align: center;
+    margin-top: 40px;
     font-size: 18px;
 }
 
@@ -126,6 +129,23 @@ pre code {
     clear: both;
     margin-top: -20px;
     padding: 20px 5px 0;
+}
+
+/* Support
+   ========================================================================== */
+
+.support {
+    list-style: none;
+}
+
+.support li {
+    display: inline-block;
+    text-align: center;
+    margin: 10px 10px 0;
+}
+
+.support p {
+    margin: 0;
 }
 
 /* ==========================================================================
