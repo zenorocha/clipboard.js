@@ -6,27 +6,41 @@
 
     <link rel="stylesheet" href="bower_components/primer-css/css/primer.css">
     <link rel="stylesheet" href="bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="bower_components/highlightjs/styles/github.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
     <link rel="stylesheet" href="demo.css">
 </head>
 <body>
-    <header class="text-center">
+    <header class="gradient text-center">
         <h1 class="title">clipboard.js</h1>
         <h2 class="subtitle">A modern approach to copy &amp; cut to the clipboard</h2>
         <h2 class="subtitle" style="color: white">No Flash. No dependencies. Just 2kb</h2>
     </header>
 
     <main class="wrap">
+        <h1>Usage</h1>
+
+        <p>First, you need to instantiate it using a DOM selector. This selector corresponds to the trigger element, i.e. <code>&lt;button&gt;</code>.</p>
+
+        <pre><code class="js">new Clipboard('.btn');</code></pre>
+
         <h3>Copy text from attribute</h3>
 
-        <button class="btn" data-action="copy" data-value="Just because you can doesn't mean you should — clipboard.js">Copy to the clipboard</button>
+        <p>The easiest way to copy some content to the clipboard, is to include a <code>data-value</code> attribute in your trigger element.</p>
+
+        <form class="example">
+            <button class="btn" data-action="copy" data-value="Just because you can doesn't mean you should — clipboard.js">Copy to the clipboard</button>
+        </form>
 
         <pre><code class="html">&lt;!-- Trigger --&gt;
 &lt;button class="btn" data-value="Heya!"&gt;Copy&lt;/button&gt;</code></pre>
 
         <h3>Copy text from another element</h3>
 
-        <form>
+        <p>Alternatively, you can copy content from another element by adding a <code>data-target</code> attribute in your trigger element.</p>
+        <p>The value you include on this attribute needs to match another's element <code>id</code> attribute.</p>
+
+        <form class="example">
             <div class="input-group">
                 <input id="foo" type="text" value="https://github.com/zenorocha/clipboard.js.git">
                 <span class="input-group-button">
@@ -45,7 +59,10 @@
 
         <h3>Cut text from another element</h3>
 
-        <form>
+        <p>Additionally, you can define a <code>data-action</code> attribute to specify if you want to either <code>copy</code> or <code>cut</code> content.</p>
+        <p>If you omit this attribute, <code>copy</code> will be used by default.</p>
+
+        <form class="example">
             <div class="input-group">
                 <textarea id="bar" cols="62" rows="4" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga.</textarea>
             </div>
@@ -63,9 +80,15 @@
 &lt;button class="btn" data-action="cut" data-target="bar"&gt;
     Copy
 &lt;/button&gt;</code></pre>
+
+        <p>As you may expect, the <code>cut</code> action only works on <code>&lt;input&gt;</code> or <code>&lt;textarea&gt;</code> elements.</p>
     </main>
 
-    <script src="dist/clipboard.min.js"></script>
+    <footer class="gradient text-center">
+        <p class="credits">
+            Made with <span class="love">♥</span> by <a class="credits-link" href="http://zenorocha.com/">Zeno Rocha</a> under <a class="credits-link" href="http://zenorocha.mit-license.org/">MIT license</a>
+        </p>
+    </footer>
 
     <!-- Clipboard.js -->
     <script src="dist/clipboard.min.js"></script>
@@ -76,8 +99,18 @@
     </script>
 
     <!-- Highlight.js -->
-    <link rel="stylesheet" href="bower_components/highlightjs/styles/github.css">
     <script src="bower_components/highlightjs/highlight.pack.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-4114546-44', 'auto');
+    ga('send', 'pageview');
+    </script>
 </body>
 </html>

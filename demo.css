@@ -2,11 +2,7 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* ==========================================================================
-   Header
-   ========================================================================== */
-
-header {
+.gradient {
     background: #4cd964;
     background: -moz-linear-gradient(45deg, #4cd964 0%, #5ac8fa 100%);
     background: -webkit-gradient(left bottom, right top, color-stop(0%, #4cd964), color-stop(100%, #5ac8fa));
@@ -19,7 +15,11 @@ header {
     padding: 36px 0;
 }
 
-header .title {
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+.title {
     font-size: 64px;
     color: white;
     font-weight: 700;
@@ -27,7 +27,7 @@ header .title {
     letter-spacing: -1px;
 }
 
-header .subtitle {
+.subtitle {
     font-size: 27px;
     color: #16a085;
     font-weight: 400;
@@ -41,16 +41,41 @@ header .subtitle {
 
 .wrap {
     margin: 0 auto 30px;
-    width: 480px;
+    width: 500px;
 }
 
 h3 {
     color: #333;
     margin-top: 30px;
+    text-align: center;
+    font-size: 18px;
+}
+
+p {
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+code {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-radius: 3px;
+    font-size: 85%;
+    margin: 0;
+    padding: 0.2em;
+}
+
+.hljs-keyword {
+    color: #008080;
+    font-weight: normal;
 }
 
 .form-actions {
     margin-top: 15px;
+}
+
+.form-actions .btn {
+    float: left;
 }
 
 textarea {
@@ -63,5 +88,88 @@ textarea {
 pre code {
     font-size: 14px;
     line-height: 20px;
-    margin-top: 15px;
+}
+
+/* Example
+   ========================================================================== */
+
+.example {
+    position: relative;
+    margin: 15px 0 0;
+    padding: 39px 19px 14px;
+    background-color: #fff;
+    border-radius: 4px 4px 0 0;
+    border: 1px solid #ddd;
+}
+
+.example p {
+    color: #666;
+}
+
+.example:after {
+    content: "Example";
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    color: #9da0a4;
+    border-radius: 4px 0 4px 0;
+}
+
+.example + pre {
+    background: #f8f8f8;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    clear: both;
+    margin-top: -20px;
+    padding: 20px 5px 0;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.credits {
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: #16a085;
+}
+
+.credits-link {
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px dotted white;
+}
+
+.credits-link:hover,
+.credits-link:focus {
+    text-decoration: none;
+}
+
+.love {
+    display: inline-block;
+    position: relative;
+    top: .2em;
+    font-size: 1.4em;
+    -webkit-transform: scale(.9);
+    -moz-transform: scale(.9);
+    transform: scale(.9);
+    -webkit-animation: love .5s infinite linear alternate-reverse;
+    -moz-animation: love .5s infinite linear alternate-reverse;
+    animation: love .5s infinite linear alternate-reverse;
+}
+
+@-webkit-keyframes love {
+    to {-webkit-transform: scale(1.2);}
+}
+
+@-moz-keyframes love {
+    to {-moz-transform: scale(1.2);}
+}
+@keyframes love {
+    to {transform: scale(1.2);}
 }
