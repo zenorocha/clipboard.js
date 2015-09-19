@@ -1,3 +1,5 @@
+var CustomEvent = require('custom-event');
+
 class Clipboard {
 
     // Constructor
@@ -107,3 +109,5 @@ class Clipboard {
         currentTrigger.dispatchEvent(event);
     }
 }
+
+global.Clipboard = Clipboard;
