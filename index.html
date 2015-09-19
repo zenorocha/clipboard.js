@@ -44,7 +44,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 
         <p>Now, you need to instantiate it using a DOM selector. This selector corresponds to the trigger element, i.e. <code>&lt;button&gt;</code>.</p>
 
-        <pre><code class="html">&lt;script&gt; new Clipboard('.btn'); &lt;/script&gt;</code></pre>
+        <pre><code class="js">new Clipboard('.btn');</code></pre>
 
         <h1>Usage</h1>
 
@@ -109,6 +109,27 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 
         <p>As you may expect, the <code>cut</code> action only works on <code>&lt;input&gt;</code> or <code>&lt;textarea&gt;</code> elements.</p>
 
+        <h1>Events</h1>
+
+        <p>There are cases where you'd like to capture what has been copied/cut. That's why we fire custom events such as <code>copy</code> and <code>cut</code> for you to listen and implement your custom logic.</p>
+
+        <p>But to achieve that, first you need to access the <code>triggers</code> property from your clipboard instance.</p>
+
+        <pre><code class="js">var clipboard = new Clipboard('.btn');
+var btns = clipboard.triggers;</code></pre>
+
+        <p>Internally, this property is just an array resulted from a <code>querySelectorAll</code> operation. So all you have to do now is loop through that array and attach listeners.</p>
+
+        <pre><code class="js">for (var i = 0; i &lt; btns.length; i++) {
+    btns[i].addEventListener('copy', function(e) {
+        console.info('Event:', e.type);
+        console.info('Text:', e.detail);
+    });
+}
+</code></pre>
+
+        <p>For a live demonstration, just open your console :)</p>
+
         <h1>Browser Support</h1>
 
         <p>This library relies on both <a href="https://developer.mozilla.org/en-US/docs/Web/API/Selection">Selection</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand">execCommand</a> APIs. When combined, they're supported in the following browsers.</p>
@@ -146,7 +167,20 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
     <script src="dist/clipboard.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        new Clipboard('.btn');
+        var clipboard = new Clipboard('.btn');
+        var btns = clipboard.triggers;
+
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener('copy', function(e) {
+                console.info('Event:', e.type);
+                console.info('Text:', e.detail);
+            });
+
+            btns[i].addEventListener('cut', function(e) {
+                console.info('Event:', e.type);
+                console.info('Text:', e.detail);
+            });
+        }
     });
     </script>
 
