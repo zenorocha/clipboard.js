@@ -20,7 +20,12 @@ class Clipboard {
     // Methods
 
     init() {
-        [].forEach.call(this.triggers, (trigger) => this.bind(trigger));
+        if (this.triggers.length > 0) {
+            [].forEach.call(this.triggers, (trigger) => this.bind(trigger));
+        }
+        else {
+            throw new Error('The provided selector is empty');
+        }
     }
 
     bind(trigger) {
@@ -83,7 +88,6 @@ class Clipboard {
             window.getSelection().removeAllRanges();
         }
         catch (err) {
-            console.log(err);
             throw new Error(err);
         }
     }
