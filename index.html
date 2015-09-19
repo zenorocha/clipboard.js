@@ -26,21 +26,21 @@
 
         <h3>Copy text from attribute</h3>
 
-        <p>The easiest way to copy some content to the clipboard, is to include a <code>data-value</code> attribute in your trigger element.</p>
+        <p>The easiest way to copy some content to the clipboard, is to include a <code>data-text</code> attribute in your trigger element.</p>
 
-        <form class="example">
-            <button class="btn" data-action="copy" data-value="Just because you can doesn't mean you should — clipboard.js">Copy to the clipboard</button>
-        </form>
+        <div class="example">
+            <button class="btn" data-action="copy" data-text="Just because you can doesn't mean you should — clipboard.js">Copy to the clipboard</button>
+        </div>
 
         <pre><code class="html">&lt;!-- Trigger --&gt;
-&lt;button class="btn" data-value="Heya!"&gt;Copy&lt;/button&gt;</code></pre>
+&lt;button class="btn" data-text="Heya!"&gt;Copy&lt;/button&gt;</code></pre>
 
         <h3>Copy text from another element</h3>
 
         <p>Alternatively, you can copy content from another element by adding a <code>data-target</code> attribute in your trigger element.</p>
         <p>The value you include on this attribute needs to match another's element <code>id</code> attribute.</p>
 
-        <form class="example">
+        <div class="example">
             <div class="input-group">
                 <input id="foo" type="text" value="https://github.com/zenorocha/clipboard.js.git">
                 <span class="input-group-button">
@@ -49,7 +49,7 @@
                     </button>
                 </span>
             </div>
-        </form>
+        </div>
 
         <pre><code class="html">&lt;!-- Target --&gt;
 &lt;input id="foo" value="https://git.io/vn3cM"&gt;
@@ -62,7 +62,7 @@
         <p>Additionally, you can define a <code>data-action</code> attribute to specify if you want to either <code>copy</code> or <code>cut</code> content.</p>
         <p>If you omit this attribute, <code>copy</code> will be used by default.</p>
 
-        <form class="example">
+        <div class="example">
             <div class="input-group">
                 <textarea id="bar" cols="62" rows="4" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga.</textarea>
             </div>
@@ -71,7 +71,7 @@
                     Cut to the clipboard
                 </button>
             </div>
-        </form>
+        </div>
 
         <pre><code class="html">&lt;!-- Target --&gt;
 &lt;textarea id="bar"&gt;clipboard.js rocks!&lt;/textarea&gt;

@@ -33,27 +33,27 @@ class Clipboard {
     }
 
     select(e) {
-        let actionAttr = e.currentTarget.getAttribute('action') || 'copy';
-        let targetAttr = e.currentTarget.getAttribute('target');
-        let valueAttr  = e.currentTarget.getAttribute('value');
+        let actionAttr = e.currentTarget.getAttribute('data-action') || 'copy';
+        let targetAttr = e.currentTarget.getAttribute('data-target');
+        let textAttr   = e.currentTarget.getAttribute('data-text');
 
-        if (valueAttr) {
-            this.selectValue(valueAttr, actionAttr);
+        if (textAttr) {
+            this.selectValue(textAttr, actionAttr);
         }
         else if (targetAttr) {
             this.selectTarget(targetAttr, actionAttr);
         }
         else {
-            throw new Error('Missing "data-target" or "data-value" attribute');
+            throw new Error('Missing "data-target" or "data-text" attribute');
         }
 
         e.preventDefault();
     }
 
-    selectValue(valueAttr, actionAttr) {
+    selectValue(textAttr, actionAttr) {
         let fake = document.createElement('input');
 
-        fake.value = valueAttr;
+        fake.value = textAttr;
         fake.style.opacity = 0;
         fake.style.zIndex = -1;
 

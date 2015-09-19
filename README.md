@@ -20,10 +20,10 @@ First, you need to instantiate it using a selector. This selector corresponds to
 new Clipboard('.btn');
 ```
 
-The easiest way to copy some content to the clipboard, is to include a `data-value` attribute in your trigger element.
+The easiest way to copy some content to the clipboard, is to include a `data-text` attribute in your trigger element.
 
 ```html
-<button class="btn" data-value="Lorem ipsum">Copy</button>
+<button class="btn" data-text="Lorem ipsum">Copy</button>
 ```
 
 Another way of doing it, is to copy the content from an another element. You can do that by adding a `data-target` attribute in your trigger element. The value you include on this attribute needs to match another's element `id` attribute.
