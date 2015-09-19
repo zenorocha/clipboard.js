@@ -35,9 +35,11 @@ Another way of doing it is to copy the content from an `<input>` or `<textarea`>
 
 ## Browser Support
 
+This project relies on both [Select API](https://developer.mozilla.org/en-US/docs/Web/API/Selection) and [execCommand API](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand). When combined, they're supported in the following browsers.
+
 | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/chrome/chrome_64x64.png" width="48px" height="48px" alt="Chrome logo"> | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/firefox/firefox_64x64.png" width="48px" height="48px" alt="Firefox logo"> | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/internet-explorer/internet-explorer_64x64.png" width="48px" height="48px" alt="Internet Explorer logo"> | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/opera/opera_64x64.png" width="48px" height="48px" alt="Opera logo"> | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/safari/safari_64x64.png" width="48px" height="48px" alt="Safari logo"> |
 |:---:|:---:|:---:|:---:|:---:|
-| 42+ ✔ | 41+ ✔ | 9+ ✔ | 29+ ✔ | ✘ |
+| 42+ ✔ | 41+ ✔ | 9+ ✔ | 29+ ✔ | Nope ✘ |
 
 ## License
 

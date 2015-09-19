@@ -20,51 +20,67 @@ class Clipboard {
     // Methods
 
     init() {
-        [].forEach.call(this.triggers, this.bind);
+        [].forEach.call(this.triggers, (trigger) => this.bind(trigger));
     }
 
     bind(trigger) {
-        trigger.addEventListener('click', e => {
-            var value = e.currentTarget.getAttribute('value');
-            var targetSelector = e.currentTarget.getAttribute('for');
-            var target = document.getElementById(targetSelector);
+        trigger.addEventListener('click', (e) => this.select(e));
+    }
 
-            if (value) {
-                var fake = document.createElement('input');
+    select(e) {
+        var valueAttr  = e.currentTarget.getAttribute('value');
+        var targetAttr = e.currentTarget.getAttribute('for');
 
-                fake.value = value;
-                fake.style.opacity = 0;
-                fake.style.zIndex = -1;
+        if (valueAttr) {
+            this.selectValue(valueAttr);
+        }
+        else if (targetAttr) {
+            this.selectTarget(targetAttr);
+        }
+        else {
+            console.error('Missing "for" or "value" attribute');
+        }
 
-                document.body.appendChild(fake);
+        e.preventDefault();
+    }
 
-                fake.select();
-            }
+    selectValue(valueAttr) {
+        var fake = document.createElement('input');
 
-            if (target) {
-                if (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA') {
-                    target.select();
-                }
-                else {
-                    var range = document.createRange();
-                    range.selectNode(target);
-                    window.getSelection().addRange(range);
-                }
-            }
+        fake.value = valueAttr;
+        fake.style.opacity = 0;
+        fake.style.zIndex = -1;
 
-            try {
-                document.execCommand('copy');
-                window.getSelection().removeAllRanges();
+        document.body.appendChild(fake);
 
-                if (value) {
-                    document.body.removeChild(fake);
-                }
-            }
-            catch (err) {
-                console.error(err);
-            }
+        fake.select();
+        this.copy();
 
-            e.preventDefault();
-        });
+        document.body.removeChild(fake);
+    }
+
+    selectTarget(targetAttr) {
+        var target = document.getElementById(targetAttr);
+
+        if (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA') {
+            target.select();
+        }
+        else {
+            var range = document.createRange();
+            range.selectNode(target);
+            window.getSelection().addRange(range);
+        }
+
+        this.copy();
+    }
+
+    copy() {
+        try {
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+        }
+        catch (err) {
+            console.error(err);
+        }
     }
 }
