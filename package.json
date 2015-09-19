@@ -1,9 +1,14 @@
 {
   "name": "clipboard",
   "version": "0.0.0",
-  "description": "A modern approach to copy to the clipboard",
+  "description": "A modern approach to copy & cut to the clipboard",
   "main": "src/clipboard.js",
-  "dependencies": {
+  "keywords": [
+    "clipboard",
+    "copy",
+    "cut"
+  ],
+  "devDependencies": {
     "babel": "^5.8.23",
     "uglify": "^0.1.5"
   },

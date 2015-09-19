@@ -8,10 +8,5 @@
     "clipboard",
     "copy",
     "cut"
-  ],
-  "devDependencies": {
-    "highlightjs": "~8.8.0",
-    "octicons": "~3.1.0",
-    "primer-css": "~2.3.3"
-  }
+  ]
 }
