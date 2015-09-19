@@ -1,0 +1,39 @@
+/*
+ * Primer
+ * http://primercss.io
+ *
+ * Released under MIT license. Copyright 2015 GitHub, Inc.
+ */
+
+// Primer master file
+//
+// Imports all Primer files in their intended order for easy mass-inclusion.
+// Should you need specific files, you can easily use separate `@import`s.
+
+// Global requirements
+@import "variables";
+@import "mixins";
+
+// Basecoat
+@import "normalize";
+@import "base";
+@import "type";
+@import "layout";
+@import "forms";
+@import "utility";
+
+// Components
+@import "alerts";
+@import "avatars";
+@import "blankslate";
+@import "counter";
+@import "buttons";
+@import "menu";
+@import "tabnav";
+@import "filter-list";
+@import "states";
+@import "tooltips";
+
+// Utilities
+@import "flex-table";
+@import "truncate";

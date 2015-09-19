@@ -1,0 +1,69 @@
+// Fixed-width, centered column for site content.
+.container {
+  width: $container-width;
+  margin-right: auto;
+  margin-left: auto;
+  @include clearfix;
+}
+
+// Grid system
+//
+// Create rows with `.columns` to clear the floated columns and outdent the
+// padding on `.column`s with negative margin for alignment.
+
+.columns {
+  margin-right: -$grid-gutter;
+  margin-left: -$grid-gutter;
+  @include clearfix;
+}
+
+// Base class for every column (requires a column width from below)
+.column {
+  float: left;
+  padding-right: $grid-gutter;
+  padding-left: $grid-gutter;
+}
+
+// Column widths
+.one-third {
+  width: 33.333333%;
+}
+
+.two-thirds {
+  width: 66.666667%;
+}
+
+.one-fourth {
+  width: 25%;
+}
+
+.one-half {
+  width: 50%;
+}
+
+.three-fourths {
+  width: 75%;
+}
+
+.one-fifth {
+  width: 20%;
+}
+
+.four-fifths {
+  width: 80%;
+}
+
+// Single column hack
+.single-column {
+  padding-right: $grid-gutter;
+  padding-left: $grid-gutter;
+}
+
+// Equal width columns via table sorcery.
+.table-column {
+  display: table-cell;
+  width: 1%;
+  padding-right: $grid-gutter;
+  padding-left: $grid-gutter;
+  vertical-align: top;
+}

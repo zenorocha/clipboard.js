@@ -1,0 +1,547 @@
+// Base form controls
+//
+// Overrides for common inputs for easier styling.
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+label {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.form-control,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+select,
+textarea {
+  min-height: 34px;
+  padding: 7px 8px;
+  font-size: 13px;
+  color: #333;
+  vertical-align: middle;
+  background-color: #fff;
+  background-repeat: no-repeat; // Repeat and position set for form states (success, error, etc)
+  background-position: right 8px center; // For form validation. This keeps images 8px from right and centered vertically.
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+
+  &.focus,
+  &:focus {
+    border-color: #51a7e8;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 5px rgba(81, 167, 232, 0.5);
+  }
+}
+
+select {
+  &:not([multiple]) {
+    height: 34px;
+    vertical-align: middle;
+  }
+}
+
+// Inputs with contrast for easy light gray backgrounds against white.
+// input.class is needed here to increase specificity over input[…]
+input.input-contrast,
+.input-contrast {
+  background-color: #fafafa;
+
+  &:focus { background-color: #fff; }
+}
+
+// Custom styling for HTML5 validation bubbles (WebKit only)
+::placeholder {
+  color: #aaa;
+}
+
+// Mini inputs, to match .minibutton
+input.input-mini {
+  min-height: 26px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 12px;
+}
+
+// Large inputs
+input.input-large {
+  padding: 6px 10px;
+  font-size: 16px;
+}
+
+// Full-width inputs
+.input-block {
+  display: block;
+  width: 100%;
+}
+
+// Inputs with monospace text
+.input-monospace {
+  font-family: $mono-font;
+}
+
+// Form groups
+//
+// Typical form groups - `<dl.form>` with a `<dt>` containing the label and
+// `<dd> containing the form elements.
+dl.form {
+  margin: 15px 0;
+
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="url"],
+  select,
+  textarea {
+    background-color: #fafafa;
+
+    &:focus {
+      background-color: #fff;
+    }
+  }
+
+  // The Label
+  > dt {
+    margin: 0 0 6px;
+
+    label {
+      position: relative;
+    }
+  }
+
+  &.flattened > dt {
+    float: left;
+    margin: 0;
+    line-height: 32px;
+  }
+
+  &.flattened > dd {
+    line-height: 32px;
+  }
+
+  //
+  // Form Elements
+  //
+
+  > dd {
+    // Text fields
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="url"] {
+      width: 440px;
+      max-width: 100%;
+      margin-right: 5px;
+    }
+
+    input {
+      &.shorter { width: 130px; }
+
+      &.short { width: 250px; }
+
+      &.long { width: 100%; }
+    }
+
+    // Textarea
+    textarea {
+      width: 100%;
+      height: 200px;
+      min-height: 200px;
+
+      &.short {
+        height: 50px;
+        min-height: 50px;
+      }
+    }
+
+    h4 {
+      margin: 4px 0 0;
+
+      &.is-error { color: $brand-red; }
+
+      &.is-success { color: $brand-green; }
+
+      + p.note {
+        margin-top: 0;
+      }
+    }
+  }
+
+  //
+  // Variants
+  //
+
+  &.required {
+    > dt > label:after {
+      padding-left: 5px;
+      color: #9f1006;
+      content: "*";
+    }
+  }
+
+  // Form AJAX states
+  //
+  // Form fields that need feedback for AJAX loading, success
+  // states and errored states.
+  .success,
+  .error,
+  .indicator {
+    display: none;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  &.loading {
+    opacity: 0.5;
+
+    .indicator {
+      display: inline;
+    }
+
+    .spinner {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  &.successful {
+    .success {
+      display: inline;
+      color: #390;
+    }
+  }
+
+  // Form validation
+  //
+  // Our inline errors
+
+  &.warn,
+  &.errored {
+    dd.warning,
+    dd.error {
+      display: inline-block;
+      position: absolute;
+      max-width: 450px; // Keep our long errors readable
+      z-index: 10;
+      margin: 2px 0 0;
+      padding: 5px 8px;
+      font-size: 13px;
+      font-weight: normal;
+      border-radius: 3px;
+    }
+
+    dd.warning:after,
+    dd.warning:before,
+    dd.error:after,
+    dd.error:before {
+      bottom: 100%;
+      z-index: 15;
+      left: 10px;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    dd.warning:after,
+    dd.error:after {
+      border-width: 5px;
+    }
+
+    dd.warning:before,
+    dd.error:before {
+      border-width: 6px;
+      margin-left: -1px;
+    }
+  }
+
+  &.warn {
+    dd.warning {
+      color: #4e401e;
+      background-color: #ffe5a7;
+      border: 1px solid #e7ce94;
+
+      &:after {
+        border-bottom-color: #ffe5a7;
+      }
+
+      &:before {
+        border-bottom-color: #cdb683;
+      }
+    }
+  }
+
+  &.errored {
+    > dt label {
+      color: $brand-red;
+    }
+
+    dd.error {
+      color: #fff;
+      background-color: #bf1515;
+      border-color: #911;
+      font-size: 13px;
+
+      &:after {
+        border-bottom-color: #bf1515;
+      }
+
+      &:before {
+        border-bottom-color: #911;
+      }
+    }
+  }
+}
+
+.note {
+  min-height: 17px;
+  margin: 4px 0 2px;
+  font-size: 12px;
+  color: $brand-gray;
+
+  .spinner {
+    margin-right: 3px;
+    vertical-align: middle;
+  }
+}
+
+
+// Checkboxes and Radiobuttons
+//
+// For checkboxes and radio button selections.
+.form-checkbox {
+  padding-left: 20px;
+  margin: 15px 0;
+  vertical-align: middle;
+
+  label {
+
+    em.highlight {
+      position: relative;
+      left: -4px;
+      padding: 2px 4px;
+      font-style: normal;
+      background: #fffbdc;
+      border-radius: 3px;
+    }
+  }
+
+  input[type=checkbox],
+  input[type=radio] {
+    float: left;
+    margin: 2px 0 0 -20px;
+    vertical-align: middle;
+  }
+
+  .note {
+    display: block;
+    margin: 0;
+    font-size: 12px;
+    font-weight: normal;
+    color: #666;
+  }
+}
+
+
+// Field groups
+//
+// Wrap field groups in `<div.hfields>` to lay them out horizontally - great for
+// the top of pages with autosave.
+.hfields {
+  margin: 15px 0;
+  @include clearfix;
+
+  dl.form {
+    float: left;
+    margin: 0 30px 0 0;
+
+    > dt {
+      label {
+        display: inline-block;
+        margin: 5px 0 0;
+        color: #666;
+      }
+
+      img {
+        position: relative;
+        top: -2px;
+      }
+    }
+  }
+
+  .btn {
+    float: left;
+    margin: 28px 25px 0 -20px;
+  }
+
+  select { margin-top: 5px; }
+}
+
+
+// Hide the up/down buttons in <input type="number"> in the login form, the
+// input is used for two-factor auth codes, type="number" makes it more usable
+// on phones
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+
+// Input groups
+.input-group {
+  display: table;
+
+  input {
+    position: relative;
+    width: 100%;
+
+    &:focus {
+      z-index: 2;
+    }
+  }
+
+  input[type="text"] + .btn {
+    margin-left: 0;
+  }
+
+  // For when you want the input group to behave like inline-block.
+  &.inline {
+    display: inline-table;
+  }
+}
+
+.input-group input,
+.input-group-button {
+  display: table-cell;
+}
+
+.input-group-button {
+  width: 1%;
+  vertical-align: middle; // Match the inputs
+}
+
+.input-group input:first-child,
+.input-group-button:first-child .btn {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group-button:first-child .btn {
+  margin-right: -1px;
+}
+
+.input-group input:last-child,
+.input-group-button:last-child .btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.input-group-button:last-child .btn {
+  margin-left: -1px;
+}
+
+.form-actions {
+  @include clearfix;
+
+  .btn {
+    float: right;
+
+    + .btn {
+      margin-right: 5px;
+    }
+  }
+}
+
+.form-warning {
+  padding: 8px 10px;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #333;
+  background: #ffffe2;
+  border: 1px solid #e7e4c2;
+  border-radius: 4px;
+
+  p {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  strong { color: #000; }
+
+  a { font-weight: bold; }
+}
+
+
+// Inline verification
+//
+// Used for example when autosaving checkboxes in settings.
+.status-indicator {
+  @include icon-bootstrap(16px);
+  margin-left: 5px;
+}
+
+.status-indicator-success:before {
+  color: $brand-green;
+  content: "\f03a"; // octicon-check
+}
+
+.status-indicator-failed:before {
+  color: $brand-red;
+  content: "\f02d"; // octicon-x
+}
+
+
+// Custom select
+//
+// Apply `.select` to any `<select>` element for custom styles.
+
+.select {
+  display: inline-block;
+  max-width: 100%;
+  padding: 7px 24px 7px 8px;
+  vertical-align: middle;
+  background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAUCAMAAACzvE1FAAAADFBMVEUzMzMzMzMzMzMzMzMKAG/3AAAAA3RSTlMAf4C/aSLHAAAAPElEQVR42q3NMQ4AIAgEQTn//2cLdRKppSGzBYwzVXvznNWs8C58CiussPJj8h6NwgorrKRdTvuV9v16Afn0AYFOB7aYAAAAAElFTkSuQmCC) no-repeat right 8px center;
+  background-size: 8px 10px;
+  box-shadow: inset 0 -1px 2px rgba(0, 0, 0, 0.075);
+  // Have to include vendor prefixes as the `appearance` property isn't part of the CSS spec.
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+  // IE9 hacks to hide the background-image and reduce padding
+  padding-right: 8px \9;
+  background-image: none \9;
+
+  &:focus {
+    outline: none;
+    border-color: #51a7e8;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 5px rgba(81, 167, 232, 0.5);
+  }
+
+  // Hides the default caret in IE11
+  &::-ms-expand {
+    opacity: 0;
+  }
+}
+
+.select-sm {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  font-size: 12px;
+
+  &:not([multiple]) {
+    height: 26px;
+    min-height: 26px;
+  }
+}

@@ -1,0 +1,32 @@
+// A rounded corner box containing a label "open" or "closed"
+// Without a state it is grey.
+//
+// open     - green background
+// reopened - green background
+// closed   - red background
+// merged   - purple background
+// renamed  - orange background
+//
+// No styleguide reference
+.state {
+  display: inline-block;
+  padding: 4px 8px;
+  font-weight: bold;
+  line-height: 20px;
+  color: #fff;
+  text-align: center;
+  border-radius: 3px;
+  background-color: #999;
+}
+
+.state-open,
+.state-proposed,
+.state-reopened {
+  background-color: $status-open;
+}
+
+.state-merged { background-color: $status-merged; }
+
+.state-closed { background-color: $status-closed; }
+
+.state-renamed { background-color: $status-renamed; }

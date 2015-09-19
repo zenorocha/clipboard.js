@@ -1,0 +1,34 @@
+$container-width: 980px !default;
+$grid-gutter:     10px !default;
+
+// Brand colors
+$brand-blue:       #4078c0 !default;
+$brand-gray-light: #999    !default;
+$brand-gray:       #767676 !default;
+$brand-gray-dark:  #333    !default;
+$brand-green:      #6cc644 !default;
+$brand-red:        #bd2c00 !default;
+$brand-orange:     #c9510c !default;
+$brand-purple:     #6e5494 !default;
+
+// Font stack
+$body-font: Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol" !default;
+
+// The base body size
+$body-font-size: 13px !default;
+
+// Monospace font stack
+$mono-font: Consolas, "Liberation Mono", Menlo, Courier, monospace !default;
+
+// State indicators.
+$status-open:     $brand-green;
+$status-closed:   $brand-red;
+$status-reverted: $status-closed;
+$status-merged:   $brand-purple;
+$status-renamed:  #fffa5d;
+$status-pending:  #cea61b;
+
+// Repository type colors
+$repo-private-text: #a1882b;
+$repo-private-bg:   #fff9ea;
+$repo-private-icon: #e9dba5;

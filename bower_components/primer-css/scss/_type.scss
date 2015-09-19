@@ -1,0 +1,92 @@
+// Headings
+// --------------------------------------------------
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+h1 { font-size: 30px; }
+h2 { font-size: 21px; }
+h3 { font-size: 16px; }
+h4 { font-size: 14px; }
+h5 { font-size: 12px; }
+h6 { font-size: 11px; }
+
+
+// Body text
+// --------------------------------------------------
+
+small {
+  font-size: 90%;
+}
+
+blockquote {
+  margin: 0;
+}
+
+// Large leading paragraphs
+.lead {
+  margin-bottom: 30px;
+  font-size: 20px;
+  font-weight: 300;
+  color: #555;
+}
+
+// Text utilities
+.text-muted { color: $brand-gray; }
+.text-danger { color: $brand-red; }
+
+.text-emphasized {
+  font-weight: bold;
+  color: #333;
+}
+
+
+// Lists
+// --------------------------------------------------
+
+ul,
+ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ol ol,
+ul ol {
+  list-style-type: lower-roman;
+}
+
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+dd {
+  margin-left: 0;
+}
+
+
+// Code
+// --------------------------------------------------
+
+tt,
+code {
+  font-family: $mono-font;
+  font-size: 12px;
+}
+
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font: 12px $mono-font;
+}

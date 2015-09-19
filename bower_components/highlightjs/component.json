@@ -1,0 +1,12 @@
+{
+  "name": "highlightjs",
+  "repo": "components/highlightjs",
+  "version": "8.8.0",
+  "main": "highlight.pack.min.js",
+  "scripts": [
+    "highlight.pack.min.js"
+  ],
+  "files": [
+    "styles/default.css"
+  ]
+}

@@ -1,0 +1,65 @@
+// Outer wrapper
+.tabnav {
+  margin-top: 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+
+  .counter {
+    margin-left: 5px;
+  }
+}
+
+.tabnav-tabs {
+  margin-bottom: -1px;
+}
+
+.tabnav-tab {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #666;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-bottom: 0;
+
+  &.selected {
+    color: #333;
+    background-color: #fff;
+    border-color: #ddd;
+    border-radius: 3px 3px 0 0;
+  }
+
+  &:hover { text-decoration: none; }
+}
+
+// Tabnav extras
+//
+// Tabnav extras are non-tab elements that sit in the tabnav. Usually they're
+// inline text or links.
+
+.tabnav-extra {
+  display: inline-block;
+  padding-top: 10px;
+  margin-left: 10px;
+  font-size: 12px;
+  color: #666;
+
+  > .octicon {
+    margin-right: 2px;
+  }
+}
+
+a.tabnav-extra:hover {
+  color: $brand-blue;
+  text-decoration: none;
+}
+
+// Tabnav buttons
+//
+// For when there are multiple buttons, space them out appropriately. Requires
+// the buttons to be floated or inline-block.
+
+.tabnav-btn {
+  margin-left: 10px;
+}

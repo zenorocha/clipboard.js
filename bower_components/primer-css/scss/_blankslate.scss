@@ -1,0 +1,73 @@
+.blankslate {
+  position: relative;
+  padding: 30px;
+  text-align: center;
+  background-color: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 3px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+
+  &.clean-background {
+    background: none;
+    border: 0;
+    box-shadow: none;
+  }
+
+  &.capped {
+    border-radius: 0 0 3px 3px;
+  }
+
+  &.spacious {
+    padding: 100px 60px 120px;
+  }
+
+  &.has-fixed-width {
+    width: 485px;
+    margin: 0 auto;
+  }
+
+  &.large-format {
+    h3 {
+      margin: 0.75em 0;
+      font-size: 20px;
+    }
+
+    p {
+      font-size: 16px;
+
+      &.has-fixed-width {
+        width: 540px;
+        margin: 0 auto;
+        text-align: left;
+      }
+    }
+
+    .mega-octicon {
+      width: 40px;
+      height: 40px;
+      font-size: 40px;
+      color: #aaa;
+    }
+
+    .octicon-inbox {
+      font-size: 48px;
+      line-height: 40px;
+    }
+  }
+
+  code {
+    padding: 2px 5px 3px;
+    font-size: 14px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 3px;
+  }
+
+  > .mega-octicon { color: #aaa; }
+
+  .mega-octicon + .mega-octicon { margin-left: 10px; }
+
+  .tabnav + & { margin-top: 20px; }
+
+  .context-loader.large-format-loader { padding-top: 50px; }
+}

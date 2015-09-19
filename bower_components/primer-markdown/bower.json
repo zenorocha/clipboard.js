@@ -1,0 +1,19 @@
+{
+  "name": "primer-user-content",
+  "keywords": [
+    "github",
+    "markdown",
+    "css"
+  ],
+  "main": [
+    "dist/github-markdown.css"
+  ],
+  "ignore": [
+    "**/.*",
+    "*.js",
+    "README.md",
+    "Gruntfile.js",
+    "package.json",
+    "render-test.md"
+  ]
+}

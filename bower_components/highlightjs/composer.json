@@ -1,0 +1,26 @@
+{
+    "name": "components/highlightjs",
+    "description": "Highlight.js highlights syntax in code examples on blogs, forums and in fact on any web pages.",
+    "type": "component",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Ivan Sagalaev",
+            "email": "maniac@softwaremaniacs.org",
+            "homepage": "http://softwaremaniacs.org"
+        }
+    ],
+    "extra": {
+        "component": {
+            "scripts": [
+                "highlight.pack.min.js"
+            ],
+            "files": [
+                "styles/*"
+            ],
+            "shim": {
+                "exports": "hljs"
+            }
+        }
+    }
+}

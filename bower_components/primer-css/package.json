@@ -1,0 +1,22 @@
+{
+  "name": "primer",
+  "version": "2.3.3",
+  "homepage": "http://primercss.io",
+  "author": "GitHub, Inc.",
+  "scss": "./scss/primer.scss",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/primer/primer.git"
+  },
+  "devDependencies": {
+    "autoprefixer-core": "~5.2.1",
+    "grunt": "~0.4.5",
+    "grunt-build-control": "~0.2.0",
+    "grunt-jekyll": "~0.4.2",
+    "grunt-parker": "~0.1.0",
+    "grunt-sass": "~0.18.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-postcss": "~0.5.1"
+  }
+}

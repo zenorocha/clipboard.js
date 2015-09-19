@@ -1,15 +1,6 @@
 {
   "name": "clipboard",
-  "version": "0.0.0",
-  "description": "A modern approach to copy & cut to the clipboard",
-  "license": "MIT",
-  "main": "src/clipboard.js",
-  "keywords": [
-    "clipboard",
-    "copy",
-    "cut"
-  ],
-  "devDependencies": {
+  "dependencies": {
     "highlightjs": "~8.8.0",
     "octicons": "~3.1.0",
     "primer-css": "~2.3.3"

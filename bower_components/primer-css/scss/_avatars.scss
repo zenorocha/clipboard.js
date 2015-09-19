@@ -1,0 +1,37 @@
+.avatar {
+  display: inline-block;
+  overflow: hidden; // Ensure page layout in Firefox should images fail to load
+  line-height: 1;
+  vertical-align: middle;
+  border-radius: 3px;
+}
+
+.avatar-small { border-radius: 2px; }
+
+.avatar-link {
+  float: left;
+  line-height: 1;
+}
+
+// User for example on /stars and /user for grids of avatars
+.avatar-group-item {
+  display: inline-block;
+  margin-bottom: 3px;
+}
+
+// .avatar-parent-child is when you see a small avatar at the bottom right
+// corner of a larger avatar.
+//
+// No Styleguide version
+.avatar-parent-child {
+  position: relative;
+}
+
+.avatar-child {
+  position: absolute;
+  right: -15%;
+  bottom: -9%;
+  background-color: #fff; // For transparent backgrounds
+  border-radius: 2px;
+  box-shadow: -2px -2px 0 rgba(255, 255, 255, 0.8);
+}

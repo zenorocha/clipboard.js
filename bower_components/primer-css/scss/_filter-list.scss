@@ -1,0 +1,67 @@
+// Filters list
+//
+// A vertical list of filters.
+.filter-list {
+  list-style-type: none;
+
+  &.small .filter-item {
+    padding: 4px 10px;
+    margin: 0 0 2px;
+    font-size: 12px;
+  }
+
+  &.pjax-active .filter-item {
+    color: $brand-gray;
+    background-color: transparent;
+
+    &.pjax-active {
+      color: #fff;
+      background-color: $brand-blue;
+    }
+  }
+}
+
+.filter-item {
+  position: relative;
+  display: block;
+  padding: 8px 10px;
+  margin-bottom: 5px;
+  overflow: hidden;
+  font-size: 14px;
+  color: $brand-gray;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  border-radius: 3px;
+
+  &:hover {
+    text-decoration: none;
+    background-color: #eee;
+  }
+
+  &.selected {
+    color: #fff;
+    background-color: $brand-blue;
+
+    .octicon-remove-close {
+      float: right;
+      opacity: 0.8;
+    }
+  }
+
+  .count {
+    float: right;
+    font-weight: bold;
+  }
+
+  .bar {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    bottom: 2px;
+    z-index: -1;
+    display: inline-block;
+    background-color: #f1f1f1;
+  }
+}
