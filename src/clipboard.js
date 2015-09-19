@@ -28,24 +28,24 @@ class Clipboard {
     }
 
     select(e) {
-        let targetAttr = e.currentTarget.getAttribute('for');
-        let typeAttr   = e.currentTarget.getAttribute('type') || 'copy';
-        let valueAttr  = e.currentTarget.getAttribute('value');
+        let actionAttr = e.currentTarget.dataset.action || 'copy';
+        let targetAttr = e.currentTarget.dataset.target;
+        let valueAttr  = e.currentTarget.dataset.value;
 
         if (valueAttr) {
-            this.selectValue(valueAttr, typeAttr);
+            this.selectValue(valueAttr, actionAttr);
         }
         else if (targetAttr) {
-            this.selectTarget(targetAttr, typeAttr);
+            this.selectTarget(targetAttr, actionAttr);
         }
         else {
-            throw new Error('Missing "for" or "value" attribute');
+            throw new Error('Missing "data-target" or "data-value" attribute');
         }
 
         e.preventDefault();
     }
 
-    selectValue(valueAttr, typeAttr) {
+    selectValue(valueAttr, actionAttr) {
         let fake = document.createElement('input');
 
         fake.value = valueAttr;
@@ -55,12 +55,12 @@ class Clipboard {
         document.body.appendChild(fake);
 
         fake.select();
-        this.copy(typeAttr);
+        this.copy(actionAttr);
 
         document.body.removeChild(fake);
     }
 
-    selectTarget(targetAttr, typeAttr) {
+    selectTarget(targetAttr, actionAttr) {
         let target = document.getElementById(targetAttr);
 
         if (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA') {
@@ -72,13 +72,13 @@ class Clipboard {
             window.getSelection().addRange(range);
         }
 
-        this.copy(typeAttr);
+        this.copy(actionAttr);
     }
 
-    copy(typeAttr) {
+    copy(actionAttr) {
         try {
-            let successful = document.execCommand(typeAttr);
-            if (!successful) throw 'Invalid "type" attribute';
+            let successful = document.execCommand(actionAttr);
+            if (!successful) throw 'Invalid "data-action" attribute';
 
             window.getSelection().removeAllRanges();
         }
