@@ -1,5 +1,5 @@
 {
-  "name": "clipboard.js",
+  "name": "clipboard",
   "version": "0.0.0",
   "description": "A modern approach to copy to the clipboard",
   "main": "src/clipboard.js",

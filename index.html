@@ -2,16 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Clipboard.js</title>
+    <title>clipboard.js</title>
+
+    <link rel="stylesheet" href="bower_components/primer-css/css/primer.css">
+    <link rel="stylesheet" href="bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+    <link rel="stylesheet" href="demo.css">
 </head>
 <body>
-    <button class="btn" data-action="copy" data-value="lorem ipsum">Copy</button>
+    <header class="text-center">
+        <h1 class="title">clipboard.js</h1>
+        <h2 class="subtitle">A modern approach to copy &amp; cut to the clipboard</h2>
+        <h2 class="subtitle" style="color: white">No Flash. No dependencies. Just 2kb</h2>
+    </header>
 
-    <blockquote id="foo">Lorem ipsum dolor.</blockquote>
-    <button class="btn" data-action="copy" data-target="foo">Copy</button>
+    <main class="wrap">
+        <h3>Copy text from attribute</h3>
 
-    <input id="bar" type="text" value="qwe">
-    <button class="btn" data-action="cut" data-target="bar">Cut</button>
+        <button class="btn" data-action="copy" data-value="Just because you can doesn't mean you should — clipboard.js">Copy to the clipboard</button>
+
+        <h3>Copy text from another element</h3>
+
+        <form>
+            <div class="input-group">
+                <input id="foo" type="text" value="https://github.com/zenorocha/clipboard.js.git">
+                <span class="input-group-button">
+                    <button class="btn" type="button" data-action="copy" data-target="foo">
+                        <span class="octicon octicon-clippy"></span>
+                    </button>
+                </span>
+            </div>
+        </form>
+
+        <h3>Cut text from another element</h3>
+
+        <form>
+            <div class="input-group">
+                <textarea id="bar" cols="62" rows="4" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga.</textarea>
+            </div>
+            <div class="form-actions">
+                <button class="btn" type="button" data-action="cut" data-target="bar">
+                    Cut to the clipboard
+                </button>
+            </div>
+        </form>
+    </main>
 
     <script src="dist/clipboard.min.js"></script>
 

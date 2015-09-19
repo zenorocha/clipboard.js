@@ -1,0 +1,61 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+header {
+    background: #4cd964;
+    background: -moz-linear-gradient(45deg, #4cd964 0%, #5ac8fa 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, #4cd964), color-stop(100%, #5ac8fa));
+    background: -webkit-linear-gradient(45deg, #4cd964 0%, #5ac8fa 100%);
+    background: -o-linear-gradient(45deg, #4cd964 0%, #5ac8fa 100%);
+    background: -ms-linear-gradient(45deg, #4cd964 0%, #5ac8fa 100%);
+    background: linear-gradient(45deg, #4cd964 0%, #5ac8fa 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4cd964', endColorstr='#5ac8fa', GradientType=1 );
+    margin: 0 auto;
+    padding: 36px 0;
+}
+
+header .title {
+    font-size: 64px;
+    color: white;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -1px;
+}
+
+header .subtitle {
+    font-size: 27px;
+    color: #16a085;
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -1px;
+}
+
+/* ==========================================================================
+   Main
+   ========================================================================== */
+
+.wrap {
+    margin: 0 auto 30px;
+    width: 480px;
+}
+
+h3 {
+    color: #333;
+    margin-top: 30px;
+}
+
+.form-actions {
+    margin-top: 15px;
+}
+
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}
