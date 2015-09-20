@@ -25,4 +25,46 @@ describe('Clipboard', () => {
             return assert.instanceOf(clipboard.triggers, NodeList);
         });
     });
+
+    describe('#validate', () => {
+        var elem = document.createElement('input');
+        let clipboard = new Clipboard('.btn');
+
+        it('should throw an error since there was no "data-target" or "data-text"', (done) => {
+            try {
+                clipboard.validate({
+                    currentTarget: elem
+                });
+            }
+            catch(e) {
+                done();
+            }
+        });
+
+        it('should throw an error since "data-action" is invalid', (done) => {
+            try {
+                elem.setAttribute('data-action', 'paste');
+
+                clipboard.validate({
+                    currentTarget: elem
+                });
+            }
+            catch(e) {
+                done();
+            }
+        });
+
+        it('should throw an error since "data-target" do not match any element', (done) => {
+            try {
+                elem.setAttribute('data-target', 'xyz');
+
+                clipboard.validate({
+                    currentTarget: elem
+                });
+            }
+            catch(e) {
+                done();
+            }
+        });
+    });
 });
