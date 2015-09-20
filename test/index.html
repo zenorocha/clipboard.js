@@ -7,8 +7,26 @@
 <body>
   <div id="mocha"></div>
 
+  <div>
+    <p>Copy text from attribute</p>
+    <button class="btn" data-action="copy" data-text="hello">Copy</button>
+  </div>
+
+  <div>
+    <p>Copy text from another element</p>
+    <input id="foo" type="text" value="hello">
+    <button class="btn" data-action="copy" data-target="foo">Copy</button>
+  </div>
+
+  <div>
+    <p>Cut text from another element</p>
+    <textarea id="bar">hello</textarea>
+    <button class="btn" data-action="cut" data-target="bar">Cut</button>
+  </div>
+
   <script src="../dist/clipboard.min.js"></script>
   <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
 
   <script>mocha.setup('bdd')</script>
   <script src="clipboard.js"></script>
