@@ -2,120 +2,119 @@ var CustomEvent = require('custom-event');
 
 class Clipboard {
 
-    // Constructor
-
     constructor(triggers) {
-        this._triggers = triggers;
+        this.triggers = document.querySelectorAll(triggers);
         this.init();
     }
 
-    // Getters & Setters
-
-    get triggers() {
-        return document.querySelectorAll(this._triggers);
-    }
-
-    set triggers(val) {
-        return this._triggers = val;
-    }
-
-    // Methods
-
     init() {
-        if (this.triggers.length > 0) {
-            [].forEach.call(this.triggers, (trigger) => this.bind(trigger));
-        }
-        else {
+        if (this.triggers.length === 0) {
             throw new Error('The provided selector is empty');
         }
+
+        [].forEach.call(this.triggers, (trigger) => this.bind(trigger));
     }
 
     bind(trigger) {
-        trigger.addEventListener('click', (e) => this.select(e));
+        trigger.addEventListener('click', function(e) {
+            let action = e.currentTarget.getAttribute('data-action');
+            let target = e.currentTarget.getAttribute('data-target');
+            let text   = e.currentTarget.getAttribute('data-text');
+
+            if (!action === 'copy' || !action === 'cut') {
+                throw new Error('Invalid "data-action" attribute');
+            }
+            else if (!target && !text) {
+                throw new Error('Missing "data-target" or "data-text" attribute');
+            }
+
+            new ClipboardAction({
+                action  : action,
+                target  : target,
+                text    : text,
+                trigger : e.currentTarget
+            });
+        });
+    }
+}
+
+class ClipboardAction {
+    constructor(options) {
+        this.action  = options.action || 'copy';
+        this.target  = document.getElementById(options.target);
+        this.text    = options.text;
+        this.trigger = options.trigger;
+
+        this.selectedText = '';
+
+        if (this.text) {
+            this.selectValue();
+        }
+        else if (this.target) {
+            this.selectTarget();
+        }
     }
 
-    select(e) {
-        let actionAttr = e.currentTarget.getAttribute('data-action') || 'copy';
-        let targetAttr = e.currentTarget.getAttribute('data-target');
-        let textAttr   = e.currentTarget.getAttribute('data-text');
-
-        if (textAttr) {
-            this.selectValue(actionAttr, textAttr, e.currentTarget);
-        }
-        else if (targetAttr) {
-            this.selectTarget(actionAttr, targetAttr, e.currentTarget);
-        }
-        else {
-            throw new Error('Missing "data-target" or "data-text" attribute');
-        }
-
-        e.preventDefault();
-    }
-
-    selectValue(actionAttr, textAttr, currentTrigger) {
+    selectValue() {
         let fake = document.createElement('input');
 
-        fake.value = textAttr;
         fake.style.opacity = 0;
         fake.style.zIndex = -1;
+        fake.value = this.text;
+        this.selectedText = this.text;
 
         document.body.appendChild(fake);
 
         fake.select();
-        this.copy(actionAttr, textAttr, currentTrigger);
+        this.copy();
 
         document.body.removeChild(fake);
     }
 
-    selectTarget(actionAttr, targetAttr, currentTrigger) {
-        let selectedText = '';
-        let target = document.getElementById(targetAttr);
-
-        if (target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA') {
-            target.select();
-            selectedText = target.value;
+    selectTarget() {
+        if (this.target.nodeName === 'INPUT' || this.target.nodeName === 'TEXTAREA') {
+            this.target.select();
+            this.selectedText = this.target.value;
         }
         else {
             let range = document.createRange();
             let selection = window.getSelection();
 
-            range.selectNode(target);
+            range.selectNode(this.target);
             selection.addRange(range);
-            selectedText = selection.toString();
+            this.selectedText = selection.toString();
         }
 
-        this.copy(actionAttr, selectedText, currentTrigger);
+        this.copy();
     }
 
-    copy(actionAttr, selectedText, currentTrigger) {
-        let supported = document.queryCommandSupported(actionAttr);
+    copy() {
+        let supported = document.queryCommandSupported(this.action);
 
         try {
-            let successful = document.execCommand(actionAttr);
+            document.execCommand(this.action);
 
-            if (!successful) throw new Error('Invalid "data-action" attribute');
-
-            this.dispatchEvent(actionAttr, selectedText, currentTrigger);
+            this.fireEventDetails();
             window.getSelection().removeAllRanges();
         }
         catch (err) {
             supported = false;
         }
 
-        if (!supported) this.notSupported(currentTrigger);
+        if (!supported) this.fireNoSupport();
     }
 
-    dispatchEvent(actionAttr, selectedText, currentTrigger) {
-        let event = new CustomEvent(actionAttr, {
-            detail: selectedText
+    fireEventDetails() {
+        let event = new CustomEvent(this.action, {
+            detail: this.selectedText
         });
 
-        currentTrigger.dispatchEvent(event);
+        this.trigger.dispatchEvent(event);
     }
 
-    notSupported(currentTrigger) {
+    fireNoSupport() {
         let event = new CustomEvent('no-support');
-        currentTrigger.dispatchEvent(event);
+        this.trigger.dispatchEvent(event);
     }
 }
 
