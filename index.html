@@ -132,7 +132,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
         <pre><code class="js">var clipboard = new Clipboard('.btn');
 var btns = clipboard.triggers;</code></pre>
 
-        <p>Internally, this property is just an array resulted from a <code>querySelectorAll</code> operation. So all you have to do now is loop through that array and attach listeners.</p>
+        <p>Internally, this property is just a collections of nodes resulted from a <code>querySelectorAll</code> operation. So all you have to do now is loop through that collection and attach listeners.</p>
 
         <pre><code class="js">for (var i = 0; i &lt; btns.length; i++) {
     btns[i].addEventListener('copy', function(e) {
