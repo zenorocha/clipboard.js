@@ -1,49 +1,49 @@
 var CustomEvent = require('custom-event');
 
 class Clipboard {
-
     constructor(triggers) {
         this.triggers = document.querySelectorAll(triggers);
-        this.init();
-    }
 
-    init() {
-        if (this.triggers.length === 0) {
-            throw new Error('The provided selector is empty');
+        if (!this.triggers.length) {
+            throw new Error('No matches were found for the provided selector');
         }
 
         [].forEach.call(this.triggers, (trigger) => this.bind(trigger));
     }
 
     bind(trigger) {
-        trigger.addEventListener('click', function(e) {
-            let action = e.currentTarget.getAttribute('data-action');
-            let target = e.currentTarget.getAttribute('data-target');
-            let text   = e.currentTarget.getAttribute('data-text');
+        trigger.addEventListener('click', (e) => this.validate(e));
+    }
 
-            if (!action === 'copy' || !action === 'cut') {
-                throw new Error('Invalid "data-action" attribute');
-            }
-            else if (!target && !text) {
-                throw new Error('Missing "data-target" or "data-text" attribute');
-            }
+    validate(e) {
+        let trigger = e.currentTarget;
+        let action  = trigger.getAttribute('data-action') || 'copy';
+        let target  = trigger.getAttribute('data-target');
+        let text    = trigger.getAttribute('data-text');
 
-            new ClipboardAction({
-                action  : action,
-                target  : target,
-                text    : text,
-                trigger : e.currentTarget
-            });
-        });
+        if (action !== 'copy' && action !== 'cut') {
+            throw new Error('Invalid "data-action" value, use either "copy" or "cut"');
+        }
+
+        if (!target && !text) {
+            throw new Error('Missing required attributes, use either "data-target" or "data-text"');
+        }
+
+        if (target) {
+            target = document.getElementById(target);
+            if (!target) throw new Error('Invalid "data-target" selector, use a value that matches an ID');
+        }
+
+        new ClipboardAction(action, target, text, trigger);
     }
 }
 
 class ClipboardAction {
-    constructor(options) {
-        this.action  = options.action || 'copy';
-        this.target  = document.getElementById(options.target);
-        this.text    = options.text;
-        this.trigger = options.trigger;
+    constructor(action, target, text, trigger) {
+        this.action  = action;
+        this.target  = target;
+        this.text    = text;
+        this.trigger = trigger;
 
         this.selectedText = '';
 
