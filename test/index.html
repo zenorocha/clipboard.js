@@ -1,0 +1,21 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+</head>
+<body>
+  <div id="mocha"></div>
+
+  <script src="../dist/clipboard.min.js"></script>
+  <script src="../node_modules/mocha/mocha.js"></script>
+
+  <script>mocha.setup('bdd')</script>
+  <script src="clipboard.js"></script>
+  <script>
+    mocha.checkLeaks();
+    mocha.globals(['Clipboard']);
+    mocha.run();
+  </script>
+</body>
+</html>
