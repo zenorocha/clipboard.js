@@ -27,14 +27,15 @@ body {
     font-size: 64px;
     font-weight: 900;
     letter-spacing: -1px;
-    margin: 0 0 20px;
+    margin: 0 20px 20px;
 }
 
 .subtitle {
     color: #16a085;
     font-size: 27px;
     font-weight: 400;
-    margin: 0 0 20px;
+    line-height: 30px;
+    margin: 0 20px 20px;
 }
 
 .subtitle + .subtitle {
@@ -53,7 +54,8 @@ body {
 
 .wrap {
     margin: 0 auto 90px;
-    width: 500px;
+    max-width: 540px;
+    padding: 0 20px;
 }
 
 p {
@@ -149,7 +151,7 @@ code {
     border: 1px solid #ddd;
     clear: both;
     margin-top: -20px;
-    padding: 20px 5px 0;
+    padding: 20px 0 0;
 }
 
 /* Live example
@@ -235,4 +237,22 @@ textarea {
 }
 @keyframes love {
     to {transform: scale(1.2);}
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media screen and (max-width: 540px) {
+    .title {
+        font-size: 48px;
+    }
+
+    .subtitle {
+        font-size: 22px;
+    }
+
+    .credits {
+        font-size: 22px;
+    }
 }
