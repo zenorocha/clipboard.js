@@ -57,9 +57,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
         <p>The easiest way to copy some content to the clipboard, is to include a <code>data-text</code> attribute in your trigger element.</p>
 
         <div id="example-1" class="example">
-            <div class="flash flash-error hidden">
-              Sorry, your browser do not support copy text to clipboard.
-            </div>
+            <div class="flash flash-error hidden"></div>
 
             <button class="btn" data-action="copy" data-text="Just because you can doesn't mean you should — clipboard.js">Copy to clipboard</button>
         </div>
@@ -73,9 +71,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
         <p>The value you include on this attribute needs to match another's element <code>id</code> attribute.</p>
 
         <div id="example-2" class="example">
-            <div class="flash flash-error hidden">
-              Sorry, your browser do not support copy text to clipboard.
-            </div>
+            <div class="flash flash-error hidden"></div>
 
             <div class="input-group">
                 <input id="foo" type="text" value="https://github.com/zenorocha/clipboard.js.git">
@@ -99,9 +95,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
         <p>If you omit this attribute, <code>copy</code> will be used by default.</p>
 
         <div id="example-3" class="example">
-            <div class="flash flash-error hidden">
-              Sorry, your browser do not support copy text to clipboard.
-            </div>
+            <div class="flash flash-error hidden"></div>
 
             <div class="input-group">
                 <textarea id="bar" cols="62" rows="4" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga.</textarea>
@@ -125,9 +119,9 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 
         <h1 id="events">Events</h1>
 
-        <p>There are cases where you'd like to capture what has been copied/cut or even check if this API is supported.</p>
+        <p>There are cases where you'd like to capture what has been copied/cut or even check if there was an error.</p>
 
-        <p>That's why we fire custom events such as <code>copy</code>, <code>cut</code>, and <code>no-support</code> for you to listen and implement your custom logic.</p>
+        <p>That's why we fire custom events such as <code>success</code> and <code>error</code> for you to listen and implement your custom logic.</p>
 
         <p>But to achieve that, first you need to access the <code>triggers</code> property from your clipboard instance.</p>
 
@@ -137,13 +131,13 @@ var btns = clipboard.triggers;</code></pre>
         <p>Internally, this property is just a collections of nodes resulted from a <code>querySelectorAll</code> operation. So all you have to do now is loop through that collection and attach listeners.</p>
 
         <pre><code class="js">for (var i = 0; i &lt; btns.length; i++) {
-    btns[i].addEventListener('copy', function(e) {
-        console.info('Event:', e.type);
-        console.info('Text:', e.detail);
+    btns[i].addEventListener('success', function(e) {
+        console.info('Action:', e.detail.action);
+        console.info('Text:', e.detail.text);
     });
 
-    btns[i].addEventListener('no-support', function(e) {
-        alert('Sorry, your browser sucks :P');
+    btns[i].addEventListener('error', function(e) {
+        alert(e.detail);
     });
 }
 </code></pre>
@@ -175,7 +169,6 @@ var btns = clipboard.triggers;</code></pre>
                 <p>Safari ✘</p>
             </li>
         </ul>
-        <p>For instructions on how to detect support, check <a href="#events">Events</a> section.</p>
     </main>
 
     <footer class="footer gradient text-center">
