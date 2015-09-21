@@ -1,6 +1,6 @@
 var CustomEvent = require('custom-event');
 
-class Clipboard {
+export default class Clipboard {
     constructor(triggers) {
         this.triggers = document.querySelectorAll(triggers);
 

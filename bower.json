@@ -1,7 +1,7 @@
 {
   "name": "clipboard",
   "version": "0.0.0",
-  "description": "A modern approach to copy & cut to the clipboard",
+  "description": "A modern approach to copy text to clipboard",
   "license": "MIT",
   "main": "src/clipboard.js",
   "keywords": [
