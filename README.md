@@ -87,9 +87,9 @@ As you may expect, the `cut` action only works on `<input>` or `<textarea>` elem
 
 ## Events
 
-There are cases where you'd like to capture what has been copied/cut or even check if this API is supported.
+There are cases where you'd like to capture what has been copied/cut or even check if there was an error.
 
-That's why we fire custom events such as `copy`, `cut`, and `no-support` for you to listen and implement your custom logic.
+That's why we fire custom events such as `success` and `error` for you to listen and implement your custom logic.
 
 But to achieve that, first you need to access the `triggers` property from your clipboard instance.
 
@@ -102,13 +102,13 @@ Internally, this property is just a collections of nodes resulted from a `queryS
 
 ```js
 for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener('copy', function(e) {
-        console.info('Event:', e.type);
-        console.info('Text:', e.detail);
+    btns[i].addEventListener('success', function(e) {
+        console.info('Action:', e.detail.action);
+        console.info('Text:', e.detail.text);
     });
 
-    btns[i].addEventListener('no-support', function(e) {
-        alert('Sorry, your browser sucks :P');
+    btns[i].addEventListener('error', function(e) {
+        alert(e.detail);
     });
 }
 ```
@@ -120,8 +120,6 @@ This library relies on both [Selection](https://developer.mozilla.org/en-US/docs
 | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/chrome/chrome_64x64.png" width="48px" height="48px" alt="Chrome logo"> | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/firefox/firefox_64x64.png" width="48px" height="48px" alt="Firefox logo"> | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/internet-explorer/internet-explorer_64x64.png" width="48px" height="48px" alt="Internet Explorer logo"> | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/opera/opera_64x64.png" width="48px" height="48px" alt="Opera logo"> | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/safari/safari_64x64.png" width="48px" height="48px" alt="Safari logo"> |
 |:---:|:---:|:---:|:---:|:---:|
 | 42+ ✔ | 41+ ✔ | 9+ ✔ | 29+ ✔ | Nope ✘ |
-
-For instructions on how to detect support, check [Events](#events) section.
 
 ## License
 

@@ -89,17 +89,26 @@ class ClipboardAction {
     }
 
     copy() {
-        let successful = false;
+        let succeeded;
 
         try {
-            successful = document.execCommand(this.action);
-            this.clearSelection();
+            succeeded = document.execCommand(this.action);
         }
         catch (err) {
+            succeeded = false;
         }
 
-        if (successful) this.fireEventDetails();
-        else this.fireNoSupport();
+        if (succeeded) {
+            this.fireEvent('success', {
+                action: this.action,
+                text: this.selectedText
+            });
+        }
+        else {
+            this.fireEvent('error', 'Cannot complete ' + this.action + ' operation');
+        }
+
+        this.clearSelection();
     }
 
     clearSelection() {
@@ -110,16 +119,11 @@ class ClipboardAction {
         window.getSelection().removeAllRanges();
     }
 
-    fireEventDetails() {
-        let event = new CustomEvent(this.action, {
-            detail: this.selectedText
+    fireEvent(type, detail) {
+        let event = new CustomEvent(type, {
+            detail: detail
         });
 
-        this.trigger.dispatchEvent(event);
-    }
-
-    fireNoSupport() {
-        let event = new CustomEvent('no-support');
         this.trigger.dispatchEvent(event);
     }
 }
