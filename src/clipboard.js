@@ -89,19 +89,17 @@ class ClipboardAction {
     }
 
     copy() {
-        let supported = document.queryCommandSupported(this.action);
+        let successful = false;
 
         try {
-            let successful = document.execCommand(this.action);
-            if (successful) this.fireEventDetails();
-
+            successful = document.execCommand(this.action);
             this.clearSelection();
         }
         catch (err) {
-            supported = false;
         }
 
-        if (!supported) this.fireNoSupport();
+        if (successful) this.fireEventDetails();
+        else this.fireNoSupport();
     }
 
     clearSelection() {
