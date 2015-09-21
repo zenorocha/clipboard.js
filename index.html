@@ -1,15 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>clipboard.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A modern approach to copy &amp; cut to the clipboard. No Flash. No dependencies. Just 2kb">
 
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="bower_components/primer-css/css/primer.css">
     <link rel="stylesheet" href="bower_components/octicons/octicons/octicons.css">
     <link rel="stylesheet" href="bower_components/highlightjs/styles/github.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900">
-    <link rel="stylesheet" href="demo.css">
+    <link rel="stylesheet" href="assets/main.css">
 </head>
 <body>
     <header class="header gradient text-center">
@@ -183,39 +185,9 @@ var btns = clipboard.triggers;</code></pre>
         </p>
     </footer>
 
-    <!-- Clipboard.js -->
-    <script src="dist/clipboard.min.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var clipboard = new Clipboard('.btn');
-        var btns = clipboard.triggers;
-
-        for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener('copy', function(e) {
-                console.info('Event:', e.type);
-                console.info('Text:', e.detail);
-            });
-
-            btns[i].addEventListener('cut', function(e) {
-                console.info('Event:', e.type);
-                console.info('Text:', e.detail);
-            });
-
-            btns[i].addEventListener('no-support', function(e) {
-                var flashes = document.querySelectorAll('.flash');
-
-                for (var j = 0; j < btns.length; j++) {
-                    btns[j].disabled = true;
-                    flashes[j].classList.remove('hidden');
-                }
-            });
-        }
-    });
-    </script>
-
-    <!-- Highlight.js -->
     <script src="bower_components/highlightjs/highlight.pack.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="dist/clipboard.min.js"></script>
+    <script src="assets/main.js"></script>
 
     <!-- Google Analytics -->
     <script>
