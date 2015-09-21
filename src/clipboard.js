@@ -92,16 +92,24 @@ class ClipboardAction {
         let supported = document.queryCommandSupported(this.action);
 
         try {
-            document.execCommand(this.action);
+            let successful = document.execCommand(this.action);
+            if (successful) this.fireEventDetails();
 
-            this.fireEventDetails();
-            window.getSelection().removeAllRanges();
+            this.clearSelection();
         }
         catch (err) {
             supported = false;
         }
 
         if (!supported) this.fireNoSupport();
+    }
+
+    clearSelection() {
+        if (this.target) {
+            this.target.blur();
+        }
+
+        window.getSelection().removeAllRanges();
     }
 
     fireEventDetails() {

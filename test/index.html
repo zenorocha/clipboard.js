@@ -13,13 +13,19 @@
   </div>
 
   <div>
-    <p>Copy text from another element</p>
+    <p>Copy text from non-input element</p>
+    <p id="paragraph">hello</p>
+    <button class="btn" data-action="copy" data-target="paragraph">Copy</button>
+  </div>
+
+  <div>
+    <p>Copy text from input element</p>
     <input id="foo" type="text" value="hello">
     <button class="btn" data-action="copy" data-target="foo">Copy</button>
   </div>
 
   <div>
-    <p>Cut text from another element</p>
+    <p>Cut text from textarea element</p>
     <textarea id="bar">hello</textarea>
     <button class="btn" data-action="cut" data-target="bar">Cut</button>
   </div>
