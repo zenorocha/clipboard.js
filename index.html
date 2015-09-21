@@ -63,7 +63,9 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
         </div>
 
         <pre><code class="html">&lt;!-- Trigger --&gt;
-&lt;button class="btn" data-text="Heya!"&gt;Copy&lt;/button&gt;</code></pre>
+&lt;button class="btn" data-text="Just because you can doesn't mean you should — clipboard.js"&gt;
+    Copy to clipboard
+&lt;/button&gt;</code></pre>
 
         <h3>Copy text from another element</h3>
 
@@ -76,18 +78,20 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
             <div class="input-group">
                 <input id="foo" type="text" value="https://github.com/zenorocha/clipboard.js.git">
                 <span class="input-group-button">
-                    <button aria-label="Copy to clipboard" class="btn" type="button" data-action="copy" data-target="foo">
-                        <img class="clippy" src="assets/clippy.svg" width="13" alt="Clipboard icon">
+                    <button aria-label="Copy to clipboard" class="btn" type="button" data-target="foo">
+                        <img class="clippy" src="assets/clippy.svg" width="13" alt="Copy to clipboard">
                     </button>
                 </span>
             </div>
         </div>
 
         <pre><code class="html">&lt;!-- Target --&gt;
-&lt;input id="foo" value="https://git.io/vn3cM"&gt;
+&lt;input id="foo" value="https://github.com/zenorocha/clipboard.js.git"&gt;
 
 &lt;!-- Trigger --&gt;
-&lt;button class="btn" data-target="foo"&gt;Copy&lt;/button&gt;</code></pre>
+&lt;button class="btn" data-target="foo"&gt;
+    &lt;img src="assets/clippy.svg" alt="Copy to clipboard"&gt;
+&lt;/button&gt;</code></pre>
 
         <h3>Cut text from another element</h3>
 
@@ -108,11 +112,11 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
         </div>
 
         <pre><code class="html">&lt;!-- Target --&gt;
-&lt;textarea id="bar"&gt;clipboard.js rocks!&lt;/textarea&gt;
+&lt;textarea id="bar"&gt;Mussum ipsum cacilds...&lt;/textarea&gt;
 
 &lt;!-- Trigger --&gt;
 &lt;button class="btn" data-action="cut" data-target="bar"&gt;
-    Copy
+    Cut to clipboard
 &lt;/button&gt;</code></pre>
 
         <p>As you may expect, the <code>cut</code> action only works on <code>&lt;input&gt;</code> or <code>&lt;textarea&gt;</code> elements.</p>
