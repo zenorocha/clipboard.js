@@ -61,7 +61,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
               Sorry, your browser do not support copy text to clipboard.
             </div>
 
-            <button class="btn" data-action="copy" data-text="Just because you can doesn't mean you should — clipboard.js">Copy to the clipboard</button>
+            <button class="btn" data-action="copy" data-text="Just because you can doesn't mean you should — clipboard.js">Copy to clipboard</button>
         </div>
 
         <pre><code class="html">&lt;!-- Trigger --&gt;
@@ -80,7 +80,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
             <div class="input-group">
                 <input id="foo" type="text" value="https://github.com/zenorocha/clipboard.js.git">
                 <span class="input-group-button">
-                    <button class="btn" type="button" data-action="copy" data-target="foo">
+                    <button aria-label="Copy to clipboard" class="btn" type="button" data-action="copy" data-target="foo">
                         <img class="clippy" src="assets/clippy.svg" width="13" alt="Clipboard icon">
                     </button>
                 </span>
@@ -108,7 +108,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
             </div>
             <div class="form-actions">
                 <button class="btn" type="button" data-action="cut" data-target="bar">
-                    Cut to the clipboard
+                    Cut to clipboard
                 </button>
             </div>
         </div>

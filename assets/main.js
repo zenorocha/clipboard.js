@@ -5,14 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
     var btns = clipboard.triggers;
 
     for (var i = 0; i < btns.length; i++) {
-        btns[i].addEventListener('copy', function(e) {
-            console.info('Event:', e.type);
-            console.info('Text:', e.detail);
-        });
+        btns[i].addEventListener('copy', complete);
+        btns[i].addEventListener('cut', complete);
 
-        btns[i].addEventListener('cut', function(e) {
-            console.info('Event:', e.type);
-            console.info('Text:', e.detail);
+        btns[i].addEventListener('mouseleave', function(e) {
+            e.currentTarget.classList.remove('tooltipped', 'tooltipped-s');
+            e.currentTarget.removeAttribute('aria-label');
         });
 
         btns[i].addEventListener('no-support', function(e) {
@@ -23,5 +21,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 flashes[j].classList.remove('hidden');
             }
         });
+    }
+
+    function complete(e) {
+        console.info('Event:', e.type);
+        console.info('Text:', e.detail);
+
+        e.currentTarget.classList.add('tooltipped', 'tooltipped-s');
+        e.currentTarget.setAttribute('aria-label', 'Copied!');
     }
 });
