@@ -42,11 +42,13 @@ We're living a _declarative renaissance_, that's why we decided to take advantag
 
 The easiest way to copy some content to the clipboard, is to include a `data-text` attribute in your trigger element.
 
-<a href="http://zenorocha.github.io/clipboard.js/#example-1"><img width="171" alt="example-1" src="https://cloud.githubusercontent.com/assets/398893/9983469/a4959402-5fb1-11e5-80a0-cf3c8db1f02c.png"></a>
+<a href="http://zenorocha.github.io/clipboard.js/#example-1"><img width="147" alt="example-1" src="https://cloud.githubusercontent.com/assets/398893/10000347/6e16cf8c-6050-11e5-9883-1c5681f9ec45.png"></a>
 
 ```html
 <!-- Trigger -->
-<button class="btn" data-text="Heya!">Copy</button>
+<button class="btn" data-text="Just because you can doesn't mean you should — clipboard.js">
+    Copy to clipboard
+</button>
 ```
 
 ### Copy text from another element
@@ -59,10 +61,12 @@ The value you include on this attribute needs to match another's element `id` at
 
 ```html
 <!-- Target -->
-<input id="foo" value="https://git.io/vn3cM">
+<input id="foo" value="https://github.com/zenorocha/clipboard.js.git">
 
 <!-- Trigger -->
-<button class="btn" data-target="foo">Copy</button>
+<button class="btn" data-target="foo">
+    <img src="assets/clippy.svg" alt="Copy to clipboard">
+</button>
 ```
 
 ### Cut text from another element
@@ -71,15 +75,15 @@ Additionally, you can define a `data-action` attribute to specify if you want to
 
 If you omit this attribute, `copy` will be used by default.
 
-<a href="http://zenorocha.github.io/clipboard.js/#example-2"><img width="476" alt="example-3" src="https://cloud.githubusercontent.com/assets/398893/9983468/a4946442-5fb1-11e5-805e-9e2df2641cb2.png"></a>
+<a href="http://zenorocha.github.io/clipboard.js/#example-2"><img width="473" alt="example-3" src="https://cloud.githubusercontent.com/assets/398893/10000358/7df57b9c-6050-11e5-9cd1-fbc51d2fd0a7.png"></a>
 
 ```html
 <!-- Target -->
-<textarea id="bar">clipboard.js rocks!</textarea>
+<textarea id="bar">Mussum ipsum cacilds...</textarea>
 
 <!-- Trigger -->
 <button class="btn" data-action="cut" data-target="bar">
-    Copy
+    Cut to clipboard
 </button>
 ```
 
