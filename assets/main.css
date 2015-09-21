@@ -90,6 +90,12 @@ h3 {
     text-align: center;
 }
 
+.clippy {
+    margin-top: -3px;
+    position: relative;
+    top: 3px;
+}
+
 /* Code
    ========================================================================== */
 
