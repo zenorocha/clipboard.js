@@ -58,8 +58,8 @@ class ClipboardAction {
     selectValue() {
         let fake = document.createElement('input');
 
-        fake.style.opacity = 0;
-        fake.style.zIndex = -1;
+        fake.style.position = 'absolute';
+        fake.style.left = '-9999px';
         fake.value = this.text;
         this.selectedText = this.text;
 
