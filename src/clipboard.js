@@ -105,7 +105,7 @@ class ClipboardAction {
             });
         }
         else {
-            this.fireEvent('error', 'Cannot complete ' + this.action + ' operation');
+            this.fireEvent('error', `Cannot execute ${this.action} operation`);
         }
 
         this.clearSelection();
