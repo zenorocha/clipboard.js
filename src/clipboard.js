@@ -98,16 +98,17 @@ class ClipboardAction {
             succeeded = false;
         }
 
-        this.fireResult(succeeded);
-        this.clearSelection();
+        this.handleResult(succeeded);
     }
 
-    fireResult(succeeded) {
+    handleResult(succeeded) {
         if (succeeded) {
             this.fireEvent('success', {
                 action: this.action,
                 text: this.selectedText
             });
+
+            this.clearSelection();
         }
         else {
             this.fireEvent('error', `Cannot execute ${this.action} operation`);
