@@ -66,7 +66,7 @@ class ClipboardAction {
         document.body.appendChild(fake);
 
         fake.select();
-        this.copy();
+        this.copyText();
 
         document.body.removeChild(fake);
     }
@@ -80,15 +80,15 @@ class ClipboardAction {
             let range = document.createRange();
             let selection = window.getSelection();
 
-            range.selectNode(this.target);
+            range.selectNodeContents(this.target);
             selection.addRange(range);
             this.selectedText = selection.toString();
         }
 
-        this.copy();
+        this.copyText();
     }
 
-    copy() {
+    copyText() {
         let succeeded;
 
         try {
@@ -98,6 +98,11 @@ class ClipboardAction {
             succeeded = false;
         }
 
+        this.fireResult(succeeded);
+        this.clearSelection();
+    }
+
+    fireResult(succeeded) {
         if (succeeded) {
             this.fireEvent('success', {
                 action: this.action,
@@ -107,8 +112,6 @@ class ClipboardAction {
         else {
             this.fireEvent('error', `Cannot execute ${this.action} operation`);
         }
-
-        this.clearSelection();
     }
 
     clearSelection() {
