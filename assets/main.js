@@ -10,24 +10,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.info('Action:', e.detail.action);
             console.info('Text:', e.detail.text);
+
+            e.detail.clearSelection();
         });
 
         btns[i].addEventListener('error', function(e) {
-            if (e.currentTarget.hasAttribute('data-text')) {
-                var flash = document.querySelector('.flash');
-                flash.textContent = e.detail;
-                flash.setAttribute('class', 'flash flash-error');
-
-                e.currentTarget.disabled = true;
-            }
-            else {
-                showTooltip(e.currentTarget, 'Selected!');
-            }
+            showTooltip(e.currentTarget, messageFallback(e.detail.action));
         });
     }
 
     function showTooltip(elem, msg) {
         elem.setAttribute('class', 'btn tooltipped tooltipped-s');
         elem.setAttribute('aria-label', msg);
+    }
+
+    function messageFallback(action) {
+        var actionKey, actionCommand;
+
+        if (action === 'copy') {
+            actionKey = 'C';
+        }
+        else {
+            actionKey = 'X';
+        }
+
+        // Simplistic detection, do not use it in production
+        if(/iPhone|iPad/i.test(navigator.userAgent)) {
+            actionCommand = 'No support :(';
+        }
+        else if (/Mac/i.test(navigator.userAgent)) {
+            actionCommand = 'Press ⌘-' + actionKey + ' to ' + action;
+        }
+        else {
+            actionCommand = 'Press Ctrl-' + actionKey + ' to ' + action;
+        }
+
+        return actionCommand;
     }
 });
