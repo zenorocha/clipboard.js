@@ -15,6 +15,11 @@
     "babelify": "^6.3.0",
     "browserify": "^11.1.0",
     "chai": "^3.2.0",
+    "karma": "^0.13.10",
+    "karma-browserify": "^4.3.0",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.2.1",
     "mocha": "^2.3.2",
     "uglify": "^0.1.5"
   },

@@ -1,6 +1,12 @@
-var assert = chai.assert;
+import Clipboard from '../src/clipboard';
 
 describe('Clipboard', () => {
+    before(() => {
+        let button = document.createElement('button');
+        button.setAttribute('class', 'btn');
+        document.body.appendChild(button);
+    });
+
     describe('#constructor', () => {
         it('should throw an error since there was no arguments passed', done => {
             try {
@@ -20,51 +26,13 @@ describe('Clipboard', () => {
             }
         });
 
-        it('should create a NodeList and store it in a property', () => {
+        it('should create a NodeList from selector and store it in a "triggers" property', () => {
             let clipboard = new Clipboard('.btn');
             return assert.instanceOf(clipboard.triggers, NodeList);
         });
     });
 
-    describe('#validate', () => {
-        var elem = document.createElement('input');
-        let clipboard = new Clipboard('.btn');
-
-        it('should throw an error since there was no "data-target" or "data-text"', (done) => {
-            try {
-                clipboard.validate({
-                    currentTarget: elem
-                });
-            }
-            catch(e) {
-                done();
-            }
-        });
-
-        it('should throw an error since "data-action" is invalid', (done) => {
-            try {
-                elem.setAttribute('data-action', 'paste');
-
-                clipboard.validate({
-                    currentTarget: elem
-                });
-            }
-            catch(e) {
-                done();
-            }
-        });
-
-        it('should throw an error since "data-target" do not match any element', (done) => {
-            try {
-                elem.setAttribute('data-target', 'xyz');
-
-                clipboard.validate({
-                    currentTarget: elem
-                });
-            }
-            catch(e) {
-                done();
-            }
-        });
+    after(() => {
+        document.body.innerHTML = '';
     });
 });
