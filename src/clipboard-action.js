@@ -1,6 +1,13 @@
 var CustomEvent = require('custom-event');
 
-export default class ClipboardAction {
+/**
+ * Inner class which performs selection and copy operations.
+ */
+class ClipboardAction {
+    /**
+     * Initializes selection from either `text` or `target` property.
+     * @param {Object} options
+     */
     constructor(options) {
         this.action  = options.action;
         this.target  = options.target;
@@ -17,6 +24,9 @@ export default class ClipboardAction {
         }
     }
 
+    /**
+     * Selects the content from value passed on `text` property.
+     */
     selectValue() {
         let fake = document.createElement('input');
 
@@ -33,6 +43,9 @@ export default class ClipboardAction {
         document.body.removeChild(fake);
     }
 
+    /**
+     * Selects the content from element passed on `target` property.
+     */
     selectTarget() {
         if (this.target.nodeName === 'INPUT' || this.target.nodeName === 'TEXTAREA') {
             this.target.select();
@@ -50,6 +63,9 @@ export default class ClipboardAction {
         this.copyText();
     }
 
+    /**
+     * Executes the copy operation based on the current selection.
+     */
     copyText() {
         let succeeded;
 
@@ -63,6 +79,10 @@ export default class ClipboardAction {
         this.handleResult(succeeded);
     }
 
+    /**
+     * Fires an event based on the copy operation result.
+     * @param {Boolean} succeeded
+     */
     handleResult(succeeded) {
         if (succeeded) {
             this.fireEvent('success', {
@@ -79,14 +99,11 @@ export default class ClipboardAction {
         }
     }
 
-    clearSelection() {
-        if (this.target) {
-            this.target.blur();
-        }
-
-        window.getSelection().removeAllRanges();
-    }
-
+    /**
+     * Emits a custom event into the `trigger` element.
+     * @param {String} type
+     * @param {*} detail
+     */
     fireEvent(type, detail) {
         let event = new CustomEvent(type, {
             detail: detail
@@ -95,6 +112,21 @@ export default class ClipboardAction {
         this.trigger.dispatchEvent(event);
     }
 
+    /**
+     * Removes current selection and focus from `target` element.
+     */
+    clearSelection() {
+        if (this.target) {
+            this.target.blur();
+        }
+
+        window.getSelection().removeAllRanges();
+    }
+
+    /**
+     * Sets the `action` to be performed which can be either 'copy' or 'cut'.
+     * @param {String} action
+     */
     set action(action) {
         this._action = action || 'copy';
 
@@ -103,10 +135,19 @@ export default class ClipboardAction {
         }
     }
 
+    /**
+     * Gets the `action` property.
+     * @return {String}
+     */
     get action() {
         return this._action;
     }
 
+    /**
+     * Sets the `target` property using the ID of an element
+     * that will be have its content copied.
+     * @param {String} target
+     */
     set target(target) {
         if (target) {
             this._target = document.getElementById(target);
@@ -117,7 +158,13 @@ export default class ClipboardAction {
         }
     }
 
+    /**
+     * Gets the `target` property.
+     * @return {String|HTMLElement}
+     */
     get target() {
         return this._target;
     }
 }
+
+export default ClipboardAction;
