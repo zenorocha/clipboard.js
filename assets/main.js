@@ -6,16 +6,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     for (var i = 0; i < btns.length; i++) {
         btns[i].addEventListener('success', function(e) {
-            showTooltip(e.currentTarget, 'Copied!');
+            e.detail.clearSelection();
 
             console.info('Action:', e.detail.action);
             console.info('Text:', e.detail.text);
 
-            e.detail.clearSelection();
+            showTooltip(e.currentTarget, 'Copied!');
         });
 
         btns[i].addEventListener('error', function(e) {
             showTooltip(e.currentTarget, messageFallback(e.detail.action));
+        });
+
+        btns[i].addEventListener('mouseleave', function(e) {
+            e.currentTarget.setAttribute('class', 'btn');
+            e.currentTarget.removeAttribute('aria-label');
         });
     }
 
@@ -24,27 +29,21 @@ document.addEventListener('DOMContentLoaded', function() {
         elem.setAttribute('aria-label', msg);
     }
 
+    // Simplistic detection, do not use it in production
     function messageFallback(action) {
-        var actionKey, actionCommand;
+        var actionMsg = '';
+        var actionKey = (action === 'cut' ? 'X' : 'C');
 
-        if (action === 'copy') {
-            actionKey = 'C';
-        }
-        else {
-            actionKey = 'X';
-        }
-
-        // Simplistic detection, do not use it in production
         if(/iPhone|iPad/i.test(navigator.userAgent)) {
-            actionCommand = 'No support :(';
+            actionMsg = 'No support :(';
         }
         else if (/Mac/i.test(navigator.userAgent)) {
-            actionCommand = 'Press ⌘-' + actionKey + ' to ' + action;
+            actionMsg = 'Press ⌘-' + actionKey + ' to ' + action;
         }
         else {
-            actionCommand = 'Press Ctrl-' + actionKey + ' to ' + action;
+            actionMsg = 'Press Ctrl-' + actionKey + ' to ' + action;
         }
 
-        return actionCommand;
+        return actionMsg;
     }
 });
