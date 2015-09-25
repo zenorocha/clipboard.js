@@ -16,7 +16,7 @@ class ClipboardAction {
         this.selectedText = '';
 
         if (this.text) {
-            this.selectValue();
+            this.selectFake();
         }
         else if (this.target) {
             this.selectTarget();
@@ -24,22 +24,41 @@ class ClipboardAction {
     }
 
     /**
-     * Selects the content from value passed on `text` property.
+     * Creates a fake input element, sets its value from `text` property,
+     * and makes a selection on it.
      */
-    selectValue() {
-        let fake = document.createElement('input');
+    selectFake() {
+        this.removeFake();
 
-        fake.style.position = 'absolute';
-        fake.style.left = '-9999px';
-        fake.value = this.text;
+        this.fakeHandler = document.body.addEventListener('click', () => this.removeFake());
+
+        this.fakeElem = document.createElement('input');
+        this.fakeElem.style.position = 'absolute';
+        this.fakeElem.style.left = '-9999px';
+        this.fakeElem.setAttribute('readonly', '');
+        this.fakeElem.value = this.text;
         this.selectedText = this.text;
 
-        document.body.appendChild(fake);
+        document.body.appendChild(this.fakeElem);
 
-        fake.select();
+        this.fakeElem.select();
         this.copyText();
+    }
 
-        document.body.removeChild(fake);
+    /**
+     * Only removes the fake element after another click event, that way
+     * an user can hit `Ctrl+C` to copy because selection still exists.
+     */
+    removeFake() {
+        if (this.fakeHandler) {
+            document.body.removeEventListener('click');
+            this.fakeHandler = null;
+        }
+
+        if (this.fakeElem) {
+            document.body.removeChild(this.fakeElem);
+            this.fakeElem = null;
+        }
     }
 
     /**
