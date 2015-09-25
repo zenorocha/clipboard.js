@@ -32,8 +32,6 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 
         <p>That's why clipboard.js exists.</p>
 
-        <p>And don't be a jerk, use it responsibly :)</p>
-
         <h1 id="install">Install</h1>
 
         <p>You can get it on npm.</p>
@@ -52,33 +50,24 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 
         <pre><code class="html">&lt;script src="dist/clipboard.min.js"&gt;&lt;/script&gt;</code></pre>
 
-        <p>Now, you need to instantiate it using a DOM selector. This selector corresponds to the trigger element, i.e. <code>&lt;button&gt;</code>.</p>
+        <p>Now, you need to instantiate it using a DOM selector. This selector corresponds to the trigger element(s), for example <code>&lt;button class="btn"&gt;</code>.</p>
 
         <pre><code class="js">new Clipboard('.btn');</code></pre>
+
+        <p>Internally, we need to fetch all elements that matches with your selector and attach event listeners for each one. But guess what? If you have hundreds of matches, this operation can consume a lot of memory.</p>
+
+        <p>For this reason we use <a href="http://stackoverflow.com/questions/1687296/what-is-dom-event-delegation">event delegation</a> which replaces multiple event listeners with just a single listener. After all, <a href="https://twitter.com/hashtag/perfmatters">#perfmatters</a>.</p>
 
         <h1 id="usage">Usage</h1>
 
         <p>We're living a <em>declarative renaissance</em>, that's why we decided to take advantage of <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Using_data_attributes">HTML5 data attributes</a> for better usability.</p>
 
-        <h3>Copy text from attribute</h3>
-
-        <p>The easiest way to copy some content to the clipboard, is to include a <code>data-text</code> attribute in your trigger element.</p>
-
-        <div id="example-1" class="example">
-            <button class="btn" data-action="copy" data-text="Just because you can doesn't mean you should — clipboard.js">Copy to clipboard</button>
-        </div>
-
-        <pre><code class="html">&lt;!-- Trigger --&gt;
-&lt;button class="btn" data-text="Just because you can doesn't mean you should — clipboard.js"&gt;
-    Copy to clipboard
-&lt;/button&gt;</code></pre>
-
         <h3>Copy text from another element</h3>
 
-        <p>Alternatively, you can copy content from another element by adding a <code>data-target</code> attribute in your trigger element.</p>
+        <p>A pretty common use case is to copy content from another element. You can do that by adding a <code>data-target</code> attribute in your trigger element.</p>
         <p>The value you include on this attribute needs to match another's element <code>id</code> attribute.</p>
 
-        <div id="example-2" class="example">
+        <div id="example-target" class="example">
             <div class="input-group">
                 <input id="foo" type="text" value="https://github.com/zenorocha/clipboard.js.git">
                 <span class="input-group-button">
@@ -102,7 +91,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
         <p>Additionally, you can define a <code>data-action</code> attribute to specify if you want to either <code>copy</code> or <code>cut</code> content.</p>
         <p>If you omit this attribute, <code>copy</code> will be used by default.</p>
 
-        <div id="example-3" class="example">
+        <div id="example-action" class="example">
             <div class="input-group">
                 <textarea id="bar" cols="62" rows="5" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga.</textarea>
             </div>
@@ -123,36 +112,45 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 
         <p>As you may expect, the <code>cut</code> action only works on <code>&lt;input&gt;</code> or <code>&lt;textarea&gt;</code> elements.</p>
 
+        <h3>Copy text from attribute</h3>
+
+        <p>Truth is, you don't even need another element to copy its content from. You can just include a <code>data-text</code> attribute in your trigger element.</p>
+
+        <div id="example-text" class="example">
+            <button class="btn" data-action="copy" data-text="Just because you can doesn't mean you should — clipboard.js">Copy to clipboard</button>
+        </div>
+
+        <pre><code class="html">&lt;!-- Trigger --&gt;
+&lt;button class="btn" data-text="Just because you can doesn't mean you should — clipboard.js"&gt;
+    Copy to clipboard
+&lt;/button&gt;</code></pre>
+
         <h1 id="events">Events</h1>
 
-        <p>There are cases where you'd like to capture what has been copied/cut or even check if there was an error.</p>
+        <p>There are cases where you'd like to show some user feedback or capture what has been selected after a copy/cut operation.</p>
 
         <p>That's why we fire custom events such as <code>success</code> and <code>error</code> for you to listen and implement your custom logic.</p>
 
-        <p>But to achieve that, first you need to access the <code>triggers</code> property from your clipboard instance.</p>
-
         <pre><code class="js">var clipboard = new Clipboard('.btn');
-var btns = clipboard.triggers;</code></pre>
 
-        <p>Internally, this property is just a collections of nodes resulted from a <code>querySelectorAll</code> operation. So all you have to do now is loop through that collection and attach listeners.</p>
+clipboard.on('success', function(e) {
+    console.info('Action:', e.action);
+    console.info('Text:', e.text);
+    console.info('Trigger:', e.trigger);
 
-        <pre><code class="js">for (var i = 0; i &lt; btns.length; i++) {
-    btns[i].addEventListener('success', function(e) {
-        console.info('Action:', e.detail.action);
-        console.info('Text:', e.detail.text);
-    });
+    e.clearSelection();
+});
 
-    btns[i].addEventListener('error', function(e) {
-        alert(e.detail);
-    });
-}
-</code></pre>
+clipboard.on('error', function(e) {
+    console.error('Action:', e.action);
+    console.error('Trigger:', e.trigger);
+});</code></pre>
 
         <p>For a live demonstration, just open your console :)</p>
 
         <h1 id="browser-support">Browser Support</h1>
 
-        <p>This library relies on both <a href="https://developer.mozilla.org/en-US/docs/Web/API/Selection">Selection</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand">execCommand</a> APIs. When combined, they're supported in the following browsers.</p>
+        <p>This library relies on both <a href="https://developer.mozilla.org/en-US/docs/Web/API/Selection">Selection</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand">execCommand</a> APIs. The second one is supported in the following browsers.</p>
 
         <ul class="support">
             <li>
@@ -175,6 +173,12 @@ var btns = clipboard.triggers;</code></pre>
                 <p>Safari ✘</p>
             </li>
         </ul>
+
+        <p>Although copy/cut operations with <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand">execCommand</a> aren't supported on Safari yet (including mobile), it gracefully degrades because <a href="https://developer.mozilla.org/en-US/docs/Web/API/Selection">Selection</a> is supported.</p>
+
+        <p>That means you can show a tooltip saying <code>Copied!</code> when <code>success</code> event is called and <code>Press Ctrl+C to copy</code> when <code>error</code> event is called because the text is already selected.</p>
+
+        <p>For a live demonstration, open this site on Safari.</p>
     </main>
 
     <footer class="footer gradient text-center">
