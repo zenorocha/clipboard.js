@@ -14,8 +14,8 @@ class Clipboard extends Emitter {
     constructor(selector) {
         super();
 
-        let delegate = new Delegate(document.body);
-        delegate.on('click', selector, (e) => this.initialize(e));
+        this.delegate = new Delegate(document.body);
+        this.delegate.on('click', selector, (e) => this.initialize(e));
     }
 
     /**
@@ -23,7 +23,11 @@ class Clipboard extends Emitter {
      * @param {Event} e
      */
     initialize(e) {
-        new ClipboardAction({
+        if (this.clipboardAction) {
+            this.clipboardAction = null;
+        }
+
+        this.clipboardAction = new ClipboardAction({
             action  : e.target.getAttribute('data-action'),
             target  : e.target.getAttribute('data-target'),
             text    : e.target.getAttribute('data-text'),
