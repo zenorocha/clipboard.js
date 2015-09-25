@@ -9,7 +9,8 @@
     "cut"
   ],
   "dependencies": {
-    "custom-event": "^1.0.0"
+    "custom-event": "^1.0.0",
+    "delegate-events": "^1.1.1"
   },
   "devDependencies": {
     "babelify": "^6.3.0",

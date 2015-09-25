@@ -1,26 +1,20 @@
 var ClipboardAction = require('./clipboard-action');
+var Delegate = require('dom-delegate').Delegate;
 
 /**
- * Base class which takes a selector, binds a click event for
- * each element found, and instantiates a new `ClipboardAction`.
+ * Base class which takes a selector, delegates a click event to it,
+ * and instantiates a new `ClipboardAction` on each click.
  */
 class Clipboard {
     /**
-     * Fetches all elements from a selector and
-     * calls `bind` method for each element found.
-     * @param {String} triggers
+     * Delegates a click event to the passed selector.
+     * @param {String} selector
      */
-    constructor(triggers) {
-        this.triggers = document.querySelectorAll(triggers);
+    constructor(selector) {
+        this.selector = selector;
 
-        [].forEach.call(this.triggers, (trigger) => this.bind(trigger));
-    }
-
-    /**
-     * Adds a click event listener for each element.
-     */
-    bind(trigger) {
-        trigger.addEventListener('click', (e) => this.initialize(e));
+        let delegate = new Delegate(document.body);
+        delegate.on('click', this.selector, (e) => this.initialize(e));
     }
 
     /**
@@ -29,32 +23,11 @@ class Clipboard {
      */
     initialize(e) {
         new ClipboardAction({
-            action  : e.currentTarget.getAttribute('data-action'),
-            target  : e.currentTarget.getAttribute('data-target'),
-            text    : e.currentTarget.getAttribute('data-text'),
-            trigger : e.currentTarget
+            action  : e.target.getAttribute('data-action'),
+            target  : e.target.getAttribute('data-target'),
+            text    : e.target.getAttribute('data-text'),
+            trigger : e.target
         });
-    }
-
-    /**
-     * Sets the `triggers` property if there's at least
-     * one match for the provided selector.
-     * @param {NodeList} triggers
-     */
-    set triggers(triggers) {
-        if (!triggers.length) {
-            throw new Error('No matches were found for the provided selector');
-        }
-
-        this._triggers = triggers;
-    }
-
-    /**
-     * Gets the `triggers` property.
-     * @return {NodeList}
-     */
-    get triggers() {
-        return this._triggers;
     }
 }
 
