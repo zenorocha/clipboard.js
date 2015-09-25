@@ -1,5 +1,3 @@
-var CustomEvent = require('custom-event');
-
 /**
  * Inner class which performs selection and copy operations.
  */
@@ -10,6 +8,7 @@ class ClipboardAction {
      */
     constructor(options) {
         this.action  = options.action;
+        this.host    = options.host;
         this.target  = options.target;
         this.text    = options.text;
         this.trigger = options.trigger;
@@ -85,31 +84,20 @@ class ClipboardAction {
      */
     handleResult(succeeded) {
         if (succeeded) {
-            this.fireEvent('success', {
+            this.host.emit('success', {
                 action: this.action,
                 text: this.selectedText,
+                trigger: this.trigger,
                 clearSelection: this.clearSelection.bind(this)
             });
         }
         else {
-            this.fireEvent('error', {
+            this.host.emit('error', {
                 action: this.action,
+                trigger: this.trigger,
                 clearSelection: this.clearSelection.bind(this)
             });
         }
-    }
-
-    /**
-     * Emits a custom event into the `trigger` element.
-     * @param {String} type
-     * @param {*} detail
-     */
-    fireEvent(type, detail) {
-        let event = new CustomEvent(type, {
-            detail: detail
-        });
-
-        this.trigger.dispatchEvent(event);
     }
 
     /**

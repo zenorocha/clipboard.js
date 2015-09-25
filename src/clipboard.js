@@ -1,20 +1,21 @@
-var ClipboardAction = require('./clipboard-action');
-var Delegate = require('dom-delegate').Delegate;
+const ClipboardAction = require('./clipboard-action');
+const Delegate = require('dom-delegate').Delegate;
+const Emitter = require('tiny-emitter');
 
 /**
  * Base class which takes a selector, delegates a click event to it,
  * and instantiates a new `ClipboardAction` on each click.
  */
-class Clipboard {
+class Clipboard extends Emitter {
     /**
-     * Delegates a click event to the passed selector.
+     * Delegates a click event on the passed selector.
      * @param {String} selector
      */
     constructor(selector) {
-        this.selector = selector;
+        super();
 
         let delegate = new Delegate(document.body);
-        delegate.on('click', this.selector, (e) => this.initialize(e));
+        delegate.on('click', selector, (e) => this.initialize(e));
     }
 
     /**
@@ -26,7 +27,8 @@ class Clipboard {
             action  : e.target.getAttribute('data-action'),
             target  : e.target.getAttribute('data-target'),
             text    : e.target.getAttribute('data-text'),
-            trigger : e.target
+            trigger : e.target,
+            host    : this
         });
     }
 }
