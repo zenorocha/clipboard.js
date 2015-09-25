@@ -1,5 +1,5 @@
 const ClipboardAction = require('./clipboard-action');
-const Delegate = require('dom-delegate').Delegate;
+const delegate = require('delegate-events');
 const Emitter = require('tiny-emitter');
 
 /**
@@ -14,8 +14,7 @@ class Clipboard extends Emitter {
     constructor(selector) {
         super();
 
-        this.delegate = new Delegate(document.body);
-        this.delegate.on('click', selector, (e) => this.initialize(e));
+        delegate.bind(document.body, selector, 'click', (e) => this.initialize(e));
     }
 
     /**
@@ -28,10 +27,10 @@ class Clipboard extends Emitter {
         }
 
         this.clipboardAction = new ClipboardAction({
-            action  : e.target.getAttribute('data-action'),
-            target  : e.target.getAttribute('data-target'),
-            text    : e.target.getAttribute('data-text'),
-            trigger : e.target,
+            action  : e.delegateTarget.getAttribute('data-action'),
+            target  : e.delegateTarget.getAttribute('data-target'),
+            text    : e.delegateTarget.getAttribute('data-text'),
+            trigger : e.delegateTarget,
             host    : this
         });
     }
