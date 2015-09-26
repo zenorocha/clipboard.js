@@ -22,6 +22,7 @@
     "karma-mocha": "^0.2.0",
     "karma-phantomjs-launcher": "^0.2.1",
     "mocha": "^2.3.2",
+    "phantomjs-polyfill": "0.0.1",
     "uglify": "^0.1.5"
   },
   "scripts": {
