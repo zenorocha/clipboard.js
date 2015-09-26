@@ -3,12 +3,16 @@ import ClipboardAction from '../src/clipboard-action';
 describe('ClipboardAction', () => {
     before(() => {
         global.target = document.createElement('input');
-        target.setAttribute('id', 'foo');
+        global.target.setAttribute('id', 'target');
         document.body.appendChild(global.target);
 
         global.trigger = document.createElement('button');
-        trigger.setAttribute('class', 'btn');
+        global.trigger.setAttribute('class', 'btn');
         document.body.appendChild(global.trigger);
+    });
+
+    after(() => {
+        document.body.innerHTML = '';
     });
 
     describe('#constructor', () => {
@@ -40,10 +44,12 @@ describe('ClipboardAction', () => {
         it('should throw an error since "data-action" is invalid', (done) => {
             try {
                 new ClipboardAction({
+                    text: 'foo',
                     action: 'paste'
                 });
             }
             catch(e) {
+                assert.equal(e.message, 'Invalid "data-action" value, use either "copy" or "cut"');
                 done();
             }
         });
@@ -51,17 +57,13 @@ describe('ClipboardAction', () => {
         it('should throw an error since "data-target" do not match any element', (done) => {
             try {
                 new ClipboardAction({
-                    target: 'zzz',
-                    trigger: global.trigger
+                    target: 'foo'
                 });
             }
             catch(e) {
+                assert.equal(e.message, 'Invalid "data-target" selector, use a value that matches an ID');
                 done();
             }
         });
-    });
-
-    after(() => {
-        document.body.innerHTML = '';
     });
 });

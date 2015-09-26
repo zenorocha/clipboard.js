@@ -13,6 +13,7 @@ describe('Clipboard', () => {
                 new Clipboard();
             }
             catch(e) {
+                assert.equal(e.message, 'No matches were found for the provided selector');
                 done();
             }
         });
@@ -22,6 +23,7 @@ describe('Clipboard', () => {
                 new Clipboard('#abc');
             }
             catch(e) {
+                assert.equal(e.message, 'No matches were found for the provided selector');
                 done();
             }
         });
