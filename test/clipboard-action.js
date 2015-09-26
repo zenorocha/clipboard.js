@@ -14,7 +14,7 @@ describe('ClipboardAction', () => {
     describe('#constructor', () => {
         it('should throw an error since "data-action" is invalid', (done) => {
             try {
-                new Clipboard({
+                new ClipboardAction({
                     action: 'paste'
                 });
             }

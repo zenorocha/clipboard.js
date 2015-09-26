@@ -14,6 +14,10 @@ class Clipboard extends Emitter {
     constructor(selector) {
         super();
 
+        if (!document.querySelectorAll(selector).length) {
+            throw new Error('No matches were found for the provided selector');
+        }
+
         delegate.bind(document.body, selector, 'click', (e) => this.initialize(e));
     }
 
