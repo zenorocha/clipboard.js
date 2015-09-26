@@ -8,18 +8,24 @@ class ClipboardAction {
      */
     constructor(options) {
         this.action  = options.action;
-        this.emitter  = options.emitter;
+        this.emitter = options.emitter;
         this.target  = options.target;
         this.text    = options.text;
         this.trigger = options.trigger;
 
         this.selectedText = '';
 
-        if (this.text) {
+        if (this.text && this.target) {
+            throw new Error('Multiple attributes declared, use either "data-target" or "data-text"');
+        }
+        else if (this.text) {
             this.selectFake();
         }
         else if (this.target) {
             this.selectTarget();
+        }
+        else {
+            throw new Error('Missing required attributes, use either "data-target" or "data-text"');
         }
     }
 

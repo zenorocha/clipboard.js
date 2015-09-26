@@ -12,6 +12,31 @@ describe('ClipboardAction', () => {
     });
 
     describe('#constructor', () => {
+        it('should throw an error since both "data-text" and "data-target" were passed', (done) => {
+            try {
+                new ClipboardAction({
+                    text: 'foo',
+                    target: 'target'
+                });
+            }
+            catch(e) {
+                assert.equal(e.message, 'Multiple attributes declared, use either "data-target" or "data-text"');
+                done();
+            }
+        });
+
+        it('should throw an error since neither "data-text" nor "data-target" were passed', (done) => {
+            try {
+                new ClipboardAction({
+                    action: ''
+                });
+            }
+            catch(e) {
+                assert.equal(e.message, 'Missing required attributes, use either "data-target" or "data-text"');
+                done();
+            }
+        });
+
         it('should throw an error since "data-action" is invalid', (done) => {
             try {
                 new ClipboardAction({
