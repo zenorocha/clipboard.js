@@ -8,7 +8,7 @@ class ClipboardAction {
      */
     constructor(options) {
         this.action  = options.action;
-        this.host    = options.host;
+        this.emitter  = options.emitter;
         this.target  = options.target;
         this.text    = options.text;
         this.trigger = options.trigger;
@@ -103,7 +103,7 @@ class ClipboardAction {
      */
     handleResult(succeeded) {
         if (succeeded) {
-            this.host.emit('success', {
+            this.emitter.emit('success', {
                 action: this.action,
                 text: this.selectedText,
                 trigger: this.trigger,
@@ -111,7 +111,7 @@ class ClipboardAction {
             });
         }
         else {
-            this.host.emit('error', {
+            this.emitter.emit('error', {
                 action: this.action,
                 trigger: this.trigger,
                 clearSelection: this.clearSelection.bind(this)

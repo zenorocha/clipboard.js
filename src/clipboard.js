@@ -31,7 +31,7 @@ class Clipboard extends Emitter {
             target  : e.delegateTarget.getAttribute('data-target'),
             text    : e.delegateTarget.getAttribute('data-text'),
             trigger : e.delegateTarget,
-            host    : this
+            emitter : this
         });
     }
 }
