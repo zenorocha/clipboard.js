@@ -1,12 +1,7 @@
 import Clipboard from '../src/clipboard';
+import ClipboardAction from '../src/clipboard-action';
 
 describe('Clipboard', () => {
-    before(() => {
-        let button = document.createElement('button');
-        button.setAttribute('class', 'btn');
-        document.body.appendChild(button);
-    });
-
     describe('#constructor', () => {
         it('should throw an error since there was no arguments passed', done => {
             try {
@@ -29,7 +24,27 @@ describe('Clipboard', () => {
         });
     });
 
-    after(() => {
-        document.body.innerHTML = '';
+    describe('#initialize', () => {
+        before(() => {
+            global.button = document.createElement('button');
+            global.button.setAttribute('class', 'btn');
+            global.button.setAttribute('data-text', 'foo');
+            document.body.appendChild(global.button);
+
+            global.event = {
+                delegateTarget: global.button
+            };
+        });
+
+        after(() => {
+            document.body.innerHTML = '';
+        });
+
+        it('should create a new instance of ClipboardAction', () => {
+            let clipboard = new Clipboard('.btn');
+
+            clipboard.initialize(global.event);
+            assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+        });
     });
 });

@@ -1,8 +1,8 @@
 module.exports = function(karma) {
     karma.set({
-        plugins: ['karma-browserify', 'karma-chai', 'karma-mocha', 'karma-phantomjs-launcher'],
+        plugins: ['karma-browserify', 'karma-chai', 'karma-sinon', 'karma-mocha', 'karma-phantomjs-launcher'],
 
-        frameworks: ['browserify', 'chai', 'mocha'],
+        frameworks: ['browserify', 'chai', 'sinon', 'mocha'],
 
         files: [
             'src/**/*.js',
