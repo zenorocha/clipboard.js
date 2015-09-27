@@ -1,5 +1,7 @@
 # clipboard.js
 
+[![Build Status](http://img.shields.io/travis/zenorocha/clipboard.js/master.svg?style=flat)](https://travis-ci.org/zenorocha/clipboard.js)
+
 > A modern approach to copy text to the clipboard. No Flash. No dependencies. Just 2kb.
 
 <a href="http://zenorocha.github.io/clipboard.js/"><img width="728" src="https://cloud.githubusercontent.com/assets/398893/9983535/5ab0a950-5fb4-11e5-9602-e73c0b661883.jpg" alt="Demo"></a>
