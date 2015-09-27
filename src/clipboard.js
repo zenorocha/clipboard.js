@@ -1,6 +1,6 @@
-const ClipboardAction = require('./clipboard-action');
-const delegate = require('delegate-events');
-const Emitter = require('tiny-emitter');
+import ClipboardAction from './clipboard-action';
+import Delegate from 'delegate-events';
+import Emitter from 'tiny-emitter';
 
 /**
  * Base class which takes a selector, delegates a click event to it,
@@ -18,7 +18,7 @@ class Clipboard extends Emitter {
             throw new Error('No matches were found for the provided selector');
         }
 
-        delegate.bind(document.body, selector, 'click', (e) => this.initialize(e));
+        Delegate.bind(document.body, selector, 'click', (e) => this.initialize(e));
     }
 
     /**
