@@ -18,7 +18,7 @@ class ClipboardAction {
         if (this.text && this.target) {
             throw new Error('Multiple attributes declared, use either "data-clipboard-target" or "data-clipboard-text"');
         }
-        else if (this.text) {
+        if (this.text) {
             this.selectFake();
         }
         else if (this.target) {
@@ -41,6 +41,8 @@ class ClipboardAction {
         this.fakeElem = document.createElement('input');
         this.fakeElem.style.position = 'absolute';
         this.fakeElem.style.left = '-9999px';
+        this.fakeElem.style.width = 0;
+        this.fakeElem.style.height = 0;
         this.fakeElem.setAttribute('readonly', '');
         this.fakeElem.value = this.text;
         this.selectedText = this.text;
