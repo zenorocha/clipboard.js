@@ -52,7 +52,7 @@ We're living a _declarative renaissance_, that's why we decided to take advantag
 
 ### Copy text from another element
 
-A pretty common use case is to copy content from another element. You can do that by adding a `data-target` attribute in your trigger element.
+A pretty common use case is to copy content from another element. You can do that by adding a `data-clipboard-target` attribute in your trigger element.
 
 The value you include on this attribute needs to match another's element `id` attribute.
 
@@ -63,14 +63,14 @@ The value you include on this attribute needs to match another's element `id` at
 <input id="foo" value="https://github.com/zenorocha/clipboard.js.git">
 
 <!-- Trigger -->
-<button class="btn" data-target="foo">
+<button class="btn" data-clipboard-target="foo">
     <img src="assets/clippy.svg" alt="Copy to clipboard">
 </button>
 ```
 
 ### Cut text from another element
 
-Additionally, you can define a `data-action` attribute to specify if you want to either `copy` or `cut` content.
+Additionally, you can define a `data-clipboard-action` attribute to specify if you want to either `copy` or `cut` content.
 
 If you omit this attribute, `copy` will be used by default.
 
@@ -81,7 +81,7 @@ If you omit this attribute, `copy` will be used by default.
 <textarea id="bar">Mussum ipsum cacilds...</textarea>
 
 <!-- Trigger -->
-<button class="btn" data-action="cut" data-target="bar">
+<button class="btn" data-clipboard-action="cut" data-clipboard-target="bar">
     Cut to clipboard
 </button>
 ```
@@ -90,13 +90,13 @@ As you may expect, the `cut` action only works on `<input>` or `<textarea>` elem
 
 ### Copy text from attribute
 
-Truth is, you don't even need another element to copy its content from. You can just include a `data-text` attribute in your trigger element.
+Truth is, you don't even need another element to copy its content from. You can just include a `data-clipboard-text` attribute in your trigger element.
 
 <a href="http://zenorocha.github.io/clipboard.js/#demo-text"><img width="147" alt="example-1" src="https://cloud.githubusercontent.com/assets/398893/10000347/6e16cf8c-6050-11e5-9883-1c5681f9ec45.png"></a>
 
 ```html
 <!-- Trigger -->
-<button class="btn" data-text="Just because you can doesn't mean you should — clipboard.js">
+<button class="btn" data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">
     Copy to clipboard
 </button>
 ```

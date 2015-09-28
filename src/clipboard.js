@@ -30,10 +30,12 @@ class Clipboard extends Emitter {
             this.clipboardAction = null;
         }
 
+        const prefix = 'data-clipboard-';
+
         this.clipboardAction = new ClipboardAction({
-            action  : e.delegateTarget.getAttribute('data-action'),
-            target  : e.delegateTarget.getAttribute('data-target'),
-            text    : e.delegateTarget.getAttribute('data-text'),
+            action  : e.delegateTarget.getAttribute(prefix + 'action'),
+            target  : e.delegateTarget.getAttribute(prefix + 'target'),
+            text    : e.delegateTarget.getAttribute(prefix + 'text'),
             trigger : e.delegateTarget,
             emitter : this
         });

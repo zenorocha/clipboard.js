@@ -16,7 +16,7 @@ class ClipboardAction {
         this.selectedText = '';
 
         if (this.text && this.target) {
-            throw new Error('Multiple attributes declared, use either "data-target" or "data-text"');
+            throw new Error('Multiple attributes declared, use either "data-clipboard-target" or "data-clipboard-text"');
         }
         else if (this.text) {
             this.selectFake();
@@ -25,7 +25,7 @@ class ClipboardAction {
             this.selectTarget();
         }
         else {
-            throw new Error('Missing required attributes, use either "data-target" or "data-text"');
+            throw new Error('Missing required attributes, use either "data-clipboard-target" or "data-clipboard-text"');
         }
     }
 
@@ -144,7 +144,7 @@ class ClipboardAction {
         this._action = action || 'copy';
 
         if (this._action !== 'copy' && this._action !== 'cut') {
-            throw new Error('Invalid "data-action" value, use either "copy" or "cut"');
+            throw new Error('Invalid "data-clipboard-action" value, use either "copy" or "cut"');
         }
     }
 
@@ -166,7 +166,7 @@ class ClipboardAction {
             this._target = document.getElementById(target);
 
             if (!this._target) {
-                throw new Error('Invalid "data-target" selector, use a value that matches an ID');
+                throw new Error('Invalid "data-clipboard-target" selector, use a value that matches an ID');
             }
         }
     }
