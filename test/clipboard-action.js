@@ -20,7 +20,7 @@ describe('ClipboardAction', () => {
     });
 
     describe('#constructor', () => {
-        it('should throw an error since both "data-text" and "data-target" were passed', done => {
+        it('should throw an error since both "data-clipboard-text" and "data-clipboard-target" were passed', done => {
             try {
                 new ClipboardAction({
                     text: 'foo',
@@ -28,26 +28,26 @@ describe('ClipboardAction', () => {
                 });
             }
             catch(e) {
-                assert.equal(e.message, 'Multiple attributes declared, use either "data-target" or "data-text"');
+                assert.equal(e.message, 'Multiple attributes declared, use either "data-clipboard-target" or "data-clipboard-text"');
                 done();
             }
         });
 
-        it('should throw an error since neither "data-text" nor "data-target" were passed', done => {
+        it('should throw an error since neither "data-clipboard-text" nor "data-clipboard-target" were passed', done => {
             try {
                 new ClipboardAction({
                     action: ''
                 });
             }
             catch(e) {
-                assert.equal(e.message, 'Missing required attributes, use either "data-target" or "data-text"');
+                assert.equal(e.message, 'Missing required attributes, use either "data-clipboard-target" or "data-clipboard-text"');
                 done();
             }
         });
     });
 
     describe('#set action', () => {
-        it('should throw an error since "data-action" is invalid', done => {
+        it('should throw an error since "data-clipboard-action" is invalid', done => {
             try {
                 new ClipboardAction({
                     text: 'foo',
@@ -55,21 +55,21 @@ describe('ClipboardAction', () => {
                 });
             }
             catch(e) {
-                assert.equal(e.message, 'Invalid "data-action" value, use either "copy" or "cut"');
+                assert.equal(e.message, 'Invalid "data-clipboard-action" value, use either "copy" or "cut"');
                 done();
             }
         });
     });
 
     describe('#set target', () => {
-        it('should throw an error since "data-target" do not match any element', done => {
+        it('should throw an error since "data-clipboard-target" do not match any element', done => {
             try {
                 new ClipboardAction({
                     target: 'foo'
                 });
             }
             catch(e) {
-                assert.equal(e.message, 'Invalid "data-target" selector, use a value that matches an ID');
+                assert.equal(e.message, 'Invalid "data-clipboard-target" selector, use a value that matches an ID');
                 done();
             }
         });

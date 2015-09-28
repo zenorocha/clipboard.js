@@ -28,7 +28,7 @@ describe('Clipboard', () => {
         before(() => {
             global.button = document.createElement('button');
             global.button.setAttribute('class', 'btn');
-            global.button.setAttribute('data-text', 'foo');
+            global.button.setAttribute('data-clipboard-text', 'foo');
             document.body.appendChild(global.button);
 
             global.event = {
