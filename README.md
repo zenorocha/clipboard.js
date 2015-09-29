@@ -54,7 +54,7 @@ We're living a _declarative renaissance_, that's why we decided to take advantag
 
 A pretty common use case is to copy content from another element. You can do that by adding a `data-clipboard-target` attribute in your trigger element.
 
-The value you include on this attribute needs to match another's element `id` attribute.
+The value you include on this attribute needs to match another's element selector.
 
 <a href="http://zenorocha.github.io/clipboard.js/#demo-target"><img width="473" alt="example-2" src="https://cloud.githubusercontent.com/assets/398893/9983467/a4946aaa-5fb1-11e5-9780-f09fcd7ca6c8.png"></a>
 
@@ -63,7 +63,7 @@ The value you include on this attribute needs to match another's element `id` at
 <input id="foo" value="https://github.com/zenorocha/clipboard.js.git">
 
 <!-- Trigger -->
-<button class="btn" data-clipboard-target="foo">
+<button class="btn" data-clipboard-target="#foo">
     <img src="assets/clippy.svg" alt="Copy to clipboard">
 </button>
 ```
@@ -81,7 +81,7 @@ If you omit this attribute, `copy` will be used by default.
 <textarea id="bar">Mussum ipsum cacilds...</textarea>
 
 <!-- Trigger -->
-<button class="btn" data-clipboard-action="cut" data-clipboard-target="bar">
+<button class="btn" data-clipboard-action="cut" data-clipboard-target="#bar">
     Cut to clipboard
 </button>
 ```
