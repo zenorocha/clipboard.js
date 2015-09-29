@@ -16,7 +16,7 @@ class ClipboardAction {
         this.selectedText = '';
 
         if (this.text && this.target) {
-            throw new Error('Multiple attributes declared, use either "data-clipboard-target" or "data-clipboard-text"');
+            throw new Error('Multiple attributes declared, use either "target" or "text"');
         }
         else if (this.text) {
             this.selectFake();
@@ -25,7 +25,7 @@ class ClipboardAction {
             this.selectTarget();
         }
         else {
-            throw new Error('Missing required attributes, use either "data-clipboard-target" or "data-clipboard-text"');
+            throw new Error('Missing required attributes, use either "target" or "text"');
         }
     }
 
@@ -144,7 +144,7 @@ class ClipboardAction {
         this._action = action || 'copy';
 
         if (this._action !== 'copy' && this._action !== 'cut') {
-            throw new Error('Invalid "data-clipboard-action" value, use either "copy" or "cut"');
+            throw new Error('Invalid "action" value, use either "copy" or "cut"');
         }
     }
 
@@ -157,16 +157,17 @@ class ClipboardAction {
     }
 
     /**
-     * Sets the `target` property using the selector of an element
-     * that will be have its content copied.
-     * @param {String} target
+     * Sets the `target` property using an element that will be have its content
+     * copied.
+     * @param {Element} target
      */
     set target(target) {
-        if (target) {
-            this._target = document.querySelector(target);
-
-            if (!this._target) {
-                throw new Error('Invalid "data-clipboard-target" selector, use a value that matches an ID');
+        if (target !== undefined) {
+            if (target && typeof target === 'object' && target.nodeType === 1) {
+                this._target = target;
+            }
+            else {
+                throw new Error('Invalid "target" value, use a valid Element');
             }
         }
     }

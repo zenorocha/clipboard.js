@@ -20,34 +20,34 @@ describe('ClipboardAction', () => {
     });
 
     describe('#constructor', () => {
-        it('should throw an error since both "data-clipboard-text" and "data-clipboard-target" were passed', done => {
+        it('should throw an error since both "text" and "target" were passed', done => {
             try {
                 new ClipboardAction({
                     text: 'foo',
-                    target: '#input'
+                    target: document.querySelector('#input')
                 });
             }
             catch(e) {
-                assert.equal(e.message, 'Multiple attributes declared, use either "data-clipboard-target" or "data-clipboard-text"');
+                assert.equal(e.message, 'Multiple attributes declared, use either "target" or "text"');
                 done();
             }
         });
 
-        it('should throw an error since neither "data-clipboard-text" nor "data-clipboard-target" were passed', done => {
+        it('should throw an error since neither "text" nor "target" were passed', done => {
             try {
                 new ClipboardAction({
                     action: ''
                 });
             }
             catch(e) {
-                assert.equal(e.message, 'Missing required attributes, use either "data-clipboard-target" or "data-clipboard-text"');
+                assert.equal(e.message, 'Missing required attributes, use either "target" or "text"');
                 done();
             }
         });
     });
 
     describe('#set action', () => {
-        it('should throw an error since "data-clipboard-action" is invalid', done => {
+        it('should throw an error since "action" is invalid', done => {
             try {
                 new ClipboardAction({
                     text: 'foo',
@@ -55,21 +55,21 @@ describe('ClipboardAction', () => {
                 });
             }
             catch(e) {
-                assert.equal(e.message, 'Invalid "data-clipboard-action" value, use either "copy" or "cut"');
+                assert.equal(e.message, 'Invalid "action" value, use either "copy" or "cut"');
                 done();
             }
         });
     });
 
     describe('#set target', () => {
-        it('should throw an error since "data-clipboard-target" do not match any element', done => {
+        it('should throw an error since "target" do not match any element', done => {
             try {
                 new ClipboardAction({
-                    target: '#foo'
+                    target: document.querySelector('#foo')
                 });
             }
             catch(e) {
-                assert.equal(e.message, 'Invalid "data-clipboard-target" selector, use a value that matches an ID');
+                assert.equal(e.message, 'Invalid "target" value, use a valid Element');
                 done();
             }
         });
@@ -103,7 +103,7 @@ describe('ClipboardAction', () => {
         it('should select text from editable element', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
-                target: '#input'
+                target: document.querySelector('#input')
             });
 
             assert.equal(clip.selectedText, clip.target.value);
@@ -112,7 +112,7 @@ describe('ClipboardAction', () => {
         it('should select text from non-editable element', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
-                target: '#paragraph'
+                target: document.querySelector('#paragraph')
             });
 
             assert.equal(clip.selectedText, clip.target.textContent);
@@ -139,7 +139,7 @@ describe('ClipboardAction', () => {
 
             let clip = new ClipboardAction({
                 emitter: emitter,
-                target: '#input'
+                target: document.querySelector('#input')
             });
         });
 
@@ -154,7 +154,7 @@ describe('ClipboardAction', () => {
 
             let clip = new ClipboardAction({
                 emitter: emitter,
-                target: '#input'
+                target: document.querySelector('#input')
             });
         });
     });
@@ -163,7 +163,7 @@ describe('ClipboardAction', () => {
         it('should fire a success event with certain properties', done => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
-                target: '#input'
+                target: document.querySelector('#input')
             });
 
             clip.emitter.on('success', (e) => {
@@ -181,7 +181,7 @@ describe('ClipboardAction', () => {
         it('should fire a error event with certain properties', done => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
-                target: '#input'
+                target: document.querySelector('#input')
             });
 
             clip.emitter.on('error', (e) => {
@@ -200,7 +200,7 @@ describe('ClipboardAction', () => {
         it('should remove focus from target and text selection', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
-                target: '#input'
+                target: document.querySelector('#input')
             });
 
             clip.clearSelection();
