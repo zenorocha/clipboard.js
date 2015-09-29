@@ -101,6 +101,30 @@ Truth is, you don't even need another element to copy its content from. You can 
 </button>
 ```
 
+## Advanced Usage
+
+If you don't want to modify your HTML, there's a pretty handy imperative API for you to use. All you need to do is declare a function, do your thing, and return a value.
+
+For instance, if you want to dynamically set a `target`, you'll need to return a Node.
+
+```js
+new Clipboard('.btn', {
+    target: function(trigger) {
+        return trigger.nextElementSibling;
+    }
+});
+```
+
+If you want to dynamically set a `text`, you'll return a String.
+
+```js
+new Clipboard('.btn', {
+    text: function(trigger) {
+        return trigger.getAttribute('aria-label');
+    }
+});
+```
+
 ## Events
 
 There are cases where you'd like to show some user feedback or capture what has been selected after a copy/cut operation.
