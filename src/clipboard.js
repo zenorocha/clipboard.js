@@ -83,5 +83,3 @@ class Clipboard extends Emitter {
 }
 
 export default Clipboard;
-
-global.Clipboard = Clipboard;
