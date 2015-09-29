@@ -56,7 +56,7 @@ A pretty common use case is to copy content from another element. You can do tha
 
 The value you include on this attribute needs to match another's element selector.
 
-<a href="http://zenorocha.github.io/clipboard.js/#demo-target"><img width="473" alt="example-2" src="https://cloud.githubusercontent.com/assets/398893/9983467/a4946aaa-5fb1-11e5-9780-f09fcd7ca6c8.png"></a>
+<a href="http://zenorocha.github.io/clipboard.js/#example-target"><img width="473" alt="example-2" src="https://cloud.githubusercontent.com/assets/398893/9983467/a4946aaa-5fb1-11e5-9780-f09fcd7ca6c8.png"></a>
 
 ```html
 <!-- Target -->
@@ -74,7 +74,7 @@ Additionally, you can define a `data-clipboard-action` attribute to specify if y
 
 If you omit this attribute, `copy` will be used by default.
 
-<a href="http://zenorocha.github.io/clipboard.js/#demo-action"><img width="473" alt="example-3" src="https://cloud.githubusercontent.com/assets/398893/10000358/7df57b9c-6050-11e5-9cd1-fbc51d2fd0a7.png"></a>
+<a href="http://zenorocha.github.io/clipboard.js/#example-action"><img width="473" alt="example-3" src="https://cloud.githubusercontent.com/assets/398893/10000358/7df57b9c-6050-11e5-9cd1-fbc51d2fd0a7.png"></a>
 
 ```html
 <!-- Target -->
@@ -92,7 +92,7 @@ As you may expect, the `cut` action only works on `<input>` or `<textarea>` elem
 
 Truth is, you don't even need another element to copy its content from. You can just include a `data-clipboard-text` attribute in your trigger element.
 
-<a href="http://zenorocha.github.io/clipboard.js/#demo-text"><img width="147" alt="example-1" src="https://cloud.githubusercontent.com/assets/398893/10000347/6e16cf8c-6050-11e5-9883-1c5681f9ec45.png"></a>
+<a href="http://zenorocha.github.io/clipboard.js/#example-text"><img width="147" alt="example-1" src="https://cloud.githubusercontent.com/assets/398893/10000347/6e16cf8c-6050-11e5-9883-1c5681f9ec45.png"></a>
 
 ```html
 <!-- Trigger -->
