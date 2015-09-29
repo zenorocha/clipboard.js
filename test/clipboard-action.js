@@ -24,7 +24,7 @@ describe('ClipboardAction', () => {
             try {
                 new ClipboardAction({
                     text: 'foo',
-                    target: 'input'
+                    target: '#input'
                 });
             }
             catch(e) {
@@ -65,7 +65,7 @@ describe('ClipboardAction', () => {
         it('should throw an error since "data-clipboard-target" do not match any element', done => {
             try {
                 new ClipboardAction({
-                    target: 'foo'
+                    target: '#foo'
                 });
             }
             catch(e) {
@@ -103,7 +103,7 @@ describe('ClipboardAction', () => {
         it('should select text from editable element', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
-                target: 'input'
+                target: '#input'
             });
 
             assert.equal(clip.selectedText, clip.target.value);
@@ -112,7 +112,7 @@ describe('ClipboardAction', () => {
         it('should select text from non-editable element', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
-                target: 'paragraph'
+                target: '#paragraph'
             });
 
             assert.equal(clip.selectedText, clip.target.textContent);
@@ -139,7 +139,7 @@ describe('ClipboardAction', () => {
 
             let clip = new ClipboardAction({
                 emitter: emitter,
-                target: 'input'
+                target: '#input'
             });
         });
 
@@ -154,7 +154,7 @@ describe('ClipboardAction', () => {
 
             let clip = new ClipboardAction({
                 emitter: emitter,
-                target: 'input'
+                target: '#input'
             });
         });
     });
@@ -163,7 +163,7 @@ describe('ClipboardAction', () => {
         it('should fire a success event with certain properties', done => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
-                target: 'input'
+                target: '#input'
             });
 
             clip.emitter.on('success', (e) => {
@@ -181,7 +181,7 @@ describe('ClipboardAction', () => {
         it('should fire a error event with certain properties', done => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
-                target: 'input'
+                target: '#input'
             });
 
             clip.emitter.on('error', (e) => {
@@ -200,7 +200,7 @@ describe('ClipboardAction', () => {
         it('should remove focus from target and text selection', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
-                target: 'input'
+                target: '#input'
             });
 
             clip.clearSelection();

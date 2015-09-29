@@ -157,13 +157,13 @@ class ClipboardAction {
     }
 
     /**
-     * Sets the `target` property using the ID of an element
+     * Sets the `target` property using the selector of an element
      * that will be have its content copied.
      * @param {String} target
      */
     set target(target) {
         if (target) {
-            this._target = document.getElementById(target);
+            this._target = document.querySelector(target);
 
             if (!this._target) {
                 throw new Error('Invalid "data-clipboard-target" selector, use a value that matches an ID');
