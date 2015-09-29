@@ -27,8 +27,7 @@ class Clipboard extends Emitter {
      * or a custom function that was passed in the constructor.
      * @param {Object} options
      */
-    resolveOptions(options) {
-        options = options || {};
+    resolveOptions(options = {}) {
 
         this.action = (typeof options.action === 'function') ? options.action : this.setAction;
         this.target = (typeof options.target === 'function') ? options.target : this.setTarget;

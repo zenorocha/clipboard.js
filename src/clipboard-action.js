@@ -140,8 +140,8 @@ class ClipboardAction {
      * Sets the `action` to be performed which can be either 'copy' or 'cut'.
      * @param {String} action
      */
-    set action(action) {
-        this._action = action || 'copy';
+    set action(action = 'copy') {
+        this._action = action;
 
         if (this._action !== 'copy' && this._action !== 'cut') {
             throw new Error('Invalid "action" value, use either "copy" or "cut"');
