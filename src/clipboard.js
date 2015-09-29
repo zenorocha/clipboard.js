@@ -9,7 +9,6 @@ const prefix = 'data-clipboard-';
  * and instantiates a new `ClipboardAction` on each click.
  */
 class Clipboard extends Emitter {
-
     /**
      * Delegates a click event on the passed selector.
      * @param {String} selector
