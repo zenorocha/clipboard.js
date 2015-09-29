@@ -70,13 +70,13 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
         <h3>Copy text from another element</h3>
 
         <p>A pretty common use case is to copy content from another element. You can do that by adding a <code>data-clipboard-target</code> attribute in your trigger element.</p>
-        <p>The value you include on this attribute needs to match another's element <code>id</code> attribute.</p>
+        <p>The value you include on this attribute needs to match another's element selector.</p>
 
         <div id="example-target" class="example">
             <div class="input-group">
                 <input id="foo" type="text" value="https://github.com/zenorocha/clipboard.js.git">
                 <span class="input-group-button">
-                    <button class="btn" type="button" data-clipboard-target="foo">
+                    <button class="btn" type="button" data-clipboard-target="#foo">
                         <img class="clippy" src="assets/images/clippy.svg" width="13" alt="Copy to clipboard">
                     </button>
                 </span>
@@ -87,7 +87,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 &lt;input id="foo" value="https://github.com/zenorocha/clipboard.js.git"&gt;
 
 &lt;!-- Trigger --&gt;
-&lt;button class="btn" data-clipboard-target="foo"&gt;
+&lt;button class="btn" data-clipboard-target="#foo"&gt;
     &lt;img src="assets/clippy.svg" alt="Copy to clipboard"&gt;
 &lt;/button&gt;</code></pre>
 
@@ -101,7 +101,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
                 <textarea id="bar" cols="62" rows="5" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga.</textarea>
             </div>
             <div class="form-actions">
-                <button class="btn" type="button" data-clipboard-action="cut" data-clipboard-target="bar">
+                <button class="btn" type="button" data-clipboard-action="cut" data-clipboard-target="#bar">
                     Cut to clipboard
                 </button>
             </div>
@@ -111,7 +111,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 &lt;textarea id="bar"&gt;Mussum ipsum cacilds...&lt;/textarea&gt;
 
 &lt;!-- Trigger --&gt;
-&lt;button class="btn" data-clipboard-action="cut" data-clipboard-target="bar"&gt;
+&lt;button class="btn" data-clipboard-action="cut" data-clipboard-target="#bar"&gt;
     Cut to clipboard
 &lt;/button&gt;</code></pre>
 
