@@ -6,9 +6,14 @@
   "main": "dist/clipboard.js",
   "browser": "src/clipboard.js",
   "browserify": {
-    "transform": [["babelify", {
-        "loose": "all"
-    }]]
+    "transform": [
+      [
+        "babelify",
+        {
+          "loose": "all"
+        }
+      ]
+    ]
   },
   "license": "MIT",
   "keywords": [
@@ -29,6 +34,7 @@
     "karma-mocha": "^0.2.0",
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-sinon": "^1.0.4",
+    "mocha": "^2.3.3",
     "phantomjs-polyfill": "0.0.1",
     "uglify": "^0.1.5"
   },
@@ -36,6 +42,8 @@
     "publish": "npm run build && npm run minify",
     "build": "browserify src/clipboard.js -s Clipboard -o dist/clipboard.js",
     "minify": "uglify -s dist/clipboard.js -o dist/clipboard.min.js",
-    "test": "karma start --single-run"
+    "test": "npm run mocha | npm run karma",
+    "karma": "karma start --single-run",
+    "mocha": "mocha test/node.js"
   }
 }
