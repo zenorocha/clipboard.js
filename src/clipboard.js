@@ -18,10 +18,6 @@ class Clipboard extends Emitter {
     constructor(selector, options) {
         super();
 
-        if (!document.querySelectorAll(selector).length) {
-            throw new Error('No matches were found for the provided selector');
-        }
-
         this.resolveOptions(options);
 
         Delegate.bind(document.body, selector, 'click', (e) => this.initialize(e));
