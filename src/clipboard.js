@@ -28,14 +28,44 @@ class Clipboard extends Emitter {
     }
 
     /**
-     * Resolves contructor options.
+     * Defines if attributes would be resolved using an internal setter function
+     * or a custom function that was passed in the constructor.
      * @param {Object} options
      */
     resolveOptions(options) {
         options = options || {};
+
         this.action = (typeof options.action === 'function') ? options.action : this.setAction;
         this.target = (typeof options.target === 'function') ? options.target : this.setTarget;
-        this.text = (typeof options.text === 'function') ? options.text : this.setText;
+        this.text   = (typeof options.text   === 'function') ? options.text   : this.setText;
+    }
+
+    /**
+     * Sets the `action` lookup function.
+     * @param {Element} trigger
+     */
+    setAction(trigger) {
+        return trigger.getAttribute(prefix + 'action');
+    }
+
+    /**
+     * Sets the `target` lookup function.
+     * @param {Element} trigger
+     */
+    setTarget(trigger) {
+        let target = trigger.getAttribute(prefix + 'target');
+
+        if (target) {
+            return document.querySelector(target);
+        }
+    }
+
+    /**
+     * Sets the `text` lookup function.
+     * @param {Element} trigger
+     */
+    setText(trigger) {
+        return trigger.getAttribute(prefix + 'text');
     }
 
     /**
@@ -54,33 +84,6 @@ class Clipboard extends Emitter {
             trigger : e.delegateTarget,
             emitter : this
         });
-    }
-
-    /**
-     * Sets the `action` lookup function.
-     * @param {Element} trigger
-     */
-    setAction(trigger) {
-        return trigger.getAttribute(prefix + 'action');
-    }
-
-    /**
-     * Sets the `target` lookup function.
-     * @param {Element} trigger
-     */
-    setTarget(trigger) {
-        let target = trigger.getAttribute(prefix + 'target');
-        if (target) {
-            return document.querySelector(target);
-        }
-    }
-
-    /**
-     * Sets the `text` lookup function.
-     * @param {Element} trigger
-     */
-    setText(trigger) {
-        return trigger.getAttribute(prefix + 'text');
     }
 }
 
