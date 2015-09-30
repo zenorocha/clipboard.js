@@ -19,7 +19,7 @@ describe('ClipboardAction', () => {
         document.body.innerHTML = '';
     });
 
-    describe('#resolveOptions', () => {
+    describe('_resolveOptions', () => {
         it('should set base properties', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
@@ -35,7 +35,7 @@ describe('ClipboardAction', () => {
         });
     });
 
-    describe('#initSelection', () => {
+    describe('_initSelection', () => {
         it('should throw an error since both "text" and "target" were passed', done => {
             try {
                 new ClipboardAction({
@@ -113,7 +113,7 @@ describe('ClipboardAction', () => {
         });
     });
 
-    describe('#selectTarget', () => {
+    describe('_selectTarget', () => {
         it('should select text from editable element', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),

@@ -16,8 +16,8 @@ class Clipboard extends Emitter {
     constructor(selector, options) {
         super();
 
-        this.resolveOptions(options);
-        this.delegateClick(selector);
+        this._resolveOptions(options);
+        this._delegateClick(selector);
     }
 
     /**
@@ -25,17 +25,17 @@ class Clipboard extends Emitter {
      * or custom functions that were passed in the constructor.
      * @param {Object} options
      */
-    resolveOptions(options = {}) {
+    _resolveOptions(options = {}) {
         this.action = (typeof options.action === 'function') ? options.action : this.setAction;
         this.target = (typeof options.target === 'function') ? options.target : this.setTarget;
         this.text   = (typeof options.text   === 'function') ? options.text   : this.setText;
     }
 
     /**
-     * Delegates a click event on the passed selector.
+     * Delegates a click event to the passed selector.
      * @param {String} selector
      */
-    delegateClick(selector) {
+    _delegateClick(selector) {
         Delegate.bind(document.body, selector, 'click', (e) => this.initialize(e));
     }
 

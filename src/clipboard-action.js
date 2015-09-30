@@ -7,15 +7,15 @@ class ClipboardAction {
      * @param {Object} options
      */
     constructor(options) {
-        this.resolveOptions(options);
-        this.initSelection();
+        this._resolveOptions(options);
+        this._initSelection();
     }
 
     /**
      * Defines base properties passed from constructor.
      * @param {Object} options
      */
-    resolveOptions(options = {}) {
+    _resolveOptions(options = {}) {
         this.action  = options.action;
         this.emitter = options.emitter;
         this.target  = options.target;
@@ -29,7 +29,7 @@ class ClipboardAction {
      * Decides which selection strategy is going to be applied based
      * on the existence of `text` and `target` properties.
      */
-    initSelection() {
+    _initSelection() {
         if (this.text && this.target) {
             throw new Error('Multiple attributes declared, use either "target" or "text"');
         }
@@ -37,7 +37,7 @@ class ClipboardAction {
             this.selectFake();
         }
         else if (this.target) {
-            this.selectTarget();
+            this._selectTarget();
         }
         else {
             throw new Error('Missing required attributes, use either "target" or "text"');
@@ -63,7 +63,7 @@ class ClipboardAction {
         document.body.appendChild(this.fakeElem);
 
         this.fakeElem.select();
-        this.copyText();
+        this._copyText();
     }
 
     /**
@@ -85,7 +85,7 @@ class ClipboardAction {
     /**
      * Selects the content from element passed on `target` property.
      */
-    selectTarget() {
+    _selectTarget() {
         if (this.target.nodeName === 'INPUT' || this.target.nodeName === 'TEXTAREA') {
             this.target.select();
             this.selectedText = this.target.value;
@@ -99,13 +99,13 @@ class ClipboardAction {
             this.selectedText = selection.toString();
         }
 
-        this.copyText();
+        this._copyText();
     }
 
     /**
      * Executes the copy operation based on the current selection.
      */
-    copyText() {
+    _copyText() {
         let succeeded;
 
         try {
