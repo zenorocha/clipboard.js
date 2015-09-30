@@ -35,9 +35,7 @@ describe('ClipboardAction', () => {
 
         it('should throw an error since neither "text" nor "target" were passed', done => {
             try {
-                new ClipboardAction({
-                    action: undefined
-                });
+                new ClipboardAction();
             }
             catch(e) {
                 assert.equal(e.message, 'Missing required attributes, use either "target" or "text"');

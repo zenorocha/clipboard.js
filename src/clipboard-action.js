@@ -6,7 +6,7 @@ class ClipboardAction {
      * Initializes selection from either `text` or `target` property.
      * @param {Object} options
      */
-    constructor(options) {
+    constructor(options = {}) {
         this.action  = options.action;
         this.emitter = options.emitter;
         this.target  = options.target;
