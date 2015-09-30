@@ -10,7 +10,7 @@ module.exports = function(karma) {
             './node_modules/phantomjs-polyfill/bind-polyfill.js'
         ],
 
-        exclude: ['test/node.js'],
+        exclude: ['test/module-systems.js'],
 
         preprocessors: {
             'src/**/*.js' : ['browserify'],

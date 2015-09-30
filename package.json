@@ -7,12 +7,7 @@
   "browser": "src/clipboard.js",
   "browserify": {
     "transform": [
-      [
-        "babelify",
-        {
-          "loose": "all"
-        }
-      ]
+      ["babelify", { "loose": "all" }]
     ]
   },
   "license": "MIT",
