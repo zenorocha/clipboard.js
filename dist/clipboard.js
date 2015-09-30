@@ -207,7 +207,8 @@ module.exports = E;
 
 },{}],6:[function(require,module,exports){
 /**
- * Inner class which performs selection and copy operations.
+ * Inner class which performs selection from either `text` or `target`
+ * properties and then executes copy or cut operations.
  */
 'use strict';
 
@@ -219,12 +220,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var ClipboardAction = (function () {
     /**
-     * Initializes selection from either `text` or `target` property.
      * @param {Object} options
      */
 
     function ClipboardAction(options) {
         _classCallCheck(this, ClipboardAction);
+
+        this.resolveOptions(options);
+        this.initSelection();
+    }
+
+    /**
+     * Defines base properties passed from constructor.
+     * @param {Object} options
+     */
+
+    ClipboardAction.prototype.resolveOptions = function resolveOptions() {
+        var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
         this.action = options.action;
         this.emitter = options.emitter;
@@ -233,7 +245,14 @@ var ClipboardAction = (function () {
         this.trigger = options.trigger;
 
         this.selectedText = '';
+    };
 
+    /**
+     * Decides which selection strategy is going to be applied based
+     * on the existence of `text` and `target` properties.
+     */
+
+    ClipboardAction.prototype.initSelection = function initSelection() {
         if (this.text && this.target) {
             throw new Error('Multiple attributes declared, use either "target" or "text"');
         } else if (this.text) {
@@ -243,7 +262,7 @@ var ClipboardAction = (function () {
         } else {
             throw new Error('Missing required attributes, use either "target" or "text"');
         }
-    }
+    };
 
     /**
      * Creates a fake input element, sets its value from `text` property,
@@ -366,8 +385,10 @@ var ClipboardAction = (function () {
 
     _createClass(ClipboardAction, [{
         key: 'action',
-        set: function set(action) {
-            this._action = action || 'copy';
+        set: function set() {
+            var action = arguments.length <= 0 || arguments[0] === undefined ? 'copy' : arguments[0];
+
+            this._action = action;
 
             if (this._action !== 'copy' && this._action !== 'cut') {
                 throw new Error('Invalid "action" value, use either "copy" or "cut"');
@@ -383,8 +404,8 @@ var ClipboardAction = (function () {
         }
 
         /**
-         * Sets the `target` property using an element that will be have its content
-         * copied.
+         * Sets the `target` property using an element
+         * that will be have its content copied.
          * @param {Element} target
          */
     }, {
@@ -448,33 +469,27 @@ var Clipboard = (function (_Emitter) {
     _inherits(Clipboard, _Emitter);
 
     /**
-     * Delegates a click event on the passed selector.
      * @param {String} selector
      * @param {Object} options
      */
 
     function Clipboard(selector, options) {
-        var _this = this;
-
         _classCallCheck(this, Clipboard);
 
         _Emitter.call(this);
 
         this.resolveOptions(options);
-
-        _delegateEvents2['default'].bind(document.body, selector, 'click', function (e) {
-            return _this.initialize(e);
-        });
+        this.delegateClick(selector);
     }
 
     /**
-     * Defines if attributes would be resolved using an internal setter function
-     * or a custom function that was passed in the constructor.
+     * Defines if attributes would be resolved using internal setter functions
+     * or custom functions that were passed in the constructor.
      * @param {Object} options
      */
 
-    Clipboard.prototype.resolveOptions = function resolveOptions(options) {
-        options = options || {};
+    Clipboard.prototype.resolveOptions = function resolveOptions() {
+        var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
         this.action = typeof options.action === 'function' ? options.action : this.setAction;
         this.target = typeof options.target === 'function' ? options.target : this.setTarget;
@@ -482,34 +497,16 @@ var Clipboard = (function (_Emitter) {
     };
 
     /**
-     * Sets the `action` lookup function.
-     * @param {Element} trigger
+     * Delegates a click event on the passed selector.
+     * @param {String} selector
      */
 
-    Clipboard.prototype.setAction = function setAction(trigger) {
-        return trigger.getAttribute(prefix + 'action');
-    };
+    Clipboard.prototype.delegateClick = function delegateClick(selector) {
+        var _this = this;
 
-    /**
-     * Sets the `target` lookup function.
-     * @param {Element} trigger
-     */
-
-    Clipboard.prototype.setTarget = function setTarget(trigger) {
-        var target = trigger.getAttribute(prefix + 'target');
-
-        if (target) {
-            return document.querySelector(target);
-        }
-    };
-
-    /**
-     * Sets the `text` lookup function.
-     * @param {Element} trigger
-     */
-
-    Clipboard.prototype.setText = function setText(trigger) {
-        return trigger.getAttribute(prefix + 'text');
+        _delegateEvents2['default'].bind(document.body, selector, 'click', function (e) {
+            return _this.initialize(e);
+        });
     };
 
     /**
@@ -529,6 +526,46 @@ var Clipboard = (function (_Emitter) {
             trigger: e.delegateTarget,
             emitter: this
         });
+    };
+
+    /**
+     * Sets the `action` lookup function.
+     * @param {Element} trigger
+     */
+
+    Clipboard.prototype.setAction = function setAction(trigger) {
+        if (!trigger.hasAttribute(prefix + 'action')) {
+            return;
+        }
+
+        return trigger.getAttribute(prefix + 'action');
+    };
+
+    /**
+     * Sets the `target` lookup function.
+     * @param {Element} trigger
+     */
+
+    Clipboard.prototype.setTarget = function setTarget(trigger) {
+        if (!trigger.hasAttribute(prefix + 'target')) {
+            return;
+        }
+
+        var target = trigger.getAttribute(prefix + 'target');
+        return document.querySelector(target);
+    };
+
+    /**
+     * Sets the `text` lookup function.
+     * @param {Element} trigger
+     */
+
+    Clipboard.prototype.setText = function setText(trigger) {
+        if (!trigger.hasAttribute(prefix + 'text')) {
+            return;
+        }
+
+        return trigger.getAttribute(prefix + 'text');
     };
 
     return Clipboard;
