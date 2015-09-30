@@ -1,12 +1,21 @@
 /**
- * Inner class which performs selection and copy operations.
+ * Inner class which performs selection from either `text` or `target`
+ * properties and then executes copy or cut operations.
  */
 class ClipboardAction {
     /**
-     * Initializes selection from either `text` or `target` property.
      * @param {Object} options
      */
-    constructor(options = {}) {
+    constructor(options) {
+        this.resolveOptions(options);
+        this.initSelection();
+    }
+
+    /**
+     * Defines base properties passed from constructor.
+     * @param {Object} options
+     */
+    resolveOptions(options = {}) {
         this.action  = options.action;
         this.emitter = options.emitter;
         this.target  = options.target;
@@ -14,7 +23,13 @@ class ClipboardAction {
         this.trigger = options.trigger;
 
         this.selectedText = '';
+    }
 
+    /**
+     * Decides which selection strategy is going to be applied based
+     * on the existence of `text` and `target` properties.
+     */
+    initSelection() {
         if (this.text && this.target) {
             throw new Error('Multiple attributes declared, use either "target" or "text"');
         }
@@ -157,8 +172,8 @@ class ClipboardAction {
     }
 
     /**
-     * Sets the `target` property using an element that will be have its content
-     * copied.
+     * Sets the `target` property using an element
+     * that will be have its content copied.
      * @param {Element} target
      */
     set target(target) {

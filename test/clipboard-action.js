@@ -19,7 +19,23 @@ describe('ClipboardAction', () => {
         document.body.innerHTML = '';
     });
 
-    describe('#constructor', () => {
+    describe('#resolveOptions', () => {
+        it('should set base properties', () => {
+            let clip = new ClipboardAction({
+                emitter: new Emitter(),
+                text: 'foo'
+            });
+
+            assert.property(clip, 'action');
+            assert.property(clip, 'emitter');
+            assert.property(clip, 'target');
+            assert.property(clip, 'text');
+            assert.property(clip, 'trigger');
+            assert.property(clip, 'selectedText');
+        });
+    });
+
+    describe('#initSelection', () => {
         it('should throw an error since both "text" and "target" were passed', done => {
             try {
                 new ClipboardAction({

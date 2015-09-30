@@ -1,5 +1,6 @@
 import Clipboard from '../src/clipboard';
 import ClipboardAction from '../src/clipboard-action';
+import Delegate from 'delegate-events';
 
 describe('Clipboard', () => {
     before(() => {
@@ -18,28 +19,53 @@ describe('Clipboard', () => {
     });
 
     describe('#resolveOptions', function() {
+        before(() => {
+            global.fn = function() {};
+        });
+
         it('should set action as a function', () => {
-            var fn = function() {};
-            var clipboard = new Clipboard('.btn', {
-                action: fn
+            let clipboard = new Clipboard('.btn', {
+                action: global.fn
             });
-            assert.equal(fn, clipboard.action);
+
+            assert.equal(global.fn, clipboard.action);
         });
 
         it('should set target as a function', () => {
-            var fn = function() {};
-            var clipboard = new Clipboard('.btn', {
-                target: fn
+            let clipboard = new Clipboard('.btn', {
+                target: global.fn
             });
-            assert.equal(fn, clipboard.target);
+
+            assert.equal(global.fn, clipboard.target);
         });
 
         it('should set text as a function', () => {
-            var fn = function() {};
-            var clipboard = new Clipboard('.btn', {
-                text: fn
+            let clipboard = new Clipboard('.btn', {
+                text: global.fn
             });
-            assert.equal(fn, clipboard.text);
+
+            assert.equal(global.fn, clipboard.text);
+        });
+    });
+
+    describe('#delegateClick', function() {
+        before(() => {
+            global.spy = sinon.spy(Delegate, 'bind');
+        });
+
+        after(() => {
+            global.spy.restore();
+        });
+
+        it('should delegate a click event to the passed selector', () => {
+            let element = document.body;
+            let selector = '.btn'
+            let event = 'click';
+
+            let clipboard = new Clipboard(selector);
+
+            assert.ok(global.spy.calledOnce);
+            assert.ok(global.spy.calledWith(element, selector, event));
         });
     });
 

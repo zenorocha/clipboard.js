@@ -10,7 +10,6 @@ const prefix = 'data-clipboard-';
  */
 class Clipboard extends Emitter {
     /**
-     * Delegates a click event on the passed selector.
      * @param {String} selector
      * @param {Object} options
      */
@@ -18,19 +17,44 @@ class Clipboard extends Emitter {
         super();
 
         this.resolveOptions(options);
-
-        Delegate.bind(document.body, selector, 'click', (e) => this.initialize(e));
+        this.delegateClick(selector);
     }
 
     /**
-     * Defines if attributes would be resolved using an internal setter function
-     * or a custom function that was passed in the constructor.
+     * Defines if attributes would be resolved using internal setter functions
+     * or custom functions that were passed in the constructor.
      * @param {Object} options
      */
     resolveOptions(options = {}) {
         this.action = (typeof options.action === 'function') ? options.action : this.setAction;
         this.target = (typeof options.target === 'function') ? options.target : this.setTarget;
         this.text   = (typeof options.text   === 'function') ? options.text   : this.setText;
+    }
+
+    /**
+     * Delegates a click event on the passed selector.
+     * @param {String} selector
+     */
+    delegateClick(selector) {
+        Delegate.bind(document.body, selector, 'click', (e) => this.initialize(e));
+    }
+
+    /**
+     * Defines a new `ClipboardAction` on each click event.
+     * @param {Event} e
+     */
+    initialize(e) {
+        if (this.clipboardAction) {
+            this.clipboardAction = null;
+        }
+
+        this.clipboardAction = new ClipboardAction({
+            action  : this.action(e.delegateTarget),
+            target  : this.target(e.delegateTarget),
+            text    : this.text(e.delegateTarget),
+            trigger : e.delegateTarget,
+            emitter : this
+        });
     }
 
     /**
@@ -68,24 +92,6 @@ class Clipboard extends Emitter {
         }
 
         return trigger.getAttribute(prefix + 'text');
-    }
-
-    /**
-     * Defines a new `ClipboardAction` on each click event.
-     * @param {Event} e
-     */
-    initialize(e) {
-        if (this.clipboardAction) {
-            this.clipboardAction = null;
-        }
-
-        this.clipboardAction = new ClipboardAction({
-            action  : this.action(e.delegateTarget),
-            target  : this.target(e.delegateTarget),
-            text    : this.text(e.delegateTarget),
-            trigger : e.delegateTarget,
-            emitter : this
-        });
     }
 }
 
