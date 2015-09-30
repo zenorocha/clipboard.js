@@ -1,5 +1,6 @@
 import ClipboardAction from './clipboard-action';
 import Delegate from 'delegate-events';
+import event from 'component-event';
 import Emitter from 'tiny-emitter';
 
 /**
@@ -15,7 +16,13 @@ class Clipboard extends Emitter {
         super();
 
         this.resolveOptions(options);
-        this.delegateClick(selector);
+        if (typeof selector === 'string') {
+            this.delegateClickToSelector(selector);
+        } else if (selector !== null && typeof selector === 'object') {
+            this.delegateClickToElement(selector);
+        } else {
+            throw new Error('`selector` should be a CSS selector string or elements itself.');
+        }
     }
 
     /**
@@ -33,7 +40,7 @@ class Clipboard extends Emitter {
      * Delegates a click event on the passed selector.
      * @param {String} selector
      */
-    delegateClick(selector) {
+    delegateClickToSelector(selector) {
         this.binding = Delegate.bind(document.body, selector, 'click', (e) => this.onClick(e));
     }
 
@@ -43,6 +50,19 @@ class Clipboard extends Emitter {
      */
     undelegateClick() {
         Delegate.unbind(document.body, 'click', this.binding);
+    }
+
+    /**
+     * Delegates a click event on the passed element.
+     * @param {Object} element
+     */
+    delegateClickToElement(element) {
+        event.bind(document.body, 'click', (e) => {
+            e.delegateTarget = element;
+            if (e.delegateTarget) {
+                (e) => this.onClick(e);
+            }
+        });
     }
 
     /**

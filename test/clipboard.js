@@ -1,6 +1,7 @@
 import Clipboard from '../src/clipboard';
 import ClipboardAction from '../src/clipboard-action';
 import Delegate from 'delegate-events';
+import Event from 'component-event';
 
 describe('Clipboard', () => {
     before(() => {
@@ -48,7 +49,7 @@ describe('Clipboard', () => {
         });
     });
 
-    describe('#delegateClick', function() {
+    describe('#delegateClickToSelector', function() {
         before(() => {
             global.spy = sinon.spy(Delegate, 'bind');
         });
@@ -84,6 +85,26 @@ describe('Clipboard', () => {
 
             let clipboard = new Clipboard('.btn');
             clipboard.undelegateClick();
+
+            assert.ok(global.spy.calledOnce);
+            assert.ok(global.spy.calledWith(element, event));
+        });
+    });
+
+    describe('#delegateClickToElement', function() {
+        before(() => {
+            global.spy = sinon.spy(Event, 'bind');
+        });
+
+        after(() => {
+            global.spy.restore();
+        });
+
+        it('should delegate a click event to the passed element', () => {
+            let element = document.body;
+            let event = 'click';
+
+            let clipboard = new Clipboard(global.button);
 
             assert.ok(global.spy.calledOnce);
             assert.ok(global.spy.calledWith(element, event));
