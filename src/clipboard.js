@@ -15,6 +15,7 @@ class Clipboard extends Emitter {
      */
     constructor(selector, options) {
         super();
+        this.initialize = this.initialize.bind(this); // pre-bind for consistent reference on remove
 
         this.resolveOptions(options);
         this.delegateClick(selector);
@@ -59,7 +60,7 @@ class Clipboard extends Emitter {
      * Defines a new `ClipboardAction` on each click event.
      * @param {Event} e
      */
-    initialize = (e) => {
+    initialize(e) {
         if (this.clipboardAction) {
             this.clipboardAction = null;
         }
