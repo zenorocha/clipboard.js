@@ -265,7 +265,7 @@ var ClipboardAction = (function () {
     };
 
     /**
-     * Creates a fake input element, sets its value from `text` property,
+     * Creates a fake textarea element, sets its value from `text` property,
      * and makes a selection on it.
      */
 
