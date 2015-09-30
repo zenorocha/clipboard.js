@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example</title>
+    <style>
+        .copy {
+            display: inline-block;
+            padding: 2px 5px;
+
+            font: inherit;
+
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.1);
+            cursor: default;
+        }
+
+        button.copy {
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+
+        #span, #input {
+            display: inline-block;
+            width: 100px;
+            padding: 2px 5px;
+            margin-right: 10px;
+
+            font: inherit;
+
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+<body>
+<input type="text" id="input" value="input">
+
+<span class="copy" data-clipboard-action="copy" data-clipboard-target="#input">
+    &lt;span&gt;
+</span>
+<button class="copy" data-clipboard-action="copy" data-clipboard-target="#input">
+    &lt;button&gt;
+</button>
+
+<br>
+<br>
+
+<span id="span">span</span>
+
+<span class="copy" data-clipboard-action="copy" data-clipboard-target="#span">
+    &lt;span&gt;
+</span>
+<button class="copy" data-clipboard-action="copy" data-clipboard-target="#span">
+    &lt;button&gt;
+</button>
+
+<br><br>
+
+<textarea cols="30" rows="10" placeholder="Paste here"></textarea>
+
+
+<script src="../dist/clipboard.js"></script>
+<script>
+    new Clipboard('.copy');
+</script>
+</body>
+</html>
