@@ -148,12 +148,12 @@ function E () {
 E.prototype = {
 	on: function (name, callback, ctx) {
     var e = this.e || (this.e = {});
-    
+
     (e[name] || (e[name] = [])).push({
       fn: callback,
       ctx: ctx
     });
-    
+
     return this;
   },
 
@@ -163,7 +163,7 @@ E.prototype = {
       self.off(name, fn);
       callback.apply(ctx, arguments);
     };
-    
+
     return this.on(name, fn, ctx);
   },
 
@@ -172,11 +172,11 @@ E.prototype = {
     var evtArr = ((this.e || (this.e = {}))[name] || []).slice();
     var i = 0;
     var len = evtArr.length;
-    
+
     for (i; i < len; i++) {
       evtArr[i].fn.apply(evtArr[i].ctx, data);
     }
-    
+
     return this;
   },
 
@@ -184,21 +184,21 @@ E.prototype = {
     var e = this.e || (this.e = {});
     var evts = e[name];
     var liveEvents = [];
-    
+
     if (evts && callback) {
       for (var i = 0, len = evts.length; i < len; i++) {
         if (evts[i].fn !== callback) liveEvents.push(evts[i]);
       }
     }
-    
+
     // Remove event from queue to prevent memory leak
     // Suggested by https://github.com/lazd
     // Ref: https://github.com/scottcorgan/tiny-emitter/commit/c6ebfaa9bc973b33d110a84a307742b7cf94c953#commitcomment-5024910
 
-    (liveEvents.length) 
+    (liveEvents.length)
       ? e[name] = liveEvents
       : delete e[name];
-    
+
     return this;
   }
 };
@@ -265,7 +265,7 @@ var ClipboardAction = (function () {
     };
 
     /**
-     * Creates a fake input element, sets its value from `text` property,
+     * Creates a fake textarea element, sets its value from `text` property,
      * and makes a selection on it.
      */
 
@@ -278,7 +278,7 @@ var ClipboardAction = (function () {
             return _this.removeFake();
         });
 
-        this.fakeElem = document.createElement('input');
+        this.fakeElem = document.createElement('textarea');
         this.fakeElem.style.position = 'absolute';
         this.fakeElem.style.left = '-9999px';
         this.fakeElem.setAttribute('readonly', '');

@@ -45,7 +45,7 @@ class ClipboardAction {
     }
 
     /**
-     * Creates a fake input element, sets its value from `text` property,
+     * Creates a fake textarea element, sets its value from `text` property,
      * and makes a selection on it.
      */
     selectFake() {
@@ -53,7 +53,7 @@ class ClipboardAction {
 
         this.fakeHandler = document.body.addEventListener('click', () => this.removeFake());
 
-        this.fakeElem = document.createElement('input');
+        this.fakeElem = document.createElement('textarea');
         this.fakeElem.style.position = 'absolute';
         this.fakeElem.style.left = '-9999px';
         this.fakeElem.setAttribute('readonly', '');
