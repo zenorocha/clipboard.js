@@ -18,7 +18,8 @@
   ],
   "dependencies": {
     "delegate-events": "^1.1.1",
-    "tiny-emitter": "^1.0.0"
+    "tiny-emitter": "^1.0.0",
+    "component-event": "^0.1.4"
   },
   "devDependencies": {
     "babelify": "^6.3.0",
