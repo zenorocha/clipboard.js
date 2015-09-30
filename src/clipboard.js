@@ -28,7 +28,6 @@ class Clipboard extends Emitter {
      * @param {Object} options
      */
     resolveOptions(options = {}) {
-
         this.action = (typeof options.action === 'function') ? options.action : this.setAction;
         this.target = (typeof options.target === 'function') ? options.target : this.setTarget;
         this.text   = (typeof options.text   === 'function') ? options.text   : this.setText;
@@ -39,8 +38,11 @@ class Clipboard extends Emitter {
      * @param {Element} trigger
      */
     setAction(trigger) {
-        var action = trigger.getAttribute(prefix + 'action');
-        return action === null ? undefined : action;
+        if (!trigger.hasAttribute(prefix + 'action')) {
+            return;
+        }
+
+        return trigger.getAttribute(prefix + 'action');
     }
 
     /**
@@ -48,11 +50,12 @@ class Clipboard extends Emitter {
      * @param {Element} trigger
      */
     setTarget(trigger) {
-        let target = trigger.getAttribute(prefix + 'target');
-
-        if (target) {
-            return document.querySelector(target);
+        if (!trigger.hasAttribute(prefix + 'target')) {
+            return;
         }
+
+        let target = trigger.getAttribute(prefix + 'target');
+        return document.querySelector(target);
     }
 
     /**
@@ -60,6 +63,10 @@ class Clipboard extends Emitter {
      * @param {Element} trigger
      */
     setText(trigger) {
+        if (!trigger.hasAttribute(prefix + 'text')) {
+            return;
+        }
+
         return trigger.getAttribute(prefix + 'text');
     }
 
