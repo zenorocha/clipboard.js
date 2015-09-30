@@ -34,11 +34,11 @@
     "uglify": "^0.1.5"
   },
   "scripts": {
-    "publish": "npm run build && npm run minify",
-    "build": "browserify src/clipboard.js -s Clipboard -o dist/clipboard.js",
-    "minify": "uglify -s dist/clipboard.js -o dist/clipboard.min.js",
-    "test": "npm run mocha | npm run karma",
-    "karma": "karma start --single-run",
-    "mocha": "mocha test/node.js"
+    "build": "npm run build-debug && npm run build-min",
+    "build-debug": "browserify src/clipboard.js -s Clipboard -o dist/clipboard.js",
+    "build-min": "uglify -s dist/clipboard.js -o dist/clipboard.min.js",
+    "test": "npm run test-browser && npm run test-server",
+    "test-browser": "karma start --single-run",
+    "test-server": "mocha test/module-systems.js"
   }
 }
