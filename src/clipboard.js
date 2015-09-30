@@ -21,6 +21,14 @@ class Clipboard extends Emitter {
     }
 
     /**
+     * @param {String} selector
+     * @param {Object} options
+     */
+    destroy() {
+        this.undelegateClick();
+    }
+
+    /**
      * Defines if attributes would be resolved using internal setter functions
      * or custom functions that were passed in the constructor.
      * @param {Object} options
@@ -36,14 +44,22 @@ class Clipboard extends Emitter {
      * @param {String} selector
      */
     delegateClick(selector) {
-        Delegate.bind(document.body, selector, 'click', (e) => this.initialize(e));
+        Delegate.bind(document.body, selector, 'click', this.initialize);
+    }
+
+    /**
+     * Undelegates a click event on the passed selector.
+     * @param {String} selector
+     */
+    undelegateClick() {
+        Delegate.unbind(document.body, 'click', this.initialize);
     }
 
     /**
      * Defines a new `ClipboardAction` on each click event.
      * @param {Event} e
      */
-    initialize(e) {
+    initialize = (e) => {
         if (this.clipboardAction) {
             this.clipboardAction = null;
         }
