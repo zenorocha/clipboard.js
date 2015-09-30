@@ -39,7 +39,8 @@ class Clipboard extends Emitter {
      * @param {Element} trigger
      */
     setAction(trigger) {
-        return trigger.getAttribute(prefix + 'action');
+        var action = trigger.getAttribute(prefix + 'action');
+        return action === null ? undefined : action;
     }
 
     /**
