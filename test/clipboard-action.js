@@ -1,4 +1,3 @@
-import Clipboard from '../src/clipboard-action';
 import ClipboardAction from '../src/clipboard-action';
 import Emitter from 'tiny-emitter';
 
@@ -145,7 +144,7 @@ describe('ClipboardAction', () => {
         it('should fire a success event on browsers that support copy command', done => {
             global.stub.returns(true);
 
-            let emitter = new Emitter()
+            let emitter = new Emitter();
 
             emitter.on('success', () => {
                 done();
@@ -160,7 +159,7 @@ describe('ClipboardAction', () => {
         it('should fire an error event on browsers that support copy command', done => {
             global.stub.returns(false);
 
-            let emitter = new Emitter()
+            let emitter = new Emitter();
 
             emitter.on('error', () => {
                 done();
