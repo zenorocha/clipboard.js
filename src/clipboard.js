@@ -62,11 +62,12 @@ class Clipboard extends Emitter {
      * @param {Element} trigger
      */
     setAction(trigger) {
-        if (!trigger.hasAttribute(prefix + 'action')) {
+        let attr = `${prefix}action`;
+        if (!trigger.hasAttribute(attr)) {
             return;
         }
 
-        return trigger.getAttribute(prefix + 'action');
+        return trigger.getAttribute(attr);
     }
 
     /**
@@ -74,11 +75,12 @@ class Clipboard extends Emitter {
      * @param {Element} trigger
      */
     setTarget(trigger) {
-        if (!trigger.hasAttribute(prefix + 'target')) {
+        let attr = `${prefix}target`;
+        if (!trigger.hasAttribute(attr)) {
             return;
         }
 
-        let target = trigger.getAttribute(prefix + 'target');
+        let target = trigger.getAttribute(attr);
         return document.querySelector(target);
     }
 
@@ -87,11 +89,12 @@ class Clipboard extends Emitter {
      * @param {Element} trigger
      */
     setText(trigger) {
-        if (!trigger.hasAttribute(prefix + 'text')) {
+        let attr = `${prefix}text`;
+        if (!trigger.hasAttribute(attr)) {
             return;
         }
 
-        return trigger.getAttribute(prefix + 'text');
+        return trigger.getAttribute(attr);
     }
 }
 
