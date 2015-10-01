@@ -59,7 +59,7 @@ describe('Clipboard', () => {
 
         it('should delegate a click event to the passed selector', () => {
             let element = document.body;
-            let selector = '.btn'
+            let selector = '.btn';
             let event = 'click';
 
             let clipboard = new Clipboard(selector);
