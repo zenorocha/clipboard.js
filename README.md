@@ -30,10 +30,16 @@ If you're not into package management, just [download a ZIP](https://github.com/
 
 ## Setup
 
-First, include the script located on the `dist` folder
+First, include the script located on the `dist` folder.
 
 ```html
 <script src="dist/clipboard.min.js"></script>
+```
+
+Or load it from a CDN.
+
+```html
+<script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
 ```
 
 Now, you need to instantiate it using a DOM selector. This selector corresponds to the trigger element(s), for example `<button class="btn">`.
