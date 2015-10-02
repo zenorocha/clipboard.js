@@ -5,6 +5,21 @@ import Emitter from 'tiny-emitter';
 const prefix = 'data-clipboard-';
 
 /**
+ * Helper function to retrieve attribute value.
+ * @param {String} suffix
+ * @param {Element} element
+ */
+var getAttributeValue = (suffix, element) => {
+    let attribute = prefix + suffix;
+
+    if (!element.hasAttribute(attribute)) {
+        return;
+    }
+
+    return element.getAttribute(attribute);
+};
+
+/**
  * Base class which takes a selector, delegates a click event to it,
  * and instantiates a new `ClipboardAction` on each click.
  */
@@ -58,40 +73,31 @@ class Clipboard extends Emitter {
     }
 
     /**
-     * Sets the `action` lookup function.
+     * Default `action` lookup function.
      * @param {Element} trigger
      */
     setAction(trigger) {
-        if (!trigger.hasAttribute(prefix + 'action')) {
-            return;
-        }
-
-        return trigger.getAttribute(prefix + 'action');
+        return getAttributeValue('action', trigger);
     }
 
     /**
-     * Sets the `target` lookup function.
+     * Default `target` lookup function.
      * @param {Element} trigger
      */
     setTarget(trigger) {
-        if (!trigger.hasAttribute(prefix + 'target')) {
-            return;
-        }
+        let selector = getAttributeValue('target', trigger);
 
-        let target = trigger.getAttribute(prefix + 'target');
-        return document.querySelector(target);
+        if ('string' === typeof selector) {
+            return document.querySelector(selector);
+        }
     }
 
     /**
-     * Sets the `text` lookup function.
+     * Defualt `text` lookup function.
      * @param {Element} trigger
      */
     setText(trigger) {
-        if (!trigger.hasAttribute(prefix + 'text')) {
-            return;
-        }
-
-        return trigger.getAttribute(prefix + 'text');
+        return getAttributeValue('text', trigger);
     }
 }
 
