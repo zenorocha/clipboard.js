@@ -9,7 +9,7 @@ const prefix = 'data-clipboard-';
  * @param {String} suffix
  * @param {Element} element
  */
-var getAttributeValue = (suffix, element) => {
+function getAttributeValue(suffix, element) {
     let attribute = prefix + suffix;
 
     if (!element.hasAttribute(attribute)) {
@@ -17,7 +17,7 @@ var getAttributeValue = (suffix, element) => {
     }
 
     return element.getAttribute(attribute);
-};
+}
 
 /**
  * Base class which takes a selector, delegates a click event to it,
