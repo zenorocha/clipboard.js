@@ -144,7 +144,11 @@ class ClipboardAction {
     /**
      * Removes current selection and focus from `target` element.
      */
-    clearSelection() {
+    clearSelection(force = false) {
+        if (!force && navigator.userAgent.indexOf('Mobile') > -1) {
+          return;
+        }
+
         if (this.target) {
             this.target.blur();
         }
