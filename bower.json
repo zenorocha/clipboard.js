@@ -4,6 +4,14 @@
   "description": "Modern copy to clipboard. No Flash. Just 2kb",
   "license": "MIT",
   "main": "dist/clipboard.js",
+  "ignore": [
+    "/.*/",
+    "/example/",
+    "/test/",
+    "/.*",
+    "/bower.json",
+    "/karma.conf.js"
+  ],
   "keywords": [
     "clipboard",
     "copy",
