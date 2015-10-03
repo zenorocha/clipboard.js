@@ -2,23 +2,6 @@ import ClipboardAction from './clipboard-action';
 import Delegate from 'delegate-events';
 import Emitter from 'tiny-emitter';
 
-const prefix = 'data-clipboard-';
-
-/**
- * Helper function to retrieve attribute value.
- * @param {String} suffix
- * @param {Element} element
- */
-function getAttributeValue(suffix, element) {
-    let attribute = prefix + suffix;
-
-    if (!element.hasAttribute(attribute)) {
-        return;
-    }
-
-    return element.getAttribute(attribute);
-}
-
 /**
  * Base class which takes a selector, delegates a click event to it,
  * and instantiates a new `ClipboardAction` on each click.
@@ -41,9 +24,9 @@ class Clipboard extends Emitter {
      * @param {Object} options
      */
     resolveOptions(options = {}) {
-        this.action = (typeof options.action === 'function') ? options.action : this.setAction;
-        this.target = (typeof options.target === 'function') ? options.target : this.setTarget;
-        this.text   = (typeof options.text   === 'function') ? options.text   : this.setText;
+        this.action = (typeof options.action === 'function') ? options.action : this.defaultAction;
+        this.target = (typeof options.target === 'function') ? options.target : this.defaultTarget;
+        this.text   = (typeof options.text   === 'function') ? options.text   : this.defaultText;
     }
 
     /**
@@ -76,7 +59,7 @@ class Clipboard extends Emitter {
      * Default `action` lookup function.
      * @param {Element} trigger
      */
-    setAction(trigger) {
+    defaultAction(trigger) {
         return getAttributeValue('action', trigger);
     }
 
@@ -84,21 +67,37 @@ class Clipboard extends Emitter {
      * Default `target` lookup function.
      * @param {Element} trigger
      */
-    setTarget(trigger) {
+    defaultTarget(trigger) {
         let selector = getAttributeValue('target', trigger);
 
-        if ('string' === typeof selector) {
+        if (selector) {
             return document.querySelector(selector);
         }
     }
 
     /**
-     * Defualt `text` lookup function.
+     * Default `text` lookup function.
      * @param {Element} trigger
      */
-    setText(trigger) {
+    defaultText(trigger) {
         return getAttributeValue('text', trigger);
     }
+}
+
+
+/**
+ * Helper function to retrieve attribute value.
+ * @param {String} suffix
+ * @param {Element} element
+ */
+function getAttributeValue(suffix, element) {
+    let attribute = `data-clipboard-${suffix}`;
+
+    if (!element.hasAttribute(attribute)) {
+        return;
+    }
+
+    return element.getAttribute(attribute);
 }
 
 export default Clipboard;
