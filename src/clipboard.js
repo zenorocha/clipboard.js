@@ -15,9 +15,18 @@ class Clipboard extends Emitter {
      */
     constructor(selector, options) {
         super();
+        this.initialize = this.initialize.bind(this); // pre-bind for consistent reference on remove
 
         this.resolveOptions(options);
         this.delegateClick(selector);
+    }
+
+    /**
+     * @param {String} selector
+     * @param {Object} options
+     */
+    destroy() {
+        this.undelegateClick();
     }
 
     /**
@@ -36,7 +45,15 @@ class Clipboard extends Emitter {
      * @param {String} selector
      */
     delegateClick(selector) {
-        Delegate.bind(document.body, selector, 'click', (e) => this.initialize(e));
+        Delegate.bind(document.body, selector, 'click', this.initialize);
+    }
+
+    /**
+     * Undelegates a click event on the passed selector.
+     * @param {String} selector
+     */
+    undelegateClick() {
+        Delegate.unbind(document.body, 'click', this.initialize);
     }
 
     /**

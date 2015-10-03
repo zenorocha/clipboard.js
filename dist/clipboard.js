@@ -477,10 +477,20 @@ var Clipboard = (function (_Emitter) {
         _classCallCheck(this, Clipboard);
 
         _Emitter.call(this);
+        this.initialize = this.initialize.bind(this); // pre-bind for consistent reference on remove
 
         this.resolveOptions(options);
         this.delegateClick(selector);
     }
+
+    /**
+     * @param {String} selector
+     * @param {Object} options
+     */
+
+    Clipboard.prototype.destroy = function destroy() {
+        this.undelegateClick();
+    };
 
     /**
      * Defines if attributes would be resolved using internal setter functions
@@ -502,11 +512,16 @@ var Clipboard = (function (_Emitter) {
      */
 
     Clipboard.prototype.delegateClick = function delegateClick(selector) {
-        var _this = this;
+        _delegateEvents2['default'].bind(document.body, selector, 'click', this.initialize);
+    };
 
-        _delegateEvents2['default'].bind(document.body, selector, 'click', function (e) {
-            return _this.initialize(e);
-        });
+    /**
+     * Undelegates a click event on the passed selector.
+     * @param {String} selector
+     */
+
+    Clipboard.prototype.undelegateClick = function undelegateClick() {
+        _delegateEvents2['default'].unbind(document.body, 'click', this.initialize);
     };
 
     /**
