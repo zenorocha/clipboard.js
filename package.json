@@ -25,7 +25,8 @@
     "babelify": "^6.3.0",
     "browserify": "^11.2.0",
     "delegate-events": "^1.1.1",
-    "tiny-emitter": "^1.0.0"
+    "tiny-emitter": "^1.0.0",
+    "component-event": "^0.1.4"
   },
   "devDependencies": {
     "karma": "^0.13.10",
