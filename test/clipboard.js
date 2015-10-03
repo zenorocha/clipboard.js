@@ -69,11 +69,11 @@ describe('Clipboard', () => {
         });
     });
 
-    describe('#initialize', () => {
+    describe('#onClick', () => {
         it('should create a new instance of ClipboardAction', () => {
             let clipboard = new Clipboard('.btn');
 
-            clipboard.initialize(global.event);
+            clipboard.onClick(global.event);
             assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
         });
 
@@ -84,7 +84,7 @@ describe('Clipboard', () => {
                         return null;
                     }
                 });
-                clipboard.initialize(global.event);
+                clipboard.onClick(global.event);
             }
             catch(e) {
                 assert.equal(e.message, 'Invalid "target" value, use a valid Element');

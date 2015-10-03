@@ -34,14 +34,14 @@ class Clipboard extends Emitter {
      * @param {String} selector
      */
     delegateClick(selector) {
-        Delegate.bind(document.body, selector, 'click', (e) => this.initialize(e));
+        Delegate.bind(document.body, selector, 'click', (e) => this.onClick(e));
     }
 
     /**
      * Defines a new `ClipboardAction` on each click event.
      * @param {Event} e
      */
-    initialize(e) {
+    onClick(e) {
         if (this.clipboardAction) {
             this.clipboardAction = null;
         }
