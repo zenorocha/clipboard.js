@@ -18,7 +18,7 @@ describe('Clipboard', () => {
         document.body.innerHTML = '';
     });
 
-    describe('#resolveOptions', function() {
+    describe('_resolveOptions', function() {
         before(() => {
             global.fn = function() {};
         });
@@ -48,7 +48,7 @@ describe('Clipboard', () => {
         });
     });
 
-    describe('#delegateClick', function() {
+    describe('_delegateClick', function() {
         before(() => {
             global.spy = sinon.spy(Delegate, 'bind');
         });
