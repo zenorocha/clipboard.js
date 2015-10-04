@@ -195,6 +195,13 @@ class ClipboardAction {
     get target() {
         return this._target;
     }
+
+    /**
+     * Destroy lifecycle.
+     */
+    destroy() {
+        this.removeFake();
+    }
 }
 
 export default ClipboardAction;

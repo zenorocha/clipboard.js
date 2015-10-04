@@ -225,4 +225,18 @@ describe('ClipboardAction', () => {
             assert.equal(selectedText, '');
         });
     });
+
+    describe('#destroy', () => {
+        it('should destroy an existing fake element', () => {
+            let clip = new ClipboardAction({
+                emitter: new Emitter(),
+                text: 'blah'
+            });
+
+            clip.selectFake();
+            clip.destroy();
+
+            assert.equal(clip.fakeElem, null);
+        });
+    });
 });
