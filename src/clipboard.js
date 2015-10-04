@@ -34,7 +34,15 @@ class Clipboard extends Emitter {
      * @param {String} selector
      */
     delegateClick(selector) {
-        Delegate.bind(document.body, selector, 'click', (e) => this.onClick(e));
+        this.binding = Delegate.bind(document.body, selector, 'click', (e) => this.onClick(e));
+    }
+
+    /**
+     * Undelegates a click event on body.
+     * @param {String} selector
+     */
+    undelegateClick() {
+        Delegate.unbind(document.body, 'click', this.binding);
     }
 
     /**
@@ -81,6 +89,18 @@ class Clipboard extends Emitter {
      */
     defaultText(trigger) {
         return getAttributeValue('text', trigger);
+    }
+
+    /**
+     * Destroy lifecycle.
+     */
+    destroy() {
+        this.undelegateClick();
+
+        if (this.clipboardAction) {
+            this.clipboardAction.destroy();
+            this.clipboardAction = null;
+        }
     }
 }
 
