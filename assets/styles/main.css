@@ -108,6 +108,16 @@ pre code {
     line-height: 20px;
 }
 
+span.btn.clip {
+    float: right;
+    height: 2em;
+    margin: 0.25vw 0 0 0.25vw;
+    background-image: url("../images/clippy.svg");
+    background-size: 60%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 code {
     background-color: #E8F5F2;
     border-radius: 3px;
