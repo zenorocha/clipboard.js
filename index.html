@@ -154,6 +154,11 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
     }
 });</code></pre>
 
+        <p>Also, with are working with single page apps, you may want to manage the lifecycle of the DOM more precisely. Here's how you clean up the events and objects that we create.</p>
+
+        <pre><code class="js">var clipboard = new Clipboard('.btn');
+clipboard.destroy();</code></pre>
+
         <h1 id="events">Events</h1>
 
         <p>There are cases where you'd like to show some user feedback or capture what has been selected after a copy/cut operation.</p>
