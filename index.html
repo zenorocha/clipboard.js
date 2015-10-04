@@ -41,11 +41,11 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 
         <p>You can get it on npm.</p>
 
-        <pre><code class="js">npm install clipboard --save</code></pre>
+        <pre class="snippet"><code class="js">npm install clipboard --save</code></pre>
 
         <p>Or bower, too.</p>
 
-        <pre><code class="js">bower install clipboard --save</code></pre>
+        <pre class="snippet"><code class="js">bower install clipboard --save</code></pre>
 
         <p>If you're not into package management, just <a href="https://github.com/zenorocha/clipboard.js/archive/master.zip">download a ZIP</a> file.</p>
 
@@ -53,15 +53,15 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 
         <p>First, include the script located on the <code>dist</code> folder.</p>
 
-        <pre><code class="html">&lt;script src="dist/clipboard.min.js"&gt;&lt;/script&gt;</code></pre>
+        <pre class="snippet"><code class="html">&lt;script src="dist/clipboard.min.js"&gt;&lt;/script&gt;</code></pre>
 
         <p>Or load it from a CDN.</p>
 
-        <pre><code class="html">&lt;script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"&gt;&lt;/script&gt;</code></pre>
+        <pre class="snippet"><code class="html">&lt;script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"&gt;&lt;/script&gt;</code></pre>
 
         <p>Now, you need to instantiate it using a DOM selector. This selector corresponds to the trigger element(s), for example <code>&lt;button class="btn"&gt;</code>.</p>
 
-        <pre><code class="js">new Clipboard('.btn');</code></pre>
+        <pre class="snippet"><code class="js">new Clipboard('.btn');</code></pre>
 
         <p>Internally, we need to fetch all elements that matches with your selector and attach event listeners for each one. But guess what? If you have hundreds of matches, this operation can consume a lot of memory.</p>
 
@@ -140,7 +140,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 
         <p>That's why we fire custom events such as <code>success</code> and <code>error</code> for you to listen and implement your custom logic.</p>
 
-        <pre><code class="js">var clipboard = new Clipboard('.btn');
+        <pre class="snippet"><code class="js">var clipboard = new Clipboard('.btn');
 
 clipboard.on('success', function(e) {
     console.info('Action:', e.action);
@@ -163,7 +163,7 @@ clipboard.on('error', function(e) {
 
         <p>For instance, if you want to dynamically set a <code>target</code>, you'll need to return a Node.</p>
 
-        <pre><code class="js">new Clipboard('.btn', {
+        <pre class="snippet"><code class="js">new Clipboard('.btn', {
     target: function(trigger) {
         return trigger.nextElementSibling;
     }
@@ -171,7 +171,7 @@ clipboard.on('error', function(e) {
 
         <p>If you want to dynamically set a <code>text</code>, you'll return a String.</p>
 
-        <pre><code class="js">new Clipboard('.btn', {
+        <pre class="snippet"><code class="js">new Clipboard('.btn', {
     text: function(trigger) {
         return trigger.getAttribute('aria-label');
     }
@@ -179,7 +179,7 @@ clipboard.on('error', function(e) {
 
         <p>Also, with are working with single page apps, you may want to manage the lifecycle of the DOM more precisely. Here's how you clean up the events and objects that we create.</p>
 
-        <pre><code class="js">var clipboard = new Clipboard('.btn');
+        <pre class="snippet"><code class="js">var clipboard = new Clipboard('.btn');
 clipboard.destroy();</code></pre>
 
         <h1 id="browser-support">Browser Support</h1>
@@ -226,6 +226,7 @@ clipboard.destroy();</code></pre>
 
     <script src="assets/scripts/clipboard.js"></script>
     <script src="assets/scripts/main.js"></script>
+    <script src="assets/scripts/snippets.js"></script>
 
     <!-- Google Analytics -->
     <script>
