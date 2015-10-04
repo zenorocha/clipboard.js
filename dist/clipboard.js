@@ -148,12 +148,12 @@ function E () {
 E.prototype = {
 	on: function (name, callback, ctx) {
     var e = this.e || (this.e = {});
-
+    
     (e[name] || (e[name] = [])).push({
       fn: callback,
       ctx: ctx
     });
-
+    
     return this;
   },
 
@@ -163,7 +163,7 @@ E.prototype = {
       self.off(name, fn);
       callback.apply(ctx, arguments);
     };
-
+    
     return this.on(name, fn, ctx);
   },
 
@@ -172,11 +172,11 @@ E.prototype = {
     var evtArr = ((this.e || (this.e = {}))[name] || []).slice();
     var i = 0;
     var len = evtArr.length;
-
+    
     for (i; i < len; i++) {
       evtArr[i].fn.apply(evtArr[i].ctx, data);
     }
-
+    
     return this;
   },
 
@@ -184,21 +184,21 @@ E.prototype = {
     var e = this.e || (this.e = {});
     var evts = e[name];
     var liveEvents = [];
-
+    
     if (evts && callback) {
       for (var i = 0, len = evts.length; i < len; i++) {
         if (evts[i].fn !== callback) liveEvents.push(evts[i]);
       }
     }
-
+    
     // Remove event from queue to prevent memory leak
     // Suggested by https://github.com/lazd
     // Ref: https://github.com/scottcorgan/tiny-emitter/commit/c6ebfaa9bc973b33d110a84a307742b7cf94c953#commitcomment-5024910
 
-    (liveEvents.length)
+    (liveEvents.length) 
       ? e[name] = liveEvents
       : delete e[name];
-
+    
     return this;
   }
 };
@@ -281,6 +281,7 @@ var ClipboardAction = (function () {
         this.fakeElem = document.createElement('textarea');
         this.fakeElem.style.position = 'absolute';
         this.fakeElem.style.left = '-9999px';
+        this.fakeElem.style.top = document.body.scrollTop + 'px';
         this.fakeElem.setAttribute('readonly', '');
         this.fakeElem.value = this.text;
         this.selectedText = this.text;
@@ -383,6 +384,14 @@ var ClipboardAction = (function () {
      * @param {String} action
      */
 
+    /**
+     * Destroy lifecycle.
+     */
+
+    ClipboardAction.prototype.destroy = function destroy() {
+        this.removeFake();
+    };
+
     _createClass(ClipboardAction, [{
         key: 'action',
         set: function set() {
@@ -458,8 +467,6 @@ var _tinyEmitter = require('tiny-emitter');
 
 var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
 
-var prefix = 'data-clipboard-';
-
 /**
  * Base class which takes a selector, delegates a click event to it,
  * and instantiates a new `ClipboardAction` on each click.
@@ -477,20 +484,16 @@ var Clipboard = (function (_Emitter) {
         _classCallCheck(this, Clipboard);
 
         _Emitter.call(this);
-        this.initialize = this.initialize.bind(this); // pre-bind for consistent reference on remove
 
         this.resolveOptions(options);
         this.delegateClick(selector);
     }
 
     /**
-     * @param {String} selector
-     * @param {Object} options
+     * Helper function to retrieve attribute value.
+     * @param {String} suffix
+     * @param {Element} element
      */
-
-    Clipboard.prototype.destroy = function destroy() {
-        this.undelegateClick();
-    };
 
     /**
      * Defines if attributes would be resolved using internal setter functions
@@ -501,9 +504,9 @@ var Clipboard = (function (_Emitter) {
     Clipboard.prototype.resolveOptions = function resolveOptions() {
         var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-        this.action = typeof options.action === 'function' ? options.action : this.setAction;
-        this.target = typeof options.target === 'function' ? options.target : this.setTarget;
-        this.text = typeof options.text === 'function' ? options.text : this.setText;
+        this.action = typeof options.action === 'function' ? options.action : this.defaultAction;
+        this.target = typeof options.target === 'function' ? options.target : this.defaultTarget;
+        this.text = typeof options.text === 'function' ? options.text : this.defaultText;
     };
 
     /**
@@ -512,16 +515,20 @@ var Clipboard = (function (_Emitter) {
      */
 
     Clipboard.prototype.delegateClick = function delegateClick(selector) {
-        _delegateEvents2['default'].bind(document.body, selector, 'click', this.initialize);
+        var _this = this;
+
+        this.binding = _delegateEvents2['default'].bind(document.body, selector, 'click', function (e) {
+            return _this.onClick(e);
+        });
     };
 
     /**
-     * Undelegates a click event on the passed selector.
+     * Undelegates a click event on body.
      * @param {String} selector
      */
 
     Clipboard.prototype.undelegateClick = function undelegateClick() {
-        _delegateEvents2['default'].unbind(document.body, 'click', this.initialize);
+        _delegateEvents2['default'].unbind(document.body, 'click', this.binding);
     };
 
     /**
@@ -529,7 +536,7 @@ var Clipboard = (function (_Emitter) {
      * @param {Event} e
      */
 
-    Clipboard.prototype.initialize = function initialize(e) {
+    Clipboard.prototype.onClick = function onClick(e) {
         if (this.clipboardAction) {
             this.clipboardAction = null;
         }
@@ -544,47 +551,61 @@ var Clipboard = (function (_Emitter) {
     };
 
     /**
-     * Sets the `action` lookup function.
+     * Default `action` lookup function.
      * @param {Element} trigger
      */
 
-    Clipboard.prototype.setAction = function setAction(trigger) {
-        if (!trigger.hasAttribute(prefix + 'action')) {
-            return;
-        }
-
-        return trigger.getAttribute(prefix + 'action');
+    Clipboard.prototype.defaultAction = function defaultAction(trigger) {
+        return getAttributeValue('action', trigger);
     };
 
     /**
-     * Sets the `target` lookup function.
+     * Default `target` lookup function.
      * @param {Element} trigger
      */
 
-    Clipboard.prototype.setTarget = function setTarget(trigger) {
-        if (!trigger.hasAttribute(prefix + 'target')) {
-            return;
-        }
+    Clipboard.prototype.defaultTarget = function defaultTarget(trigger) {
+        var selector = getAttributeValue('target', trigger);
 
-        var target = trigger.getAttribute(prefix + 'target');
-        return document.querySelector(target);
+        if (selector) {
+            return document.querySelector(selector);
+        }
     };
 
     /**
-     * Sets the `text` lookup function.
+     * Default `text` lookup function.
      * @param {Element} trigger
      */
 
-    Clipboard.prototype.setText = function setText(trigger) {
-        if (!trigger.hasAttribute(prefix + 'text')) {
-            return;
-        }
+    Clipboard.prototype.defaultText = function defaultText(trigger) {
+        return getAttributeValue('text', trigger);
+    };
 
-        return trigger.getAttribute(prefix + 'text');
+    /**
+     * Destroy lifecycle.
+     */
+
+    Clipboard.prototype.destroy = function destroy() {
+        this.undelegateClick();
+
+        if (this.clipboardAction) {
+            this.clipboardAction.destroy();
+            this.clipboardAction = null;
+        }
     };
 
     return Clipboard;
 })(_tinyEmitter2['default']);
+
+function getAttributeValue(suffix, element) {
+    var attribute = 'data-clipboard-' + suffix;
+
+    if (!element.hasAttribute(attribute)) {
+        return;
+    }
+
+    return element.getAttribute(attribute);
+}
 
 exports['default'] = Clipboard;
 module.exports = exports['default'];
