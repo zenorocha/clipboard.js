@@ -134,6 +134,29 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
     Copy to clipboard
 &lt;/button&gt;</code></pre>
 
+        <h1 id="events">Events</h1>
+
+        <p>There are cases where you'd like to show some user feedback or capture what has been selected after a copy/cut operation.</p>
+
+        <p>That's why we fire custom events such as <code>success</code> and <code>error</code> for you to listen and implement your custom logic.</p>
+
+        <pre><code class="js">var clipboard = new Clipboard('.btn');
+
+clipboard.on('success', function(e) {
+    console.info('Action:', e.action);
+    console.info('Text:', e.text);
+    console.info('Trigger:', e.trigger);
+
+    e.clearSelection();
+});
+
+clipboard.on('error', function(e) {
+    console.error('Action:', e.action);
+    console.error('Trigger:', e.trigger);
+});</code></pre>
+
+        <p>For a live demonstration, just open your console :)</p>
+
         <h1 id="advanced-usage">Advanced Usage</h1>
 
         <p>If you don't want to modify your HTML, there's a pretty handy imperative API for you to use. All you need to do is declare a function, do your thing, and return a value.</p>
@@ -158,29 +181,6 @@ allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"><
 
         <pre><code class="js">var clipboard = new Clipboard('.btn');
 clipboard.destroy();</code></pre>
-
-        <h1 id="events">Events</h1>
-
-        <p>There are cases where you'd like to show some user feedback or capture what has been selected after a copy/cut operation.</p>
-
-        <p>That's why we fire custom events such as <code>success</code> and <code>error</code> for you to listen and implement your custom logic.</p>
-
-        <pre><code class="js">var clipboard = new Clipboard('.btn');
-
-clipboard.on('success', function(e) {
-    console.info('Action:', e.action);
-    console.info('Text:', e.text);
-    console.info('Trigger:', e.trigger);
-
-    e.clearSelection();
-});
-
-clipboard.on('error', function(e) {
-    console.error('Action:', e.action);
-    console.error('Trigger:', e.trigger);
-});</code></pre>
-
-        <p>For a live demonstration, just open your console :)</p>
 
         <h1 id="browser-support">Browser Support</h1>
 
