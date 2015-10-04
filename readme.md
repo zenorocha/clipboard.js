@@ -131,6 +131,13 @@ new Clipboard('.btn', {
 });
 ```
 
+Also, with are working with single page apps, you may want to manage the lifecycle of the DOM more precisely. Here's how you clean up the events and objects that we create.
+
+```js
+var clipboard = new Clipboard('.btn');
+clipboard.destroy();
+```
+
 ## Events
 
 There are cases where you'd like to show some user feedback or capture what has been selected after a copy/cut operation.
