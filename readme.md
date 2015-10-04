@@ -107,7 +107,32 @@ Truth is, you don't even need another element to copy its content from. You can 
 </button>
 ```
 
-## Advanced Usage
+## Events
+
+There are cases where you'd like to show some user feedback or capture what has been selected after a copy/cut operation.
+
+That's why we fire custom events such as `success` and `error` for you to listen and implement your custom logic.
+
+```js
+var clipboard = new Clipboard('.btn');
+
+clipboard.on('success', function(e) {
+    console.info('Action:', e.action);
+    console.info('Text:', e.text);
+    console.info('Trigger:', e.trigger);
+
+    e.clearSelection();
+});
+
+clipboard.on('error', function(e) {
+    console.error('Action:', e.action);
+    console.error('Trigger:', e.trigger);
+});
+```
+
+For a live demonstration, open this [site](https://zenorocha.github.io/clipboard.js/) and just your console :)
+
+## Advanced Options
 
 If you don't want to modify your HTML, there's a pretty handy imperative API for you to use. All you need to do is declare a function, do your thing, and return a value.
 
@@ -137,31 +162,6 @@ Also, with are working with single page apps, you may want to manage the lifecyc
 var clipboard = new Clipboard('.btn');
 clipboard.destroy();
 ```
-
-## Events
-
-There are cases where you'd like to show some user feedback or capture what has been selected after a copy/cut operation.
-
-That's why we fire custom events such as `success` and `error` for you to listen and implement your custom logic.
-
-```js
-var clipboard = new Clipboard('.btn');
-
-clipboard.on('success', function(e) {
-    console.info('Action:', e.action);
-    console.info('Text:', e.text);
-    console.info('Trigger:', e.trigger);
-
-    e.clearSelection();
-});
-
-clipboard.on('error', function(e) {
-    console.error('Action:', e.action);
-    console.error('Trigger:', e.trigger);
-});
-```
-
-For a live demonstration, open this [site](https://zenorocha.github.io/clipboard.js/) and just your console :)
 
 ## Browser Support
 
