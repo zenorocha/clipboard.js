@@ -8,7 +8,8 @@ for (var i = 0; i < btns.length; i++) {
 }
 
 function showTooltip(elem, msg) {
-    elem.setAttribute('class', 'btn tooltipped tooltipped-s');
+    elem.classList.add('tooltipped');
+    elem.classList.add('tooltipped-s');
     elem.setAttribute('aria-label', msg);
 }
 
