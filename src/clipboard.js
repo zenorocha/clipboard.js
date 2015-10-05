@@ -1,6 +1,5 @@
 import ClipboardAction from './clipboard-action';
 import Delegate from 'delegate-events';
-import event from 'component-event';
 import Emitter from 'tiny-emitter';
 
 /**
@@ -45,24 +44,24 @@ class Clipboard extends Emitter {
     }
 
     /**
-     * Undelegates a click event on body.
-     * @param {String} selector
-     */
-    undelegateClick() {
-        Delegate.unbind(document.body, 'click', this.binding);
-    }
-
-    /**
      * Delegates a click event on the passed element.
      * @param {Object} element
      */
     delegateClickToElement(element) {
-        event.bind(document.body, 'click', (e) => {
+        element.addEventListener('click', (e) => {
             e.delegateTarget = element;
             if (e.delegateTarget) {
                 (e) => this.onClick(e);
             }
         });
+    }
+
+    /**
+     * Undelegates a click event on body.
+     * @param {String} selector
+     */
+    undelegateClick() {
+        Delegate.unbind(document.body, 'click', this.binding);
     }
 
     /**
