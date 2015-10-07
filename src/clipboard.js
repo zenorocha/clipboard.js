@@ -17,7 +17,7 @@ class Clipboard extends Emitter {
         this.resolveOptions(options);
         if (typeof selector === 'string') {
             this.delegateClickToSelector(selector);
-        } else if (selector !== null && typeof selector === 'object') {
+        } else if ('addEventListener' in selector) {
             this.delegateClickToElement(selector);
         } else {
             throw new Error('`selector` should be a CSS selector string or elements itself.');
@@ -48,12 +48,8 @@ class Clipboard extends Emitter {
      * @param {Object} element
      */
     delegateClickToElement(element) {
-        element.addEventListener('click', (e) => {
-            e.delegateTarget = element;
-            if (e.delegateTarget) {
-                (e) => this.onClick(e);
-            }
-        });
+        this.element = element;
+        element.addEventListener('click', this.onClickEventListener.bind(this));
     }
 
     /**
@@ -61,7 +57,20 @@ class Clipboard extends Emitter {
      * @param {String} selector
      */
     undelegateClick() {
-        Delegate.unbind(document.body, 'click', this.binding);
+        if (this.binding) {
+            Delegate.unbind(document.body, 'click', this.binding);
+        } else if (this.element) {
+            this.element.removeEventListener('click', this.onClickEventListener);
+        }
+    }
+
+    /**
+     * Click event when using event listener
+     * @param {Event} e
+     */
+    onClickEventListener(e) {
+      e.delegateTarget = this.element;
+      this.onClick(e);
     }
 
     /**

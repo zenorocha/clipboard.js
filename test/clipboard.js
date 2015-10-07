@@ -69,27 +69,6 @@ describe('Clipboard', () => {
         });
     });
 
-    describe('#undelegateClick', function() {
-        before(() => {
-            global.spy = sinon.spy(Delegate, 'unbind');
-        });
-
-        after(() => {
-            global.spy.restore();
-        });
-
-        it('should undelegate a click event', () => {
-            let element = document.body;
-            let event = 'click';
-
-            let clipboard = new Clipboard('.btn');
-            clipboard.undelegateClick();
-
-            assert.ok(global.spy.calledOnce);
-            assert.ok(global.spy.calledWith(element, event));
-        });
-    });
-
     describe('#delegateClickToElement', function() {
         before(() => {
             global.spy = sinon.spy(global.button, 'addEventListener');
@@ -106,6 +85,38 @@ describe('Clipboard', () => {
 
             assert.ok(global.spy.calledOnce);
             assert.ok(global.spy.calledWith(event));
+        });
+    });
+
+    describe('#undelegateClick', function() {
+        before(() => {
+            global.spy = sinon.spy(Delegate, 'unbind');
+            global.elementSpy = sinon.spy(global.button, 'removeEventListener');
+        });
+
+        after(() => {
+            global.spy.restore();
+        });
+
+        it('should undelegate a click event', () => {
+            let element = document.body;
+            let event = 'click';
+
+            let clipboard = new Clipboard('.btn');
+            clipboard.undelegateClick();
+
+            assert.ok(global.spy.calledOnce);
+            assert.ok(global.spy.calledWith(element, event));
+        });
+
+        it('should remove event listeners from elements', () => {
+            let event = 'click';
+
+            let clipboard = new Clipboard(global.button);
+            clipboard.undelegateClick();
+
+            assert.ok(global.elementSpy.calledOnce);
+            //assert.ok(global.elementSpy.calledWith(event, clipboard.onClickEventListener));
         });
     });
 
