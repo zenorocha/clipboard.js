@@ -6,7 +6,7 @@ import Emitter from 'tiny-emitter';
  * Base class which takes a selector, delegates a click event to it,
  * and instantiates a new `ClipboardAction` on each click.
  */
-class Clipboard extends Emitter {
+export default class Clipboard extends Emitter {
     /**
      * @param {String} selector
      * @param {Object} options
@@ -119,5 +119,3 @@ function getAttributeValue(suffix, element) {
 
     return element.getAttribute(attribute);
 }
-
-export default Clipboard;
