@@ -281,7 +281,7 @@ var ClipboardAction = (function () {
         this.fakeElem = document.createElement('textarea');
         this.fakeElem.style.position = 'absolute';
         this.fakeElem.style.left = '-9999px';
-        this.fakeElem.style.top = document.body.scrollTop + 'px';
+        this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
         this.fakeElem.setAttribute('readonly', '');
         this.fakeElem.value = this.text;
         this.selectedText = this.text;
