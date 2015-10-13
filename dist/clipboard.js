@@ -294,7 +294,7 @@ var ClipboardAction = (function () {
 
     /**
      * Only removes the fake element after another click event, that way
-     * an user can hit `Ctrl+C` to copy because selection still exists.
+     * a user can hit `Ctrl+C` to copy because selection still exists.
      */
 
     ClipboardAction.prototype.removeFake = function removeFake() {
@@ -321,6 +321,7 @@ var ClipboardAction = (function () {
             var range = document.createRange();
             var selection = window.getSelection();
 
+            selection.removeAllRanges();
             range.selectNodeContents(this.target);
             selection.addRange(range);
             this.selectedText = selection.toString();

@@ -95,6 +95,7 @@ class ClipboardAction {
             let range = document.createRange();
             let selection = window.getSelection();
 
+            selection.removeAllRanges();
             range.selectNodeContents(this.target);
             selection.addRange(range);
             this.selectedText = selection.toString();
