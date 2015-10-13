@@ -36,13 +36,13 @@
     "karma-sinon": "^1.0.4",
     "mocha": "^2.3.3",
     "phantomjs-polyfill": "0.0.1",
-    "uglify": "^0.1.5",
+    "uglify-js": "^2.4.24",
     "watchify": "^3.4.0"
   },
   "scripts": {
     "build": "npm run build-debug && npm run build-min",
     "build-debug": "browserify src/clipboard.js -s Clipboard -o dist/clipboard.js",
-    "build-min": "uglify -s dist/clipboard.js -o dist/clipboard.min.js",
+    "build-min": "uglifyjs dist/clipboard.js -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/clipboard.min.js",
     "build-watch": "watchify src/clipboard.js -s Clipboard -o dist/clipboard.js -v",
     "test": "npm run test-browser && npm run test-server",
     "test-browser": "karma start --single-run",
