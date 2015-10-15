@@ -1,6 +1,6 @@
-var clipboard = new Clipboard('.btn');
+var clipboardDemos = new Clipboard('[data-clipboard-demo]');
 
-clipboard.on('success', function(e) {
+clipboardDemos.on('success', function(e) {
     e.clearSelection();
 
     console.info('Action:', e.action);
@@ -10,7 +10,7 @@ clipboard.on('success', function(e) {
     showTooltip(e.trigger, 'Copied!');
 });
 
-clipboard.on('error', function(e) {
+clipboardDemos.on('error', function(e) {
     console.error('Action:', e.action);
     console.error('Trigger:', e.trigger);
 
