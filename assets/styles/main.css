@@ -100,44 +100,8 @@ h3 {
     opacity: .3;
 }
 
-/* Code
-   ========================================================================== */
-
-pre code {
-    font-size: 14px;
-    line-height: 20px;
-}
-
-span.btn.clip {
-    float: right;
-    height: 2em;
-    margin: 0.25vw 0 0 0.25vw;
-    background-image: url("../images/clippy.svg");
-    background-size: 60%;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-code {
-    background-color: #E8F5F2;
-    border-radius: 3px;
-    color: #1BC1A1;
-    font-size: 85%;
-    margin: 0;
-    padding: 0.2em;
-}
-
-.hljs-keyword {
-    color: #008080;
-    font-weight: normal;
-}
-
 /* Example
    ========================================================================== */
-
-.flash {
-    margin-bottom: 15px;
-}
 
 .example {
     position: relative;
@@ -146,6 +110,7 @@ code {
     background-color: #fff;
     border-radius: 4px 4px 0 0;
     border: 1px solid #ddd;
+    z-index: 2;
 }
 
 .example p {
@@ -165,12 +130,12 @@ code {
     border-radius: 4px 0 4px 0;
 }
 
-.example + pre {
+.example + .snippet {
     background: #f8f8f8;
     border-radius: 4px;
     border: 1px solid #ddd;
     clear: both;
-    margin-top: -20px;
+    top: -20px;
     padding: 20px 0 0;
 }
 
@@ -190,6 +155,53 @@ textarea {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
+}
+
+/* Code
+   ========================================================================== */
+
+.snippet {
+    position: relative;
+    overflow: visible;
+}
+
+.snippet code {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.snippet .btn {
+    -webkit-transition: opacity 0.3s ease-in-out;
+    -o-transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+}
+
+.snippet:hover .btn {
+    opacity: 1;
+}
+
+.example + .snippet .btn {
+    top: 22px;
+    right: 2px;
+}
+
+code {
+    background-color: #E8F5F2;
+    border-radius: 3px;
+    color: #1BC1A1;
+    font-size: 85%;
+    margin: 0;
+    padding: 0.2em;
+}
+
+.hljs-keyword {
+    color: #008080;
+    font-weight: normal;
 }
 
 /* Support

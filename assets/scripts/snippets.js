@@ -1,17 +1,21 @@
-(function() {
-  'use strict';
+var snippets = document.querySelectorAll('.snippet');
 
-  var identifier = 0;
-  var snippets = Array.prototype.slice.call(document.querySelectorAll('pre.snippet'));
+[].forEach.call(snippets, function(snippet) {
+    snippet.firstChild.insertAdjacentHTML('beforebegin', '<button class="btn" data-clipboard-snippet><img class="clippy" width="13" src="assets/images/clippy.svg" alt="Copy to clipboard"></button>');
+});
 
-  snippets.forEach(function(snippet) {
-    snippet.id = 'snip' + identifier;
+var clipboardSnippets = new Clipboard('[data-clipboard-snippet]', {
+    target: function(trigger) {
+        return trigger.nextElementSibling;
+    }
+});
 
-    var copyBtn = document.createElement('span');
+clipboardSnippets.on('success', function(e) {
+    e.clearSelection();
 
-    copyBtn.className = 'btn clip';
-    copyBtn.setAttribute('data-clipboard-target', '#snip' + identifier++);
+    showTooltip(e.trigger, 'Copied!');
+});
 
-    snippet.parentElement.insertBefore(copyBtn, snippet);
-  });
-})();
+clipboardSnippets.on('error', function(e) {
+    showTooltip(e.trigger, fallbackMessage(e.action));
+});
