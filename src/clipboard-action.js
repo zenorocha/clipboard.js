@@ -1,3 +1,5 @@
+import deselectCurrent from 'toggle-selection';
+
 /**
  * Inner class which performs selection from either `text` or `target`
  * properties and then executes copy or cut operations.
@@ -92,6 +94,7 @@ class ClipboardAction {
             this.selectedText = this.target.value;
         }
         else {
+            const reselectPrevious = deselectCurrent();
             let range = document.createRange();
             let selection = window.getSelection();
 
@@ -99,6 +102,8 @@ class ClipboardAction {
             range.selectNodeContents(this.target);
             selection.addRange(range);
             this.selectedText = selection.toString();
+
+            reselectPrevious();
         }
 
         this.copyText();
