@@ -48,7 +48,7 @@ describe('Clipboard', () => {
         });
     });
 
-    describe('#delegateClick', function() {
+    describe('#delegateClickToSelector', function() {
         before(() => {
             global.spy = sinon.spy(Delegate, 'bind');
         });
@@ -69,9 +69,29 @@ describe('Clipboard', () => {
         });
     });
 
+    describe('#delegateClickToElement', function() {
+        before(() => {
+            global.spy = sinon.spy(global.button, 'addEventListener');
+        });
+
+        after(() => {
+            global.spy.restore();
+        });
+
+        it('should delegate a click event to the passed element', () => {
+            let event = 'click';
+
+            let clipboard = new Clipboard(global.button);
+
+            assert.ok(global.spy.calledOnce);
+            assert.ok(global.spy.calledWith(event));
+        });
+    });
+
     describe('#undelegateClick', function() {
         before(() => {
             global.spy = sinon.spy(Delegate, 'unbind');
+            global.elementSpy = sinon.spy(global.button, 'removeEventListener');
         });
 
         after(() => {
@@ -87,6 +107,16 @@ describe('Clipboard', () => {
 
             assert.ok(global.spy.calledOnce);
             assert.ok(global.spy.calledWith(element, event));
+        });
+
+        it('should remove event listeners from elements', () => {
+            let event = 'click';
+
+            let clipboard = new Clipboard(global.button);
+            clipboard.undelegateClick();
+
+            assert.ok(global.elementSpy.calledOnce);
+            //assert.ok(global.elementSpy.calledWith(event, clipboard.onClickEventListener));
         });
     });
 
