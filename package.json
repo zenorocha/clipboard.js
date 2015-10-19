@@ -25,6 +25,7 @@
     "babelify": "^6.3.0",
     "browserify": "^11.2.0",
     "delegate-events": "^1.1.1",
+    "select": "^1.0.0",
     "tiny-emitter": "^1.0.0"
   },
   "devDependencies": {

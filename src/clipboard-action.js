@@ -1,3 +1,5 @@
+import select from 'select';
+
 /**
  * Inner class which performs selection from either `text` or `target`
  * properties and then executes copy or cut operations.
@@ -59,11 +61,10 @@ class ClipboardAction {
         this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
         this.fakeElem.setAttribute('readonly', '');
         this.fakeElem.value = this.text;
-        this.selectedText = this.text;
 
         document.body.appendChild(this.fakeElem);
 
-        this.fakeElem.select();
+        this.selectedText = select(this.fakeElem);
         this.copyText();
     }
 
@@ -87,20 +88,7 @@ class ClipboardAction {
      * Selects the content from element passed on `target` property.
      */
     selectTarget() {
-        if (this.target.nodeName === 'INPUT' || this.target.nodeName === 'TEXTAREA') {
-            this.target.select();
-            this.selectedText = this.target.value;
-        }
-        else {
-            let range = document.createRange();
-            let selection = window.getSelection();
-
-            selection.removeAllRanges();
-            range.selectNodeContents(this.target);
-            selection.addRange(range);
-            this.selectedText = selection.toString();
-        }
-
+        this.selectedText = select(this.target);
         this.copyText();
     }
 
