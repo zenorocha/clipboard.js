@@ -1,6 +1,6 @@
 import Clipboard from '../src/clipboard';
 import ClipboardAction from '../src/clipboard-action';
-import Delegate from 'delegate-events';
+import Delegate from 'delegate';
 
 describe('Clipboard', () => {
     before(() => {

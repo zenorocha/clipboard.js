@@ -1,5 +1,5 @@
 import ClipboardAction from './clipboard-action';
-import Delegate from 'delegate-events';
+import Delegate from 'delegate';
 import Emitter from 'tiny-emitter';
 
 /**
