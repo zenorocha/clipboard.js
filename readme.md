@@ -131,7 +131,7 @@ clipboard.on('error', function(e) {
 });
 ```
 
-For a live demonstration, open this [site](https://clipboardj.com/) and just your console :)
+For a live demonstration, open this [site](http://clipboardjs.com/) and just your console :)
 
 ## Advanced Options
 
