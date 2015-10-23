@@ -176,7 +176,7 @@ Although copy/cut operations with [execCommand](https://developer.mozilla.org/en
 
 That means you can show a tooltip saying `Copied!` when `success` event is called and `Press Ctrl+C to copy` when `error` event is called because the text is already selected.
 
-For a live demonstration, open this [site](https://clipboardj.com/) on Safari.
+For a live demonstration, open this [site](http://clipboardjs.com) on Safari.
 
 ## License
 
