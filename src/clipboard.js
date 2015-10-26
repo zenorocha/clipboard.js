@@ -1,21 +1,21 @@
 import ClipboardAction from './clipboard-action';
-import Delegate from 'delegate';
 import Emitter from 'tiny-emitter';
+import listen from 'good-listener';
 
 /**
- * Base class which takes a selector, delegates a click event to it,
+ * Base class which takes one or more elements, adds event listeners to them,
  * and instantiates a new `ClipboardAction` on each click.
  */
 class Clipboard extends Emitter {
     /**
-     * @param {String} selector
+     * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
      * @param {Object} options
      */
-    constructor(selector, options) {
+    constructor(trigger, options) {
         super();
 
         this.resolveOptions(options);
-        this.delegateClick(selector);
+        this.listenClick(trigger);
     }
 
     /**
@@ -30,19 +30,11 @@ class Clipboard extends Emitter {
     }
 
     /**
-     * Delegates a click event on the passed selector.
-     * @param {String} selector
+     * Adds a click event listener to the passed trigger.
+     * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
      */
-    delegateClick(selector) {
-        this.binding = Delegate.bind(document.body, selector, 'click', (e) => this.onClick(e));
-    }
-
-    /**
-     * Undelegates a click event on body.
-     * @param {String} selector
-     */
-    undelegateClick() {
-        Delegate.unbind(document.body, 'click', this.binding);
+    listenClick(trigger) {
+        this.listener = listen(trigger, 'click', (e) => this.onClick(e));
     }
 
     /**
@@ -55,10 +47,10 @@ class Clipboard extends Emitter {
         }
 
         this.clipboardAction = new ClipboardAction({
-            action  : this.action(e.delegateTarget),
-            target  : this.target(e.delegateTarget),
-            text    : this.text(e.delegateTarget),
-            trigger : e.delegateTarget,
+            action  : this.action(e.target),
+            target  : this.target(e.target),
+            text    : this.text(e.target),
+            trigger : e.target,
             emitter : this
         });
     }
@@ -95,7 +87,7 @@ class Clipboard extends Emitter {
      * Destroy lifecycle.
      */
     destroy() {
-        this.undelegateClick();
+        this.listener.destroy();
 
         if (this.clipboardAction) {
             this.clipboardAction.destroy();

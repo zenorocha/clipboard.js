@@ -1,6 +1,6 @@
 import Clipboard from '../src/clipboard';
 import ClipboardAction from '../src/clipboard-action';
-import Delegate from 'delegate';
+import listen from 'good-listener';
 
 describe('Clipboard', () => {
     before(() => {
@@ -10,7 +10,7 @@ describe('Clipboard', () => {
         document.body.appendChild(global.button);
 
         global.event = {
-            delegateTarget: global.button
+            target: global.button
         };
     });
 
@@ -48,45 +48,10 @@ describe('Clipboard', () => {
         });
     });
 
-    describe('#delegateClick', () => {
-        before(() => {
-            global.spy = sinon.spy(Delegate, 'bind');
-        });
-
-        after(() => {
-            global.spy.restore();
-        });
-
-        it('should delegate a click event to the passed selector', () => {
-            let element = document.body;
-            let selector = '.btn';
-            let event = 'click';
-
-            let clipboard = new Clipboard(selector);
-
-            assert.ok(global.spy.calledOnce);
-            assert.ok(global.spy.calledWith(element, selector, event));
-        });
-    });
-
-    describe('#undelegateClick', () => {
-        before(() => {
-            global.spy = sinon.spy(Delegate, 'unbind');
-        });
-
-        after(() => {
-            global.spy.restore();
-        });
-
-        it('should undelegate a click event', () => {
-            let element = document.body;
-            let event = 'click';
-
+    describe('#listenClick', () => {
+        it('should add a click event listener to the passed selector', () => {
             let clipboard = new Clipboard('.btn');
-            clipboard.undelegateClick();
-
-            assert.ok(global.spy.calledOnce);
-            assert.ok(global.spy.calledWith(element, event));
+            assert.isObject(clipboard.listener);
         });
     });
 
@@ -105,6 +70,7 @@ describe('Clipboard', () => {
                         return null;
                     }
                 });
+
                 clipboard.onClick(global.event);
             }
             catch(e) {

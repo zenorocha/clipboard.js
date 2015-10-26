@@ -24,7 +24,7 @@
   "dependencies": {
     "babelify": "^6.3.0",
     "browserify": "^11.2.0",
-    "delegate": "^1.0.0",
+    "good-listener": "^1.1.0",
     "select": "^1.0.0",
     "tiny-emitter": "^1.0.0"
   },
