@@ -31,19 +31,13 @@ If you're not into package management, just [download a ZIP](https://github.com/
 
 ## Setup
 
-First, include the script located on the `dist` folder.
+First, include the script located on the `dist` folder or load it from [a third-party CDN provider](https://github.com/zenorocha/clipboard.js/wiki/CDN-Providers).
 
 ```html
 <script src="dist/clipboard.min.js"></script>
 ```
 
-Or load it from a CDN.
-
-```html
-<script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
-```
-
-Now, you need to instantiate it using a DOM selector. This selector corresponds to the trigger element(s), for example `<button class="btn">`.
+Now, you need to instantiate it by [passing a DOM selector](https://github.com/zenorocha/clipboard.js/blob/master/demo/constructor-selector.html#L18), [HTML element](https://github.com/zenorocha/clipboard.js/blob/master/demo/constructor-node.html#L16-L17), or [list of HTML elements](https://github.com/zenorocha/clipboard.js/blob/master/demo/constructor-nodelist.html#L18-L19).
 
 ```js
 new Clipboard('.btn');
