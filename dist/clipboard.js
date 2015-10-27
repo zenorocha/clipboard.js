@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v1.5.0
+ * clipboard.js v1.5.1
  * https://zenorocha.github.io/clipboard.js
  *
  * Licensed MIT © Zeno Rocha
@@ -259,8 +259,7 @@ function select(element) {
     var selectedText;
 
     if (element.nodeName === 'INPUT' || element.nodeName === 'TEXTAREA') {
-        element.selectionStart = 0;
-        element.selectionEnd = element.value.length;
+        element.select();
 
         selectedText = element.value;
     }
