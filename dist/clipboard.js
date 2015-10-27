@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v1.4.3
+ * clipboard.js v1.5.0
  * https://zenorocha.github.io/clipboard.js
  *
  * Licensed MIT © Zeno Rocha
@@ -61,61 +61,226 @@ function match(el, selector) {
 var closest = require('closest');
 
 /**
- * Delegate event `type` to `selector`
- * and invoke `fn(e)`. A callback function
- * is returned which may be passed to `.unbind()`.
+ * Delegates event to a selector.
  *
- * @param {Element} el
+ * @param {Element} element
  * @param {String} selector
  * @param {String} type
- * @param {Function} fn
- * @param {Boolean} capture
+ * @param {Function} callback
+ * @return {Object}
+ */
+function delegate(element, selector, type, callback) {
+    var listenerFn = listener.apply(this, arguments);
+
+    element.addEventListener(type, listenerFn);
+
+    return {
+        destroy: function() {
+            element.removeEventListener(type, listenerFn);
+        }
+    }
+}
+
+/**
+ * Finds closest match and invokes callback.
+ *
+ * @param {Element} element
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
  * @return {Function}
  */
+function listener(element, selector, type, callback) {
+    return function(e) {
+        var delegateTarget = closest(e.target, selector, true);
 
-exports.bind = function(el, selector, type, fn, capture){
-    return el.addEventListener(type, function(e){
-        var target = e.target || e.srcElement;
-        e.delegateTarget = closest(target, selector, true, el);
-        if (e.delegateTarget) fn.call(el, e);
-    }, capture);
+        if (delegateTarget) {
+            Object.defineProperty(e, 'target', {
+                value: delegateTarget
+            });
+
+            callback.call(element, e);
+        }
+    }
+}
+
+module.exports = delegate;
+
+},{"closest":1}],4:[function(require,module,exports){
+/**
+ * Check if argument is a HTML element.
+ *
+ * @param {Object} value
+ * @return {Boolean}
+ */
+exports.node = function(value) {
+    return value !== undefined
+        && value instanceof HTMLElement
+        && value.nodeType === 1;
 };
 
 /**
- * Unbind event `type`'s callback `fn`.
+ * Check if argument is a list of HTML elements.
  *
- * @param {Element} el
- * @param {String} type
- * @param {Function} fn
- * @param {Boolean} capture
+ * @param {Object} value
+ * @return {Boolean}
  */
+exports.nodeList = function(value) {
+    var type = Object.prototype.toString.call(value);
 
-exports.unbind = function(el, type, fn, capture){
-    el.removeEventListener(type, fn, capture);
+    return value !== undefined
+        && (type === '[object NodeList]' || type === '[object HTMLCollection]')
+        && ('length' in value)
+        && (value.length === 0 || exports.node(value[0]));
 };
 
-},{"closest":1}],4:[function(require,module,exports){
+/**
+ * Check if argument is a string.
+ *
+ * @param {Object} value
+ * @return {Boolean}
+ */
+exports.string = function(value) {
+    return typeof value === 'string'
+        || value instanceof String;
+};
+
+/**
+ * Check if argument is a function.
+ *
+ * @param {Object} value
+ * @return {Boolean}
+ */
+exports.function = function(value) {
+    var type = Object.prototype.toString.call(value);
+
+    return type === '[object Function]';
+};
+
+},{}],5:[function(require,module,exports){
+var is = require('./is');
+var delegate = require('delegate');
+
+/**
+ * Validates all params and calls the right
+ * listener function based on its target type.
+ *
+ * @param {String|HTMLElement|HTMLCollection|NodeList} target
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Object}
+ */
+function listen(target, type, callback) {
+    if (!target && !type && !callback) {
+        throw new Error('Missing required arguments');
+    }
+
+    if (!is.string(type)) {
+        throw new TypeError('Second argument must be a String');
+    }
+
+    if (!is.function(callback)) {
+        throw new TypeError('Third argument must be a Function');
+    }
+
+    if (is.node(target)) {
+        return listenNode(target, type, callback);
+    }
+    else if (is.nodeList(target)) {
+        return listenNodeList(target, type, callback);
+    }
+    else if (is.string(target)) {
+        return listenSelector(target, type, callback);
+    }
+    else {
+        throw new TypeError('First argument must be a String, HTMLElement, HTMLCollection, or NodeList');
+    }
+}
+
+/**
+ * Adds an event listener to a HTML element
+ * and returns a remove listener function.
+ *
+ * @param {HTMLElement} node
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Object}
+ */
+function listenNode(node, type, callback) {
+    node.addEventListener(type, callback);
+
+    return {
+        destroy: function() {
+            node.removeEventListener(type, callback);
+        }
+    }
+}
+
+/**
+ * Add an event listener to a list of HTML elements
+ * and returns a remove listener function.
+ *
+ * @param {NodeList|HTMLCollection} nodeList
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Object}
+ */
+function listenNodeList(nodeList, type, callback) {
+    Array.prototype.forEach.call(nodeList, function(node) {
+        node.addEventListener(type, callback);
+    });
+
+    return {
+        destroy: function() {
+            Array.prototype.forEach.call(nodeList, function(node) {
+                node.removeEventListener(type, callback);
+            });
+        }
+    }
+}
+
+/**
+ * Add an event listener to a selector
+ * and returns a remove listener function.
+ *
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Object}
+ */
+function listenSelector(selector, type, callback) {
+    return delegate(document.body, selector, type, callback);
+}
+
+module.exports = listen;
+
+},{"./is":4,"delegate":3}],6:[function(require,module,exports){
 function select(element) {
-    var selection = window.getSelection();
+    var selectedText;
 
     if (element.nodeName === 'INPUT' || element.nodeName === 'TEXTAREA') {
         element.selectionStart = 0;
         element.selectionEnd = element.value.length;
+
+        selectedText = element.value;
     }
     else {
+        var selection = window.getSelection();
         var range = document.createRange();
 
         range.selectNodeContents(element);
         selection.removeAllRanges();
         selection.addRange(range);
+
+        selectedText = selection.toString();
     }
 
-    return selection.toString();
+    return selectedText;
 }
 
 module.exports = select;
 
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 function E () {
 	// Keep this empty so it's easier to inherit from
   // (via https://github.com/lipsmack from https://github.com/scottcorgan/tiny-emitter/issues/3)
@@ -183,7 +348,7 @@ E.prototype = {
 
 module.exports = E;
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -417,7 +582,7 @@ var ClipboardAction = (function () {
 exports['default'] = ClipboardAction;
 module.exports = exports['default'];
 
-},{"select":4}],7:[function(require,module,exports){
+},{"select":6}],9:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -432,16 +597,16 @@ var _clipboardAction = require('./clipboard-action');
 
 var _clipboardAction2 = _interopRequireDefault(_clipboardAction);
 
-var _delegate = require('delegate');
-
-var _delegate2 = _interopRequireDefault(_delegate);
-
 var _tinyEmitter = require('tiny-emitter');
 
 var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
 
+var _goodListener = require('good-listener');
+
+var _goodListener2 = _interopRequireDefault(_goodListener);
+
 /**
- * Base class which takes a selector, delegates a click event to it,
+ * Base class which takes one or more elements, adds event listeners to them,
  * and instantiates a new `ClipboardAction` on each click.
  */
 
@@ -449,17 +614,17 @@ var Clipboard = (function (_Emitter) {
     _inherits(Clipboard, _Emitter);
 
     /**
-     * @param {String} selector
+     * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
      * @param {Object} options
      */
 
-    function Clipboard(selector, options) {
+    function Clipboard(trigger, options) {
         _classCallCheck(this, Clipboard);
 
         _Emitter.call(this);
 
         this.resolveOptions(options);
-        this.delegateClick(selector);
+        this.listenClick(trigger);
     }
 
     /**
@@ -483,25 +648,16 @@ var Clipboard = (function (_Emitter) {
     };
 
     /**
-     * Delegates a click event on the passed selector.
-     * @param {String} selector
+     * Adds a click event listener to the passed trigger.
+     * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
      */
 
-    Clipboard.prototype.delegateClick = function delegateClick(selector) {
+    Clipboard.prototype.listenClick = function listenClick(trigger) {
         var _this = this;
 
-        this.binding = _delegate2['default'].bind(document.body, selector, 'click', function (e) {
+        this.listener = _goodListener2['default'](trigger, 'click', function (e) {
             return _this.onClick(e);
         });
-    };
-
-    /**
-     * Undelegates a click event on body.
-     * @param {String} selector
-     */
-
-    Clipboard.prototype.undelegateClick = function undelegateClick() {
-        _delegate2['default'].unbind(document.body, 'click', this.binding);
     };
 
     /**
@@ -515,10 +671,10 @@ var Clipboard = (function (_Emitter) {
         }
 
         this.clipboardAction = new _clipboardAction2['default']({
-            action: this.action(e.delegateTarget),
-            target: this.target(e.delegateTarget),
-            text: this.text(e.delegateTarget),
-            trigger: e.delegateTarget,
+            action: this.action(e.target),
+            target: this.target(e.target),
+            text: this.text(e.target),
+            trigger: e.target,
             emitter: this
         });
     };
@@ -559,7 +715,7 @@ var Clipboard = (function (_Emitter) {
      */
 
     Clipboard.prototype.destroy = function destroy() {
-        this.undelegateClick();
+        this.listener.destroy();
 
         if (this.clipboardAction) {
             this.clipboardAction.destroy();
@@ -583,5 +739,5 @@ function getAttributeValue(suffix, element) {
 exports['default'] = Clipboard;
 module.exports = exports['default'];
 
-},{"./clipboard-action":6,"delegate":3,"tiny-emitter":5}]},{},[7])(7)
+},{"./clipboard-action":8,"good-listener":5,"tiny-emitter":7}]},{},[9])(9)
 });
