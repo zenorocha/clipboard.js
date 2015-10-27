@@ -6,7 +6,7 @@
   "main": "dist/clipboard.js",
   "ignore": [
     "/.*/",
-    "/example/",
+    "/demo/",
     "/test/",
     "/.*",
     "/bower.json",
