@@ -21,14 +21,14 @@
     "cut"
   ],
   "dependencies": {
-    "babelify": "^6.3.0",
-    "browserify": "^11.2.0",
     "good-listener": "^1.1.2",
     "select": "^1.0.4",
     "tiny-emitter": "^1.0.0"
   },
   "devDependencies": {
     "babel": "^5.8.29",
+    "babelify": "^6.3.0",
+    "browserify": "^11.2.0",
     "karma": "^0.13.10",
     "karma-browserify": "^4.4.0",
     "karma-chai": "^0.1.0",
