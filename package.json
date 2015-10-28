@@ -4,8 +4,7 @@
   "description": "Modern copy to clipboard. No Flash. Just 2kb",
   "repository": "zenorocha/clipboard.js",
   "license": "MIT",
-  "main": "dist/clipboard.js",
-  "browser": "src/clipboard.js",
+  "main": "lib/clipboard.js",
   "browserify": {
     "transform": [
       [
@@ -29,6 +28,7 @@
     "tiny-emitter": "^1.0.0"
   },
   "devDependencies": {
+    "babel": "^5.8.29",
     "karma": "^0.13.10",
     "karma-browserify": "^4.4.0",
     "karma-chai": "^0.1.0",
@@ -48,6 +48,7 @@
     "build-watch": "watchify src/clipboard.js -s Clipboard -o dist/clipboard.js -v",
     "test": "npm run test-browser && npm run test-server",
     "test-browser": "karma start --single-run",
-    "test-server": "mocha test/module-systems.js"
+    "test-server": "mocha test/module-systems.js",
+    "prepublish": "babel src --out-dir lib --loose all"
   }
 }
