@@ -5,16 +5,6 @@
   "repository": "zenorocha/clipboard.js",
   "license": "MIT",
   "main": "lib/clipboard.js",
-  "browserify": {
-    "transform": [
-      [
-        "babelify",
-        {
-          "loose": "all"
-        }
-      ]
-    ]
-  },
   "keywords": [
     "clipboard",
     "copy",
@@ -43,9 +33,9 @@
   },
   "scripts": {
     "build": "npm run build-debug && npm run build-min",
-    "build-debug": "browserify src/clipboard.js -s Clipboard -p [bannerify --file .banner ] -o dist/clipboard.js",
+    "build-debug": "browserify src/clipboard.js -s Clipboard -t [babelify --loose all] -p [bannerify --file .banner ] -o dist/clipboard.js",
     "build-min": "uglifyjs dist/clipboard.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/clipboard.min.js",
-    "build-watch": "watchify src/clipboard.js -s Clipboard -o dist/clipboard.js -v",
+    "build-watch": "watchify src/clipboard.js -s Clipboard -t [babelify --loose all] -o dist/clipboard.js -v",
     "test": "karma start --single-run",
     "prepublish": "babel src --out-dir lib --loose all"
   }
