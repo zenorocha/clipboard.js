@@ -10,7 +10,9 @@
     "/test/",
     "/.*",
     "/bower.json",
-    "/karma.conf.js"
+    "/karma.conf.js",
+    "/src",
+    "/lib"
   ],
   "keywords": [
     "clipboard",
