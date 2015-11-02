@@ -102,6 +102,20 @@ Truth is, you don't even need another element to copy its content from. You can 
 </button>
 ```
 
+### Use custom event trigger
+
+you can listen other event, the default event is 'click'.
+
+```html
+<label class="triggerLabel" data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">
+    Double click, then copy to clipboard
+</label>
+```
+
+```javascript
+var clipboard = new Clipboard('.triggerLabel', {'triggerEvent' : 'dblclick'});
+```
+
 ## Events
 
 There are cases where you'd like to show some user feedback or capture what has been selected after a copy/cut operation.

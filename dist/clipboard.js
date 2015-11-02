@@ -621,9 +621,9 @@ var Clipboard = (function (_Emitter) {
         _classCallCheck(this, Clipboard);
 
         _Emitter.call(this);
-
+        this.defaultTriggerEvent = 'click';
         this.resolveOptions(options);
-        this.listenClick(trigger);
+        this.listenEvent(trigger);
     }
 
     /**
@@ -644,27 +644,28 @@ var Clipboard = (function (_Emitter) {
         this.action = typeof options.action === 'function' ? options.action : this.defaultAction;
         this.target = typeof options.target === 'function' ? options.target : this.defaultTarget;
         this.text = typeof options.text === 'function' ? options.text : this.defaultText;
+        this.triggerEvent = typeof options.triggerEvent === 'string' ? options.triggerEvent : this.defaultTriggerEvent;
     };
 
     /**
-     * Adds a click event listener to the passed trigger.
+     * Adds a event listener to the passed trigger.
      * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
      */
 
-    Clipboard.prototype.listenClick = function listenClick(trigger) {
+    Clipboard.prototype.listenEvent = function listenEvent(trigger) {
         var _this = this;
 
-        this.listener = _goodListener2['default'](trigger, 'click', function (e) {
-            return _this.onClick(e);
+        this.listener = _goodListener2['default'](trigger, this.triggerEvent, function (e) {
+            return _this.handleEvent(e);
         });
     };
 
     /**
-     * Defines a new `ClipboardAction` on each click event.
+     * Defines a new `ClipboardAction` on each trigger event.
      * @param {Event} e
      */
 
-    Clipboard.prototype.onClick = function onClick(e) {
+    Clipboard.prototype.handleEvent = function handleEvent(e) {
         if (this.clipboardAction) {
             this.clipboardAction = null;
         }

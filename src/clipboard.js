@@ -13,9 +13,9 @@ class Clipboard extends Emitter {
      */
     constructor(trigger, options) {
         super();
-
+        this.defaultTriggerEvent = 'click';
         this.resolveOptions(options);
-        this.listenClick(trigger);
+        this.listenEvent(trigger);
     }
 
     /**
@@ -27,21 +27,22 @@ class Clipboard extends Emitter {
         this.action = (typeof options.action === 'function') ? options.action : this.defaultAction;
         this.target = (typeof options.target === 'function') ? options.target : this.defaultTarget;
         this.text   = (typeof options.text   === 'function') ? options.text   : this.defaultText;
+        this.triggerEvent  = (typeof options.triggerEvent  === 'string')   ? options.triggerEvent  : this.defaultTriggerEvent;
     }
 
     /**
-     * Adds a click event listener to the passed trigger.
+     * Adds a event listener to the passed trigger.
      * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
      */
-    listenClick(trigger) {
-        this.listener = listen(trigger, 'click', (e) => this.onClick(e));
+    listenEvent(trigger) {
+        this.listener = listen(trigger, this.triggerEvent, (e) => this.handleEvent(e));
     }
 
     /**
-     * Defines a new `ClipboardAction` on each click event.
+     * Defines a new `ClipboardAction` on each trigger event.
      * @param {Event} e
      */
-    onClick(e) {
+    handleEvent(e) {
         if (this.clipboardAction) {
             this.clipboardAction = null;
         }
