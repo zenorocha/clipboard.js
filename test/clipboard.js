@@ -12,6 +12,14 @@ describe('Clipboard', () => {
         global.event = {
             target: global.button
         };
+
+        global.altkeyEvent = {
+            target: global.button,
+            altKey: true,
+            ctrlKey: false,
+            shiftKey: false,
+            metaKey: false
+        }
     });
 
     after(() => {
@@ -21,6 +29,7 @@ describe('Clipboard', () => {
     describe('#resolveOptions', () => {
         before(() => {
             global.fn = function() {};
+            global.key = 'alt';
         });
 
         it('should set action as a function', () => {
@@ -46,6 +55,14 @@ describe('Clipboard', () => {
 
             assert.equal(global.fn, clipboard.text);
         });
+
+        it('should set modifier key as a string', () => {
+            let clipboard = new Clipboard('.btn', {
+                modifier: global.key
+            });
+
+            assert.equal(global.key, clipboard.modifier);
+        });
     });
 
     describe('#listenClick', () => {
@@ -60,6 +77,24 @@ describe('Clipboard', () => {
             let clipboard = new Clipboard('.btn');
 
             clipboard.onClick(global.event);
+            assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+        });
+
+        it('should not create an instance of ClipboardAction', () => {
+            let clipboard = new Clipboard('.btn', {
+                modifier: 'shift'
+            });
+
+            clipboard.onClick(global.altkeyEvent);
+            assert.equal(clipboard.clipboardAction, null);
+        });
+
+        it('should create an instance of ClipboardAction', () => {
+            let clipboard = new Clipboard('.btn', {
+                modifier: 'alt'
+            });
+
+            clipboard.onClick(global.altkeyEvent);
             assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
         });
 
