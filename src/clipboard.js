@@ -27,6 +27,7 @@ class Clipboard extends Emitter {
         this.action = (typeof options.action === 'function') ? options.action : this.defaultAction;
         this.target = (typeof options.target === 'function') ? options.target : this.defaultTarget;
         this.text   = (typeof options.text   === 'function') ? options.text   : this.defaultText;
+        this.modifier = (typeof options.modifier === 'string' && /^(alt|ctrl|shift|meta){1}$/.test(options.modifier)) ? options.modifier : null;
     }
 
     /**
@@ -44,6 +45,10 @@ class Clipboard extends Emitter {
     onClick(e) {
         if (this.clipboardAction) {
             this.clipboardAction = null;
+        }
+
+        if (this.modifier) {
+            if (e[`${this.modifier}Key`] === false) return;
         }
 
         this.clipboardAction = new ClipboardAction({

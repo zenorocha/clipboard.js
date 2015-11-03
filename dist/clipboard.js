@@ -16,48 +16,7 @@ module.exports = function (element, selector, checkYoSelf) {
   }
 }
 
-},{"matches-selector":2}],2:[function(require,module,exports){
-
-/**
- * Element prototype.
- */
-
-var proto = Element.prototype;
-
-/**
- * Vendor function.
- */
-
-var vendor = proto.matchesSelector
-  || proto.webkitMatchesSelector
-  || proto.mozMatchesSelector
-  || proto.msMatchesSelector
-  || proto.oMatchesSelector;
-
-/**
- * Expose `match()`.
- */
-
-module.exports = match;
-
-/**
- * Match `el` to `selector`.
- *
- * @param {Element} el
- * @param {String} selector
- * @return {Boolean}
- * @api public
- */
-
-function match(el, selector) {
-  if (vendor) return vendor.call(el, selector);
-  var nodes = el.parentNode.querySelectorAll(selector);
-  for (var i = 0; i < nodes.length; ++i) {
-    if (nodes[i] == el) return true;
-  }
-  return false;
-}
-},{}],3:[function(require,module,exports){
+},{"matches-selector":5}],2:[function(require,module,exports){
 var closest = require('closest');
 
 /**
@@ -106,7 +65,7 @@ function listener(element, selector, type, callback) {
 
 module.exports = delegate;
 
-},{"closest":1}],4:[function(require,module,exports){
+},{"closest":1}],3:[function(require,module,exports){
 /**
  * Check if argument is a HTML element.
  *
@@ -157,7 +116,7 @@ exports.function = function(value) {
     return type === '[object Function]';
 };
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var is = require('./is');
 var delegate = require('delegate');
 
@@ -254,7 +213,48 @@ function listenSelector(selector, type, callback) {
 
 module.exports = listen;
 
-},{"./is":4,"delegate":3}],6:[function(require,module,exports){
+},{"./is":3,"delegate":2}],5:[function(require,module,exports){
+
+/**
+ * Element prototype.
+ */
+
+var proto = Element.prototype;
+
+/**
+ * Vendor function.
+ */
+
+var vendor = proto.matchesSelector
+  || proto.webkitMatchesSelector
+  || proto.mozMatchesSelector
+  || proto.msMatchesSelector
+  || proto.oMatchesSelector;
+
+/**
+ * Expose `match()`.
+ */
+
+module.exports = match;
+
+/**
+ * Match `el` to `selector`.
+ *
+ * @param {Element} el
+ * @param {String} selector
+ * @return {Boolean}
+ * @api public
+ */
+
+function match(el, selector) {
+  if (vendor) return vendor.call(el, selector);
+  var nodes = el.parentNode.querySelectorAll(selector);
+  for (var i = 0; i < nodes.length; ++i) {
+    if (nodes[i] == el) return true;
+  }
+  return false;
+}
+},{}],6:[function(require,module,exports){
 function select(element) {
     var selectedText;
 
@@ -288,24 +288,23 @@ function E () {
 E.prototype = {
 	on: function (name, callback, ctx) {
     var e = this.e || (this.e = {});
-
+    
     (e[name] || (e[name] = [])).push({
       fn: callback,
       ctx: ctx
     });
-
+    
     return this;
   },
 
   once: function (name, callback, ctx) {
     var self = this;
-    function listener () {
-      self.off(name, listener);
+    var fn = function () {
+      self.off(name, fn);
       callback.apply(ctx, arguments);
     };
-
-    listener._ = callback
-    return this.on(name, listener, ctx);
+    
+    return this.on(name, fn, ctx);
   },
 
   emit: function (name) {
@@ -313,11 +312,11 @@ E.prototype = {
     var evtArr = ((this.e || (this.e = {}))[name] || []).slice();
     var i = 0;
     var len = evtArr.length;
-
+    
     for (i; i < len; i++) {
       evtArr[i].fn.apply(evtArr[i].ctx, data);
     }
-
+    
     return this;
   },
 
@@ -325,22 +324,21 @@ E.prototype = {
     var e = this.e || (this.e = {});
     var evts = e[name];
     var liveEvents = [];
-
+    
     if (evts && callback) {
       for (var i = 0, len = evts.length; i < len; i++) {
-        if (evts[i].fn !== callback && evts[i].fn._ !== callback)
-          liveEvents.push(evts[i]);
+        if (evts[i].fn !== callback) liveEvents.push(evts[i]);
       }
     }
-
+    
     // Remove event from queue to prevent memory leak
     // Suggested by https://github.com/lazd
     // Ref: https://github.com/scottcorgan/tiny-emitter/commit/c6ebfaa9bc973b33d110a84a307742b7cf94c953#commitcomment-5024910
 
-    (liveEvents.length)
+    (liveEvents.length) 
       ? e[name] = liveEvents
       : delete e[name];
-
+    
     return this;
   }
 };
@@ -644,6 +642,7 @@ var Clipboard = (function (_Emitter) {
         this.action = typeof options.action === 'function' ? options.action : this.defaultAction;
         this.target = typeof options.target === 'function' ? options.target : this.defaultTarget;
         this.text = typeof options.text === 'function' ? options.text : this.defaultText;
+        this.modifier = typeof options.modifier === 'string' && /^(alt|ctrl|shift|meta){1}$/.test(options.modifier) ? options.modifier : null;
     };
 
     /**
@@ -667,6 +666,10 @@ var Clipboard = (function (_Emitter) {
     Clipboard.prototype.onClick = function onClick(e) {
         if (this.clipboardAction) {
             this.clipboardAction = null;
+        }
+
+        if (this.modifier) {
+            if (e[this.modifier + 'Key'] === false) return;
         }
 
         this.clipboardAction = new _clipboardAction2['default']({
@@ -738,5 +741,5 @@ function getAttributeValue(suffix, element) {
 exports['default'] = Clipboard;
 module.exports = exports['default'];
 
-},{"./clipboard-action":8,"good-listener":5,"tiny-emitter":7}]},{},[9])(9)
+},{"./clipboard-action":8,"good-listener":4,"tiny-emitter":7}]},{},[9])(9)
 });
