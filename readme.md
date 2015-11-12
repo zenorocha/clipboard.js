@@ -166,9 +166,11 @@ This library relies on both [Selection](https://developer.mozilla.org/en-US/docs
 |:---:|:---:|:---:|:---:|:---:|
 | 42+ ✔ | 41+ ✔ | 9+ ✔ | 29+ ✔ | Nope ✘ |
 
-Although copy/cut operations with [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand) aren't supported on Safari yet (including mobile), it gracefully degrades because [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection) is supported.
+Although copy/cut operations with [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand) aren't supported on Safari yet (including mobile), it gracefully degrades.
 
-That means you can show a tooltip saying `Copied!` when `success` event is called and `Press Ctrl+C to copy` when `error` event is called because the text is already selected.
+In Safari on the desktop, [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection) is used instead. That means you can show a tooltip saying `Copied!` when `success` event is called and `Press Ctrl+C to copy` when `error` event is called because the text is already selected.
+
+In Safari on iOS, Selection does not work either, so the cursor is simply moved into the text field so that the user can do "select all" and "copy".
 
 For a live demonstration, open this [site](http://clipboardjs.com) on Safari.
 
