@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v1.5.3
+ * clipboard.js v1.5.4
  * https://zenorocha.github.io/clipboard.js
  *
  * Licensed MIT © Zeno Rocha
@@ -92,13 +92,9 @@ function delegate(element, selector, type, callback) {
  */
 function listener(element, selector, type, callback) {
     return function(e) {
-        var delegateTarget = closest(e.target, selector, true);
+        e.delegateTarget = closest(e.target, selector, true);
 
-        if (delegateTarget) {
-            Object.defineProperty(e, 'target', {
-                value: delegateTarget
-            });
-
+        if (e.delegateTarget) {
             callback.call(element, e);
         }
     }
@@ -665,15 +661,17 @@ var Clipboard = (function (_Emitter) {
      */
 
     Clipboard.prototype.onClick = function onClick(e) {
+        var trigger = e.delegateTarget || e.currentTarget;
+
         if (this.clipboardAction) {
             this.clipboardAction = null;
         }
 
         this.clipboardAction = new _clipboardAction2['default']({
-            action: this.action(e.target),
-            target: this.target(e.target),
-            text: this.text(e.target),
-            trigger: e.target,
+            action: this.action(trigger),
+            target: this.target(trigger),
+            text: this.text(trigger),
+            trigger: trigger,
             emitter: this
         });
     };
