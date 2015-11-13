@@ -11,7 +11,7 @@
     "cut"
   ],
   "dependencies": {
-    "good-listener": "^1.1.2",
+    "good-listener": "^1.1.4",
     "select": "^1.0.4",
     "tiny-emitter": "^1.0.0"
   },

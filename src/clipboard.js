@@ -42,15 +42,17 @@ class Clipboard extends Emitter {
      * @param {Event} e
      */
     onClick(e) {
+        var trigger = e.delegateTarget || e.currentTarget;
+
         if (this.clipboardAction) {
             this.clipboardAction = null;
         }
 
         this.clipboardAction = new ClipboardAction({
-            action  : this.action(e.currentTarget),
-            target  : this.target(e.currentTarget),
-            text    : this.text(e.currentTarget),
-            trigger : e.currentTarget,
+            action  : this.action(trigger),
+            target  : this.target(trigger),
+            text    : this.text(trigger),
+            trigger : trigger,
             emitter : this
         });
     }
