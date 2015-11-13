@@ -18,7 +18,9 @@
   "devDependencies": {
     "babel": "^5.8.29",
     "babelify": "^6.3.0",
+    "bannerify": "Vekat/bannerify#feature-option",
     "browserify": "^11.2.0",
+    "chai": "^3.4.1",
     "karma": "^0.13.10",
     "karma-browserify": "^4.4.0",
     "karma-chai": "^0.1.0",
@@ -26,10 +28,11 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-sinon": "^1.0.4",
     "mocha": "^2.3.3",
+    "phantomjs": "^1.9.18",
     "phantomjs-polyfill": "0.0.1",
+    "sinon": "^1.17.2",
     "uglify-js": "^2.4.24",
-    "watchify": "^3.4.0",
-    "bannerify": "Vekat/bannerify#feature-option"
+    "watchify": "^3.4.0"
   },
   "scripts": {
     "build": "npm run build-debug && npm run build-min",
