@@ -170,6 +170,13 @@ textarea {
     line-height: 20px;
 }
 
+@media screen and (max-width: 768px) {
+    .snippet .btn {
+        display: none;
+    }
+}
+
+
 .snippet .btn {
     -webkit-transition: opacity 0.3s ease-in-out;
     -o-transition: opacity 0.3s ease-in-out;
