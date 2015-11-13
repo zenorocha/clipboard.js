@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v1.5.4
+ * clipboard.js v1.5.5
  * https://zenorocha.github.io/clipboard.js
  *
  * Licensed MIT © Zeno Rocha
@@ -255,11 +255,16 @@ function select(element) {
     var selectedText;
 
     if (element.nodeName === 'INPUT' || element.nodeName === 'TEXTAREA') {
-        element.select();
+        element.focus();
+        element.setSelectionRange(0, element.value.length);
 
         selectedText = element.value;
     }
     else {
+        if (element.hasAttribute('contenteditable')) {
+            element.focus();
+        }
+
         var selection = window.getSelection();
         var range = document.createRange();
 
