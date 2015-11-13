@@ -6,7 +6,7 @@ import listen from 'good-listener';
  * Base class which takes one or more elements, adds event listeners to them,
  * and instantiates a new `ClipboardAction` on each click.
  */
-class Clipboard extends Emitter {
+export default class Clipboard extends Emitter {
     /**
      * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
      * @param {Object} options
@@ -42,7 +42,7 @@ class Clipboard extends Emitter {
      * @param {Event} e
      */
     onClick(e) {
-        var trigger = e.delegateTarget || e.currentTarget;
+        let trigger = e.delegateTarget || e.currentTarget;
 
         if (this.clipboardAction) {
             this.clipboardAction = null;
@@ -113,5 +113,3 @@ function getAttributeValue(suffix, element) {
 
     return element.getAttribute(attribute);
 }
-
-export default Clipboard;
