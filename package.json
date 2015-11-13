@@ -12,7 +12,7 @@
   ],
   "dependencies": {
     "good-listener": "^1.1.4",
-    "select": "^1.0.4",
+    "select": "^1.0.6",
     "tiny-emitter": "^1.0.0"
   },
   "devDependencies": {
