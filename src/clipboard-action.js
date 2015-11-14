@@ -4,7 +4,7 @@ import select from 'select';
  * Inner class which performs selection from either `text` or `target`
  * properties and then executes copy or cut operations.
  */
-class ClipboardAction {
+export default class ClipboardAction {
     /**
      * @param {Object} options
      */
@@ -192,5 +192,3 @@ class ClipboardAction {
         this.removeFake();
     }
 }
-
-export default ClipboardAction;
