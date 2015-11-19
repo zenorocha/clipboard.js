@@ -151,7 +151,7 @@ new Clipboard('.btn', {
 });
 ```
 
-Also, with are working with single page apps, you may want to manage the lifecycle of the DOM more precisely. Here's how you clean up the events and objects that we create.
+Also, if you are working with single page apps, you may want to manage the lifecycle of the DOM more precisely. Here's how you clean up the events and objects that we create.
 
 ```js
 var clipboard = new Clipboard('.btn');
