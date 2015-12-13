@@ -77,7 +77,7 @@ describe('Clipboard', () => {
             assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
         });
 
-        it('should throws exception target', done => {
+        it('should throw an exception when target is invalid', done => {
             try {
                 var clipboard = new Clipboard('.btn', {
                     target: function() {
