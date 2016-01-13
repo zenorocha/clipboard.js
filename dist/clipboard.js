@@ -417,6 +417,8 @@ var ClipboardAction = (function () {
     ClipboardAction.prototype.selectFake = function selectFake() {
         var _this = this;
 
+        var isRTL = document.documentElement.getAttribute('dir') == 'rtl';
+
         this.removeFake();
 
         this.fakeHandler = document.body.addEventListener('click', function () {
@@ -425,7 +427,7 @@ var ClipboardAction = (function () {
 
         this.fakeElem = document.createElement('textarea');
         this.fakeElem.style.position = 'absolute';
-        this.fakeElem.style[document.documentElement.getAttribute('dir') == 'rtl' ? 'right' : 'left'] = '-9999px';
+        this.fakeElem.style[isRTL ? 'right' : 'left'] = '-9999px';
         this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
         this.fakeElem.setAttribute('readonly', '');
         this.fakeElem.value = this.text;
