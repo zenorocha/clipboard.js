@@ -51,13 +51,15 @@ export default class ClipboardAction {
      * and makes a selection on it.
      */
     selectFake() {
+        let isRTL = document.documentElement.getAttribute('dir') == 'rtl';
+
         this.removeFake();
 
         this.fakeHandler = document.body.addEventListener('click', () => this.removeFake());
 
         this.fakeElem = document.createElement('textarea');
         this.fakeElem.style.position = 'absolute';
-        this.fakeElem.style.left = '-9999px';
+        this.fakeElem.style[ isRTL ? 'right' : 'left' ] = '-9999px';
         this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
         this.fakeElem.setAttribute('readonly', '');
         this.fakeElem.value = this.text;
