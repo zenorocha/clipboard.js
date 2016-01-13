@@ -1,9 +1,3 @@
-/*!
- * clipboard.js v1.5.5
- * https://zenorocha.github.io/clipboard.js
- *
- * Licensed MIT © Zeno Rocha
- */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Clipboard = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var matches = require('matches-selector')
 
@@ -67,16 +61,17 @@ var closest = require('closest');
  * @param {String} selector
  * @param {String} type
  * @param {Function} callback
+ * @param {Boolean} useCapture
  * @return {Object}
  */
-function delegate(element, selector, type, callback) {
+function delegate(element, selector, type, callback, useCapture) {
     var listenerFn = listener.apply(this, arguments);
 
-    element.addEventListener(type, listenerFn);
+    element.addEventListener(type, listenerFn, useCapture);
 
     return {
         destroy: function() {
-            element.removeEventListener(type, listenerFn);
+            element.removeEventListener(type, listenerFn, useCapture);
         }
     }
 }
@@ -430,7 +425,7 @@ var ClipboardAction = (function () {
 
         this.fakeElem = document.createElement('textarea');
         this.fakeElem.style.position = 'absolute';
-        this.fakeElem.style.left = '-9999px';
+        this.fakeElem.style[document.documentElement.getAttribute('dir') == 'rtl' ? 'right' : 'left'] = '-9999px';
         this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
         this.fakeElem.setAttribute('readonly', '');
         this.fakeElem.value = this.text;
@@ -728,6 +723,7 @@ var Clipboard = (function (_Emitter) {
     return Clipboard;
 })(_tinyEmitter2['default']);
 
+exports['default'] = Clipboard;
 function getAttributeValue(suffix, element) {
     var attribute = 'data-clipboard-' + suffix;
 
@@ -737,8 +733,6 @@ function getAttributeValue(suffix, element) {
 
     return element.getAttribute(attribute);
 }
-
-exports['default'] = Clipboard;
 module.exports = exports['default'];
 
 },{"./clipboard-action":8,"good-listener":5,"tiny-emitter":7}]},{},[9])(9)
