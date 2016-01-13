@@ -57,6 +57,19 @@ describe('ClipboardAction', () => {
                 done();
             }
         });
+
+        it('should set the position right style property', done => {
+            // Set document direction
+            document.documentElement.setAttribute('dir', 'rtl');
+
+            let clip = new ClipboardAction({
+                    emitter: new Emitter(),
+                    text: 'foo'
+                });
+
+            assert.equal(clip.fakeElem.style.right, '-9999px');
+            done();
+        });
     });
 
     describe('#set action', () => {
