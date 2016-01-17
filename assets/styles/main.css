@@ -232,24 +232,22 @@ code {
    Footer
    ========================================================================== */
 
-.footer {
-    padding: 36px 0;
-}
-
-.credits {
+.credits, .maintainer {
     font-weight: 400;
     font-family: 'Lato', sans-serif;
     font-size: 20px;
     color: #16a085;
+    padding: 30px 0;
+    margin: 0;
 }
 
-.credits-link {
+.footer-link {
     color: white;
     border-color: white;
 }
 
-.credits-link:hover,
-.credits-link:focus {
+.footer-link:hover,
+.footer-link:focus {
     text-decoration: none;
     border-color: white;
 }
@@ -276,6 +274,10 @@ code {
 }
 @keyframes love {
     to {transform: scale(1.2);}
+}
+
+.maintainer {
+    background: rgba(0, 0, 0, .05);
 }
 
 /* ==========================================================================
