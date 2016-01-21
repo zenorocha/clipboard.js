@@ -56,9 +56,7 @@ export default class ClipboardAction {
         this.fakeHandler = document.body.addEventListener('click', () => this.removeFake());
 
         this.fakeElem = document.createElement('textarea');
-        this.fakeElem.style.position = 'absolute';
-        this.fakeElem.style.left = '-9999px';
-        this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
+        this.fakeElem.style.cssText = 'border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px';
         this.fakeElem.setAttribute('readonly', '');
         this.fakeElem.value = this.text;
 
