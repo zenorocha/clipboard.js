@@ -8,5 +8,5 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.addFiles("dist/clipboard.min.js", "client");
+  api.addFiles("dist/clipboard.js", "client");
 });
