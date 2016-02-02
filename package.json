@@ -16,30 +16,32 @@
     "tiny-emitter": "^1.0.0"
   },
   "devDependencies": {
-    "babel": "^5.8.29",
-    "babelify": "^6.3.0",
+    "babel": "^6.3.26",
+    "babel-cli": "^6.4.5",
+    "babel-preset-es2015": "^6.3.13",
+    "babelify": "^7.2.0",
     "bannerify": "Vekat/bannerify#feature-option",
-    "browserify": "^11.2.0",
+    "browserify": "^13.0.0",
     "chai": "^3.4.1",
     "karma": "^0.13.10",
-    "karma-browserify": "^4.4.0",
+    "karma-browserify": "^5.0.1",
     "karma-chai": "^0.1.0",
     "karma-mocha": "^0.2.0",
-    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-phantomjs-launcher": "^1.0.0",
     "karma-sinon": "^1.0.4",
     "mocha": "^2.3.3",
-    "phantomjs": "^1.9.18",
     "phantomjs-polyfill": "0.0.1",
+    "phantomjs-prebuilt": "^2.1.3",
     "sinon": "^1.17.2",
     "uglify-js": "^2.4.24",
-    "watchify": "^3.4.0"
+    "watchify": "^3.7.0"
   },
   "scripts": {
     "build": "npm run build-debug && npm run build-min",
-    "build-debug": "browserify src/clipboard.js -s Clipboard -t [babelify --loose all] -p [bannerify --file .banner ] -o dist/clipboard.js",
+    "build-debug": "browserify src/clipboard.js -s Clipboard -t [babelify --presets es2015] -p [bannerify --file .banner ] -o dist/clipboard.js",
     "build-min": "uglifyjs dist/clipboard.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/clipboard.min.js",
-    "build-watch": "watchify src/clipboard.js -s Clipboard -t [babelify --loose all] -o dist/clipboard.js -v",
+    "build-watch": "watchify src/clipboard.js -s Clipboard -t [babelify --presets es2015] -o dist/clipboard.js -v",
     "test": "karma start --single-run",
-    "prepublish": "babel src --out-dir lib --loose all"
+    "prepublish": "babel src --out-dir lib --presets es2015"
   }
 }
