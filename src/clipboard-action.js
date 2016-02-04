@@ -58,6 +58,8 @@ export default class ClipboardAction {
         this.fakeHandler = document.body.addEventListener('click', () => this.removeFake());
 
         this.fakeElem = document.createElement('textarea');
+        this.fakeElem.style.padding = '0';
+        this.fakeElem.style.margin = '0';
         this.fakeElem.style.position = 'absolute';
         this.fakeElem.style.fontSize = '12pt'; // Prevent zooming on iPhones.
         this.fakeElem.style[ isRTL ? 'right' : 'left' ] = '-9999px';
