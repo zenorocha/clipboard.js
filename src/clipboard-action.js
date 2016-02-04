@@ -52,6 +52,7 @@ export default class ClipboardAction {
      */
     selectFake() {
         let isRTL = document.documentElement.getAttribute('dir') == 'rtl';
+        let top = (window.pageYOffset || document.documentElement.scrollTop);
 
         this.removeFake();
 
@@ -68,11 +69,20 @@ export default class ClipboardAction {
         this.fakeElem.style.position = 'absolute';
         this.fakeElem.style[ isRTL ? 'right' : 'left' ] = '-9999px';
         // Move element to the same position vertically
-        this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
+        this.fakeElem.style.top = top + 'px';
         this.fakeElem.setAttribute('readonly', '');
         this.fakeElem.value = this.text;
 
         document.body.appendChild(this.fakeElem);
+
+        // Only after it's in the DOM can we truly tell if some other style like
+        // negative margins are causing it to be rendered off-screen. If it ends
+        // up off screen at all the browser will scroll to it when we select() it
+        let rect = this.fakeElem.getBoundingClientRect();
+
+        if (rect.top < 0) {
+            this.fakeElem.style.top = top - rect.top + 'px';
+        }
 
         this.selectedText = select(this.fakeElem);
         this.copyText();
