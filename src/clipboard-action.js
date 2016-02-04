@@ -59,6 +59,7 @@ export default class ClipboardAction {
 
         this.fakeElem = document.createElement('textarea');
         this.fakeElem.style.position = 'absolute';
+        this.fakeElem.style.fontSize = '12pt'; // Prevent zooming on iPhones.
         this.fakeElem.style[ isRTL ? 'right' : 'left' ] = '-9999px';
         this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
         this.fakeElem.setAttribute('readonly', '');
