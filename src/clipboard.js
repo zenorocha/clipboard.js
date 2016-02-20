@@ -6,7 +6,7 @@ import listen from 'good-listener';
  * Base class which takes one or more elements, adds event listeners to them,
  * and instantiates a new `ClipboardAction` on each click.
  */
-export default class Clipboard extends Emitter {
+class Clipboard extends Emitter {
     /**
      * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
      * @param {Object} options
@@ -113,3 +113,5 @@ function getAttributeValue(suffix, element) {
 
     return element.getAttribute(attribute);
 }
+
+module.exports = Clipboard;

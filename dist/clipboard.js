@@ -352,22 +352,18 @@ module.exports = E;
 },{}],8:[function(require,module,exports){
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', 'select'], factory);
+        define(['module', 'select'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('select'));
+        factory(module, require('select'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.select);
+        factory(mod, global.select);
         global.clipboardAction = mod.exports;
     }
-})(this, function (exports, _select) {
+})(this, function (module, _select) {
     'use strict';
-
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
 
     var _select2 = _interopRequireDefault(_select);
 
@@ -572,28 +568,24 @@ module.exports = E;
         return ClipboardAction;
     }();
 
-    exports.default = ClipboardAction;
+    module.exports = ClipboardAction;
 });
 
 },{"select":6}],9:[function(require,module,exports){
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
-        define(['exports', './clipboard-action', 'tiny-emitter', 'good-listener'], factory);
+        define(['module', './clipboard-action', 'tiny-emitter', 'good-listener'], factory);
     } else if (typeof exports !== "undefined") {
-        factory(exports, require('./clipboard-action'), require('tiny-emitter'), require('good-listener'));
+        factory(module, require('./clipboard-action'), require('tiny-emitter'), require('good-listener'));
     } else {
         var mod = {
             exports: {}
         };
-        factory(mod.exports, global.clipboardAction, global.tinyEmitter, global.goodListener);
+        factory(mod, global.clipboardAction, global.tinyEmitter, global.goodListener);
         global.clipboard = mod.exports;
     }
-})(this, function (exports, _clipboardAction, _tinyEmitter, _goodListener) {
+})(this, function (module, _clipboardAction, _tinyEmitter, _goodListener) {
     'use strict';
-
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
 
     var _clipboardAction2 = _interopRequireDefault(_clipboardAction);
 
@@ -722,9 +714,6 @@ module.exports = E;
         return Clipboard;
     }(_tinyEmitter2.default);
 
-    exports.default = Clipboard;
-
-
     /**
      * Helper function to retrieve attribute value.
      * @param {String} suffix
@@ -739,6 +728,8 @@ module.exports = E;
 
         return element.getAttribute(attribute);
     }
+
+    module.exports = Clipboard;
 });
 
 },{"./clipboard-action":8,"good-listener":4,"tiny-emitter":7}]},{},[9])(9)
