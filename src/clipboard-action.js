@@ -179,6 +179,14 @@ class ClipboardAction {
     set target(target) {
         if (target !== undefined) {
             if (target && typeof target === 'object' && target.nodeType === 1) {
+                if (this.action === 'copy' && target.hasAttribute('disabled')) {
+                    throw new Error('Invalid "target" attribute. Please use "readonly" instead of "disabled" attribute');
+                }
+
+                if (this.action === 'cut' && (target.hasAttribute('readonly') || target.hasAttribute('disabled'))) {
+                    throw new Error('Invalid "target" attribute. You can\'t cut text from elements with "readonly" or "disabled" attributes');
+                }
+
                 this._target = target;
             }
             else {
