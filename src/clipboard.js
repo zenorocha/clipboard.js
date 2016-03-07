@@ -26,7 +26,7 @@ class Clipboard extends Emitter {
     resolveOptions(options = {}) {
         this.action = (typeof options.action === 'function') ? options.action : this.defaultAction;
         this.target = (typeof options.target === 'function') ? options.target : this.defaultTarget;
-        this.text   = (typeof options.text   === 'function') ? options.text   : this.defaultText;
+        this.text   = (typeof options.text   === 'function') ? options.text   : options.text || this.defaultText;
     }
 
     /**
