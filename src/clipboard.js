@@ -42,7 +42,7 @@ class Clipboard extends Emitter {
      * @param {Event} e
      */
     onClick(e) {
-        let trigger = e.delegateTarget || e.currentTarget;
+        const trigger = e.delegateTarget || e.currentTarget;
 
         if (this.clipboardAction) {
             this.clipboardAction = null;
@@ -70,7 +70,7 @@ class Clipboard extends Emitter {
      * @param {Element} trigger
      */
     defaultTarget(trigger) {
-        let selector = getAttributeValue('target', trigger);
+        const selector = getAttributeValue('target', trigger);
 
         if (selector) {
             return document.querySelector(selector);
@@ -105,7 +105,7 @@ class Clipboard extends Emitter {
  * @param {Element} element
  */
 function getAttributeValue(suffix, element) {
-    let attribute = `data-clipboard-${suffix}`;
+    const attribute = `data-clipboard-${suffix}`;
 
     if (!element.hasAttribute(attribute)) {
         return;
