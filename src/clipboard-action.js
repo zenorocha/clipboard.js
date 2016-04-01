@@ -51,7 +51,7 @@ class ClipboardAction {
      * and makes a selection on it.
      */
     selectFake() {
-        let isRTL = document.documentElement.getAttribute('dir') == 'rtl';
+        const isRTL = document.documentElement.getAttribute('dir') == 'rtl';
 
         this.removeFake();
 
