@@ -35,29 +35,6 @@ describe('ClipboardAction', () => {
     });
 
     describe('#initSelection', () => {
-        it('should throw an error since both "text" and "target" were passed', done => {
-            try {
-                new ClipboardAction({
-                    text: 'foo',
-                    target: document.querySelector('#input')
-                });
-            }
-            catch(e) {
-                assert.equal(e.message, 'Multiple attributes declared, use either "target" or "text"');
-                done();
-            }
-        });
-
-        it('should throw an error since neither "text" nor "target" were passed', done => {
-            try {
-                new ClipboardAction();
-            }
-            catch(e) {
-                assert.equal(e.message, 'Missing required attributes, use either "target" or "text"');
-                done();
-            }
-        });
-
         it('should set the position right style property', done => {
             // Set document direction
             document.documentElement.setAttribute('dir', 'rtl');

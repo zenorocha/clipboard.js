@@ -32,17 +32,11 @@ class ClipboardAction {
      * on the existence of `text` and `target` properties.
      */
     initSelection() {
-        if (this.text && this.target) {
-            throw new Error('Multiple attributes declared, use either "target" or "text"');
-        }
-        else if (this.text) {
+        if (this.text) {
             this.selectFake();
         }
         else if (this.target) {
             this.selectTarget();
-        }
-        else {
-            throw new Error('Missing required attributes, use either "target" or "text"');
         }
     }
 
