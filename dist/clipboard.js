@@ -688,6 +688,7 @@ module.exports = E;
                 trigger: trigger,
                 emitter: this
             });
+            e.preventDefault();
         };
 
         Clipboard.prototype.defaultAction = function defaultAction(trigger) {
