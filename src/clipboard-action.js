@@ -49,7 +49,7 @@ class ClipboardAction {
 
         this.removeFake();
 
-        this.fakeHandler = document.body.addEventListener('click', () => this.removeFake());
+        this.fakeHandler = document.body.addEventListener('click', () => this.removeFake()) || true;
 
         this.fakeElem = document.createElement('textarea');
         // Prevent zooming on iOS
