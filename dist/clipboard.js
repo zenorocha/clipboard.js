@@ -450,7 +450,7 @@ module.exports = E;
 
             this.fakeHandler = document.body.addEventListener('click', function () {
                 return _this.removeFake();
-            });
+            }) || true;
 
             this.fakeElem = document.createElement('textarea');
             // Prevent zooming on iOS
@@ -460,7 +460,7 @@ module.exports = E;
             this.fakeElem.style.padding = '0';
             this.fakeElem.style.margin = '0';
             // Move element out of screen horizontally
-            this.fakeElem.style.position = 'fixed';
+            this.fakeElem.style.position = 'absolute';
             this.fakeElem.style[isRTL ? 'right' : 'left'] = '-9999px';
             // Move element to the same position vertically
             this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
