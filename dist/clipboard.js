@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v1.5.10
+ * clipboard.js v1.5.11
  * https://zenorocha.github.io/clipboard.js
  *
  * Licensed MIT © Zeno Rocha
@@ -448,9 +448,10 @@ module.exports = E;
 
             this.removeFake();
 
-            this.fakeHandler = document.body.addEventListener('click', function () {
+            this.fakeHandlerCallback = function () {
                 return _this.removeFake();
-            }) || true;
+            };
+            this.fakeHandler = document.body.addEventListener('click', this.fakeHandlerCallback) || true;
 
             this.fakeElem = document.createElement('textarea');
             // Prevent zooming on iOS
@@ -475,8 +476,9 @@ module.exports = E;
 
         ClipboardAction.prototype.removeFake = function removeFake() {
             if (this.fakeHandler) {
-                document.body.removeEventListener('click');
+                document.body.removeEventListener('click', this.fakeHandlerCallback);
                 this.fakeHandler = null;
+                this.fakeHandlerCallback = null;
             }
 
             if (this.fakeElem) {
@@ -491,7 +493,7 @@ module.exports = E;
         };
 
         ClipboardAction.prototype.copyText = function copyText() {
-            var succeeded = undefined;
+            var succeeded = void 0;
 
             try {
                 succeeded = document.execCommand(this.action);
