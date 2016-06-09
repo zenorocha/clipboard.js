@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v1.5.11
+ * clipboard.js v1.5.12
  * https://zenorocha.github.io/clipboard.js
  *
  * Licensed MIT © Zeno Rocha
@@ -493,7 +493,7 @@ module.exports = E;
         };
 
         ClipboardAction.prototype.copyText = function copyText() {
-            var succeeded = void 0;
+            var succeeded = undefined;
 
             try {
                 succeeded = document.execCommand(this.action);
