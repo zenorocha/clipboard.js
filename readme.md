@@ -5,7 +5,7 @@
 
 > Modern copy to clipboard. No Flash. Just 3kb gzipped.
 
-<a href="http://clipboardjs.com/"><img width="728" src="https://cloud.githubusercontent.com/assets/398893/9983535/5ab0a950-5fb4-11e5-9602-e73c0b661883.jpg" alt="Demo"></a>
+<a href="http://clipboardjs.com/"><img width="728" src="https://cloud.githubusercontent.com/assets/398893/16165747/a0f6fc46-349a-11e6-8c9b-c5fd58d9099c.png" alt="Demo"></a>
 
 ## Why
 
