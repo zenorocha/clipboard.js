@@ -130,6 +130,7 @@ class ClipboardAction {
         else {
             this.emitter.emit('error', {
                 action: this.action,
+                text: this.selectedText,
                 trigger: this.trigger,
                 clearSelection: this.clearSelection.bind(this)
             });
