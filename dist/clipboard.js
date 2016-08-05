@@ -283,12 +283,12 @@ module.exports = select;
 
 },{}],7:[function(require,module,exports){
 function E () {
-  // Keep this empty so it's easier to inherit from
+	// Keep this empty so it's easier to inherit from
   // (via https://github.com/lipsmack from https://github.com/scottcorgan/tiny-emitter/issues/3)
 }
 
 E.prototype = {
-  on: function (name, callback, ctx) {
+	on: function (name, callback, ctx) {
     var e = this.e || (this.e = {});
 
     (e[name] || (e[name] = [])).push({
@@ -407,6 +407,7 @@ module.exports = E;
         /**
          * @param {Object} options
          */
+
         function ClipboardAction(options) {
             _classCallCheck(this, ClipboardAction);
 
@@ -492,7 +493,7 @@ module.exports = E;
         };
 
         ClipboardAction.prototype.copyText = function copyText() {
-            var succeeded = void 0;
+            var succeeded = undefined;
 
             try {
                 succeeded = document.execCommand(this.action);
@@ -504,12 +505,20 @@ module.exports = E;
         };
 
         ClipboardAction.prototype.handleResult = function handleResult(succeeded) {
-            this.emitter.emit(succeeded ? 'success' : 'error', {
-                action: this.action,
-                text: this.selectedText,
-                trigger: this.trigger,
-                clearSelection: this.clearSelection.bind(this)
-            });
+            if (succeeded) {
+                this.emitter.emit('success', {
+                    action: this.action,
+                    text: this.selectedText,
+                    trigger: this.trigger,
+                    clearSelection: this.clearSelection.bind(this)
+                });
+            } else {
+                this.emitter.emit('error', {
+                    action: this.action,
+                    trigger: this.trigger,
+                    clearSelection: this.clearSelection.bind(this)
+                });
+            }
         };
 
         ClipboardAction.prototype.clearSelection = function clearSelection() {
@@ -633,6 +642,7 @@ module.exports = E;
          * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
          * @param {Object} options
          */
+
         function Clipboard(trigger, options) {
             _classCallCheck(this, Clipboard);
 
