@@ -168,7 +168,7 @@ This library relies on both [Selection](https://developer.mozilla.org/en-US/docs
 
 Although copy/cut operations with [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand) aren't supported on Safari yet (including mobile), it gracefully degrades because [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection) is supported.
 
-That means you can show a tooltip saying `Copied!` when `success` event is called and `Press Command+C to copy` when `error` event is called because the text is already selected.
+That means you can show a tooltip saying `Copied!` when `success` event is called. On an `error` event, you can check to see if `document.queryCommandSupported("copy")` is false and show `Press Command+C to copy` instead.
 
 For a live demonstration, open this [site](http://clipboardjs.com) on Safari.
 
