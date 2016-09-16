@@ -41,7 +41,7 @@ class ClipboardAction {
     }
 
     /**
-     * Creates a fake textarea element, sets its value from `text` property,
+     * Creates a fake content editable div, sets its value from `text` property,
      * and makes a selection on it.
      */
     selectFake() {
@@ -52,7 +52,8 @@ class ClipboardAction {
         this.fakeHandlerCallback = () => this.removeFake();
         this.fakeHandler = document.body.addEventListener('click', this.fakeHandlerCallback) || true;
 
-        this.fakeElem = document.createElement('textarea');
+        this.fakeElem = document.createElement('div');
+        this.fakeElem.contentEditable = true;
         // Prevent zooming on iOS
         this.fakeElem.style.fontSize = '12pt';
         // Reset box model
@@ -65,7 +66,7 @@ class ClipboardAction {
         // Move element to the same position vertically
         this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
         this.fakeElem.setAttribute('readonly', '');
-        this.fakeElem.value = this.text;
+        this.fakeElem.innerHTML = this.text;
 
         document.body.appendChild(this.fakeElem);
 

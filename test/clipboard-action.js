@@ -85,7 +85,18 @@ describe('ClipboardAction', () => {
                 text: 'blah'
             });
 
-            assert.equal(clip.selectedText, clip.fakeElem.value);
+            assert.equal(clip.selectedText, clip.fakeElem.innerHTML);
+        });
+    });
+
+    describe('#selectHtml', () => {
+        it('should create a fake element and select its value', () => {
+            let clip = new ClipboardAction({
+                emitter: new Emitter(),
+                text: '<p>foo</p>'
+            });
+
+            assert.equal('<p>foo</p>', clip.fakeElem.innerHTML);
         });
     });
 

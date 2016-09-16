@@ -16,7 +16,48 @@ module.exports = function (element, selector, checkYoSelf) {
   }
 }
 
-},{"matches-selector":5}],2:[function(require,module,exports){
+},{"matches-selector":2}],2:[function(require,module,exports){
+
+/**
+ * Element prototype.
+ */
+
+var proto = Element.prototype;
+
+/**
+ * Vendor function.
+ */
+
+var vendor = proto.matchesSelector
+  || proto.webkitMatchesSelector
+  || proto.mozMatchesSelector
+  || proto.msMatchesSelector
+  || proto.oMatchesSelector;
+
+/**
+ * Expose `match()`.
+ */
+
+module.exports = match;
+
+/**
+ * Match `el` to `selector`.
+ *
+ * @param {Element} el
+ * @param {String} selector
+ * @return {Boolean}
+ * @api public
+ */
+
+function match(el, selector) {
+  if (vendor) return vendor.call(el, selector);
+  var nodes = el.parentNode.querySelectorAll(selector);
+  for (var i = 0; i < nodes.length; ++i) {
+    if (nodes[i] == el) return true;
+  }
+  return false;
+}
+},{}],3:[function(require,module,exports){
 var closest = require('closest');
 
 /**
@@ -62,7 +103,7 @@ function listener(element, selector, type, callback) {
 
 module.exports = delegate;
 
-},{"closest":1}],3:[function(require,module,exports){
+},{"closest":1}],4:[function(require,module,exports){
 /**
  * Check if argument is a HTML element.
  *
@@ -113,7 +154,7 @@ exports.fn = function(value) {
     return type === '[object Function]';
 };
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 var is = require('./is');
 var delegate = require('delegate');
 
@@ -210,48 +251,7 @@ function listenSelector(selector, type, callback) {
 
 module.exports = listen;
 
-},{"./is":3,"delegate":2}],5:[function(require,module,exports){
-
-/**
- * Element prototype.
- */
-
-var proto = Element.prototype;
-
-/**
- * Vendor function.
- */
-
-var vendor = proto.matchesSelector
-  || proto.webkitMatchesSelector
-  || proto.mozMatchesSelector
-  || proto.msMatchesSelector
-  || proto.oMatchesSelector;
-
-/**
- * Expose `match()`.
- */
-
-module.exports = match;
-
-/**
- * Match `el` to `selector`.
- *
- * @param {Element} el
- * @param {String} selector
- * @return {Boolean}
- * @api public
- */
-
-function match(el, selector) {
-  if (vendor) return vendor.call(el, selector);
-  var nodes = el.parentNode.querySelectorAll(selector);
-  for (var i = 0; i < nodes.length; ++i) {
-    if (nodes[i] == el) return true;
-  }
-  return false;
-}
-},{}],6:[function(require,module,exports){
+},{"./is":4,"delegate":3}],6:[function(require,module,exports){
 function select(element) {
     var selectedText;
 
@@ -283,12 +283,12 @@ module.exports = select;
 
 },{}],7:[function(require,module,exports){
 function E () {
-	// Keep this empty so it's easier to inherit from
+  // Keep this empty so it's easier to inherit from
   // (via https://github.com/lipsmack from https://github.com/scottcorgan/tiny-emitter/issues/3)
 }
 
 E.prototype = {
-	on: function (name, callback, ctx) {
+  on: function (name, callback, ctx) {
     var e = this.e || (this.e = {});
 
     (e[name] || (e[name] = [])).push({
@@ -407,7 +407,6 @@ module.exports = E;
         /**
          * @param {Object} options
          */
-
         function ClipboardAction(options) {
             _classCallCheck(this, ClipboardAction);
 
@@ -453,7 +452,8 @@ module.exports = E;
             };
             this.fakeHandler = document.body.addEventListener('click', this.fakeHandlerCallback) || true;
 
-            this.fakeElem = document.createElement('textarea');
+            this.fakeElem = document.createElement('div');
+            this.fakeElem.contentEditable = true;
             // Prevent zooming on iOS
             this.fakeElem.style.fontSize = '12pt';
             // Reset box model
@@ -466,7 +466,7 @@ module.exports = E;
             // Move element to the same position vertically
             this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
             this.fakeElem.setAttribute('readonly', '');
-            this.fakeElem.value = this.text;
+            this.fakeElem.innerHTML = this.text;
 
             document.body.appendChild(this.fakeElem);
 
@@ -493,7 +493,7 @@ module.exports = E;
         };
 
         ClipboardAction.prototype.copyText = function copyText() {
-            var succeeded = undefined;
+            var succeeded = void 0;
 
             try {
                 succeeded = document.execCommand(this.action);
@@ -505,20 +505,12 @@ module.exports = E;
         };
 
         ClipboardAction.prototype.handleResult = function handleResult(succeeded) {
-            if (succeeded) {
-                this.emitter.emit('success', {
-                    action: this.action,
-                    text: this.selectedText,
-                    trigger: this.trigger,
-                    clearSelection: this.clearSelection.bind(this)
-                });
-            } else {
-                this.emitter.emit('error', {
-                    action: this.action,
-                    trigger: this.trigger,
-                    clearSelection: this.clearSelection.bind(this)
-                });
-            }
+            this.emitter.emit(succeeded ? 'success' : 'error', {
+                action: this.action,
+                text: this.selectedText,
+                trigger: this.trigger,
+                clearSelection: this.clearSelection.bind(this)
+            });
         };
 
         ClipboardAction.prototype.clearSelection = function clearSelection() {
@@ -642,7 +634,6 @@ module.exports = E;
          * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
          * @param {Object} options
          */
-
         function Clipboard(trigger, options) {
             _classCallCheck(this, Clipboard);
 
@@ -738,5 +729,5 @@ module.exports = E;
     module.exports = Clipboard;
 });
 
-},{"./clipboard-action":8,"good-listener":4,"tiny-emitter":7}]},{},[9])(9)
+},{"./clipboard-action":8,"good-listener":5,"tiny-emitter":7}]},{},[9])(9)
 });
