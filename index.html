@@ -200,15 +200,15 @@ clipboard.destroy();</code></pre>
             </li>
             <li>
                 <img src="assets/images/safari.png" width="64" height="64" alt="Safari logo">
-                <p>Safari ✘</p>
+                <p>Safari 10</p>
             </li>
         </ul>
 
-        <p>Although copy/cut operations with <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand">execCommand</a> aren't supported on Safari yet (including mobile), it gracefully degrades because <a href="https://developer.mozilla.org/en-US/docs/Web/API/Selection">Selection</a> is supported.</p>
+        <p>Although copy/cut operations with <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand">execCommand</a> aren't supported on Safari < 10 or Safari Mobile on iOS < 10, it gracefully degrades because <a href="https://developer.mozilla.org/en-US/docs/Web/API/Selection">Selection</a> is supported.</p>
 
         <p>That means you can show a tooltip saying <code>Copied!</code> when <code>success</code> event is called and <code>Press Ctrl+C to copy</code> when <code>error</code> event is called because the text is already selected.</p>
 
-        <p>For a live demonstration, open this site on Safari.</p>
+        <p>For a live demonstration, open this site on Safari < 10 or Safari Mobile on iOS < 10.</p>
     </main>
 
     <footer class="footer gradient text-center">
