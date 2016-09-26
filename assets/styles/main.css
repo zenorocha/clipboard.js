@@ -216,12 +216,26 @@ code {
 
 .support {
     list-style: none;
+    text-align: center;
 }
 
 .support li {
     display: inline-block;
     text-align: center;
-    margin: 5px 8px 0;
+    margin: 15px 0;
+    width: 30%;
+}
+
+@media screen and (max-width: 410px) {
+    .support li {
+        width: 45%;
+    }
+}
+
+@media screen and (max-width: 290px) {
+    .support li {
+       width: 100%;
+    }
 }
 
 .support p {
