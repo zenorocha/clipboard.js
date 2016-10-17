@@ -44,7 +44,7 @@ describe('ClipboardAction', () => {
                     text: 'foo'
                 });
 
-            assert.equal(clip.fakeElem.style.right, '-9999px');
+            assert.equal(clip.fakeElem.style.right, '-999999px');
             done();
         });
     });

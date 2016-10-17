@@ -453,7 +453,8 @@ module.exports = E;
             this.fakeHandler = document.body.addEventListener('click', this.fakeHandlerCallback) || true;
 
             this.fakeElem = document.createElement('div');
-            this.fakeElem.contentEditable = true;
+            //   this.fakeElem.contentEditable = true;
+
             // Prevent zooming on iOS
             this.fakeElem.style.fontSize = '12pt';
             // Reset box model
@@ -462,7 +463,7 @@ module.exports = E;
             this.fakeElem.style.margin = '0';
             // Move element out of screen horizontally
             this.fakeElem.style.position = 'absolute';
-            this.fakeElem.style[isRTL ? 'right' : 'left'] = '-9999px';
+            this.fakeElem.style[isRTL ? 'right' : 'left'] = '-999999px';
             // Move element to the same position vertically
             this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
             this.fakeElem.setAttribute('readonly', '');
@@ -471,6 +472,7 @@ module.exports = E;
             document.body.appendChild(this.fakeElem);
 
             this.selectedText = (0, _select2.default)(this.fakeElem);
+
             this.copyText();
         };
 

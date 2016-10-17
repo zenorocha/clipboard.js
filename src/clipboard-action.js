@@ -53,7 +53,8 @@ class ClipboardAction {
         this.fakeHandler = document.body.addEventListener('click', this.fakeHandlerCallback) || true;
 
         this.fakeElem = document.createElement('div');
-        this.fakeElem.contentEditable = true;
+     //   this.fakeElem.contentEditable = true;
+
         // Prevent zooming on iOS
         this.fakeElem.style.fontSize = '12pt';
         // Reset box model
@@ -62,7 +63,7 @@ class ClipboardAction {
         this.fakeElem.style.margin = '0';
         // Move element out of screen horizontally
         this.fakeElem.style.position = 'absolute';
-        this.fakeElem.style[ isRTL ? 'right' : 'left' ] = '-9999px';
+        this.fakeElem.style[ isRTL ? 'right' : 'left' ] = '-999999px';
         // Move element to the same position vertically
         this.fakeElem.style.top = (window.pageYOffset || document.documentElement.scrollTop) + 'px';
         this.fakeElem.setAttribute('readonly', '');
@@ -71,6 +72,7 @@ class ClipboardAction {
         document.body.appendChild(this.fakeElem);
 
         this.selectedText = select(this.fakeElem);
+
         this.copyText();
     }
 
