@@ -20,7 +20,6 @@
     "babel-core": "^6.5.2",
     "babel-plugin-transform-es2015-modules-umd": "^6.5.0",
     "babel-preset-es2015": "^6.5.0",
-    "babel-preset-es2015-loose": "^7.0.0",
     "babelify": "^7.2.0",
     "bannerify": "Vekat/bannerify#feature-option",
     "browserify": "^13.0.0",
@@ -44,6 +43,6 @@
     "build-min": "uglifyjs dist/clipboard.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/clipboard.min.js",
     "build-watch": "watchify src/clipboard.js -s Clipboard -t [babelify] -o dist/clipboard.js -v",
     "test": "karma start --single-run",
-    "prepublish": "babel src --out-dir lib --loose all"
+    "prepublish": "babel src --out-dir lib"
   }
 }
