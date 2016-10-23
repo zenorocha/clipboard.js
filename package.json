@@ -1,6 +1,6 @@
 {
   "name": "clipboard",
-  "version": "1.5.13",
+  "version": "1.5.14",
   "description": "Modern copy to clipboard. No Flash. Just 2kb",
   "repository": "zenorocha/clipboard.js",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "cut"
   ],
   "dependencies": {
-    "good-listener": "^1.1.6",
+    "good-listener": "^1.2.0",
     "select": "^1.0.6",
     "tiny-emitter": "^1.0.0"
   },
