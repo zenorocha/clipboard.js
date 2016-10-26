@@ -2,6 +2,7 @@
 
 [![Build Status](http://img.shields.io/travis/zenorocha/clipboard.js/master.svg?style=flat)](https://travis-ci.org/zenorocha/clipboard.js)
 ![Killing Flash](https://img.shields.io/badge/killing-flash-brightgreen.svg?style=flat)
+[![CDNJS](https://img.shields.io/cdnjs/v/clipboard.js.svg)](https://cdnjs.com/libraries/clipboard.js)
 
 > Modern copy to clipboard. No Flash. Just 3kb gzipped.
 
