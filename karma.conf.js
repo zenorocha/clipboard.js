@@ -5,9 +5,9 @@ module.exports = function(karma) {
         frameworks: ['browserify', 'chai', 'sinon', 'mocha'],
 
         files: [
+            './node_modules/babel-polyfill/dist/polyfill.js',
             'src/**/*.js',
-            'test/**/*.js',
-            './node_modules/phantomjs-polyfill/bind-polyfill.js'
+            'test/**/*.js'
         ],
 
         exclude: ['test/module-systems.js'],

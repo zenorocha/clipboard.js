@@ -62,35 +62,61 @@ describe('Clipboard', () => {
     });
 
     describe('#onClick', () => {
-        it('should create a new instance of ClipboardAction', () => {
-            let clipboard = new Clipboard('.btn');
+        it('should execute beforeAction handler and blocks ClipboardAction', done => {
+            const myerr = new Error('custom-error')
+            const beforeAction = () => Promise.reject(myerr);
+            let clipboard = new Clipboard('.btn', { beforeAction });
 
-            clipboard.onClick(global.event);
-            assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+            clipboard.onClick(global.event).catch((err) => {
+                assert.equal(err, myerr);
+                assert.equal(clipboard.clipboardAction, undefined);
+                done();
+            }).catch(done);
         });
 
-        it('should use an event\'s currentTarget when not equal to target', () => {
+        it('should execute beforeAction with triggered event as parameter', done => {
+            const assertEvent = (evt) => new Promise((resolve, reject) => {
+                try {
+                    resolve(assert.equal(evt, global.event));
+                } catch(err) {
+                    reject(err);
+                }
+            });
+
+            let clipboard = new Clipboard('.btn', { beforeAction: assertEvent });
+            clipboard.onClick(global.event).then(done).catch(done);
+        });
+
+        it('should create a new instance of ClipboardAction', done => {
+            let clipboard = new Clipboard('.btn');
+
+            clipboard.onClick(global.event).then(() => {
+                assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+                done();
+            }).catch(done);
+        });
+
+        it('should use an event\'s currentTarget when not equal to target', done => {
             let clipboard = new Clipboard('.btn');
             let bubbledEvent = { target: global.span, currentTarget: global.button };
 
-            clipboard.onClick(bubbledEvent);
-            assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+            clipboard.onClick(bubbledEvent).then(() => {
+                assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+                done();
+            }).catch(done);
         });
 
         it('should throw an exception when target is invalid', done => {
-            try {
-                var clipboard = new Clipboard('.btn', {
-                    target: function() {
-                        return null;
-                    }
-                });
+            var clipboard = new Clipboard('.btn', {
+                target: function() {
+                    return null;
+                }
+            });
 
-                clipboard.onClick(global.event);
-            }
-            catch(e) {
+            clipboard.onClick(global.event).catch((e) => {
                 assert.equal(e.message, 'Invalid "target" value, use a valid Element');
                 done();
-            }
+            }).catch(done);
         });
     });
 

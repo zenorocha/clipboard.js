@@ -24,6 +24,7 @@ class Clipboard extends Emitter {
      * @param {Object} options
      */
     resolveOptions(options = {}) {
+        this.beforeAction = options.beforeAction || (() => Promise.resolve());
         this.action = (typeof options.action === 'function') ? options.action : this.defaultAction;
         this.target = (typeof options.target === 'function') ? options.target : this.defaultTarget;
         this.text   = (typeof options.text   === 'function') ? options.text   : this.defaultText;
@@ -34,7 +35,7 @@ class Clipboard extends Emitter {
      * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
      */
     listenClick(trigger) {
-        this.listener = listen(trigger, 'click', (e) => this.onClick(e));
+        this.listener = listen(trigger, 'click', (e) => this.onClick(e).catch(console.error));
     }
 
     /**
@@ -48,13 +49,15 @@ class Clipboard extends Emitter {
             this.clipboardAction = null;
         }
 
-        this.clipboardAction = new ClipboardAction({
-            action  : this.action(trigger),
-            target  : this.target(trigger),
-            text    : this.text(trigger),
-            trigger : trigger,
-            emitter : this
-        });
+        return this.beforeAction(e).then(() => {
+            this.clipboardAction = new ClipboardAction({
+                action  : this.action(trigger),
+                target  : this.target(trigger),
+                text    : this.text(trigger),
+                trigger : trigger,
+                emitter : this
+            });
+        })
     }
 
     /**
