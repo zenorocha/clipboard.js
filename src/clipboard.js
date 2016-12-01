@@ -1,4 +1,5 @@
 import ClipboardAction from './clipboard-action';
+import isValidTrigger from './clipboard-triggers';
 import Emitter from 'tiny-emitter';
 import listen from 'good-listener';
 
@@ -34,7 +35,9 @@ class Clipboard extends Emitter {
      * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
      */
     listenClick(trigger) {
-        this.listener = listen(trigger, 'click', (e) => this.onClick(e));
+        this.listener = isValidTrigger(trigger) ?
+          listen(trigger, 'click', (e) => this.onClick(e))
+          : null;
     }
 
     /**
