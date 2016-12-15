@@ -94,6 +94,17 @@ describe('Clipboard', () => {
         });
     });
 
+    describe('#static isSupported', () => {
+        it('should return the support of the given action', () => {
+            assert.equal(Clipboard.isSupported('copy'), false);
+            assert.equal(Clipboard.isSupported('cut'), false);
+        });
+
+        it('should return the support of the cut and copy actions', () => {
+            assert.equal(Clipboard.isSupported(), false);
+        });
+    });
+
     describe('#destroy', () => {
         it('should destroy an existing instance of ClipboardAction', () => {
             let clipboard = new Clipboard('.btn');
