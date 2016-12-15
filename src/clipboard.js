@@ -82,8 +82,8 @@ class Clipboard extends Emitter {
      * given.
      * @param {String} [action]
      */
-    static isSupported(action = ['copy, cut']) {
-        const actions = action ? [action] : action;
+    static isSupported(action = ['copy', 'cut']) {
+        const actions = (typeof action === 'string') ? [action] : action;
         let support = !!document.queryCommandSupported;
 
         actions.forEach((action) => {
