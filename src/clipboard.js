@@ -43,18 +43,22 @@ class Clipboard extends Emitter {
      */
     onClick(e) {
         const trigger = e.delegateTarget || e.currentTarget;
+        const textPromise = Promise.resolve(this.text(trigger));
 
         if (this.clipboardAction) {
             this.clipboardAction = null;
         }
 
-        this.clipboardAction = new ClipboardAction({
-            action  : this.action(trigger),
-            target  : this.target(trigger),
-            text    : this.text(trigger),
-            trigger : trigger,
-            emitter : this
-        });
+        textPromise
+            .then(text => {
+                this.clipboardAction = new ClipboardAction({
+                  action  : this.action(trigger),
+                  target  : this.target(trigger),
+                  text    : text,
+                  trigger : trigger,
+                  emitter : this
+                });
+            });        
     }
 
     /**
