@@ -7,7 +7,8 @@ module.exports = function(karma) {
         files: [
             'src/**/*.js',
             'test/**/*.js',
-            './node_modules/phantomjs-polyfill/bind-polyfill.js'
+            // './node_modules/phantomjs-polyfill/bind-polyfill.js',
+            './node_modules/babel-polyfill/dist/polyfill.js',
         ],
 
         exclude: ['test/module-systems.js'],

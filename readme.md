@@ -141,7 +141,7 @@ new Clipboard('.btn', {
 });
 ```
 
-If you want to dynamically set a `text`, you'll return a String.
+If you want to dynamically set a `text`, you'll return a String:
 
 ```js
 new Clipboard('.btn', {
@@ -150,6 +150,16 @@ new Clipboard('.btn', {
     }
 });
 ```
+or a Promise:
+
+```js
+new Clipboard('.btn', {
+    text: function(trigger) {
+        return Promise.resolve('Text to copy');
+    }
+});
+```
+
 
 Also, if you are working with single page apps, you may want to manage the lifecycle of the DOM more precisely. Here's how you clean up the events and objects that we create.
 

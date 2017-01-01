@@ -685,18 +685,26 @@ module.exports = E;
         }, {
             key: 'onClick',
             value: function onClick(e) {
+                var _this3 = this;
+
                 var trigger = e.delegateTarget || e.currentTarget;
 
                 if (this.clipboardAction) {
                     this.clipboardAction = null;
                 }
 
-                this.clipboardAction = new _clipboardAction2.default({
-                    action: this.action(trigger),
-                    target: this.target(trigger),
-                    text: this.text(trigger),
-                    trigger: trigger,
-                    emitter: this
+                return Promise.resolve(this.text(trigger)).then(function (text) {
+                    _this3.clipboardAction = new _clipboardAction2.default({
+                        action: _this3.action(trigger),
+                        target: _this3.target(trigger),
+                        text: text,
+                        trigger: trigger,
+                        emitter: _this3
+                    });
+                }).catch(function (e) {
+                    setTimeout(function () {
+                        throw e;
+                    });
                 });
             }
         }, {

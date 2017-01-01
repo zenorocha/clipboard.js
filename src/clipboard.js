@@ -43,13 +43,12 @@ class Clipboard extends Emitter {
      */
     onClick(e) {
         const trigger = e.delegateTarget || e.currentTarget;
-        const textPromise = Promise.resolve(this.text(trigger));
 
         if (this.clipboardAction) {
             this.clipboardAction = null;
         }
 
-        textPromise
+        return Promise.resolve(this.text(trigger))
             .then(text => {
                 this.clipboardAction = new ClipboardAction({
                   action  : this.action(trigger),
@@ -58,7 +57,10 @@ class Clipboard extends Emitter {
                   trigger : trigger,
                   emitter : this
                 });
-            });        
+            })
+            .catch(e => {
+                setTimeout(() => {throw e;});
+            });
     }
 
     /**
