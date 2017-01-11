@@ -65,19 +65,21 @@ describe('Clipboard', () => {
         it('should create a new instance of ClipboardAction', () => {
             let clipboard = new Clipboard('.btn');
 
-            clipboard.onClick(global.event);
-            assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+            clipboard.onClick(global.event).then(() => {
+                assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+            });
         });
 
         it('should use an event\'s currentTarget when not equal to target', () => {
             let clipboard = new Clipboard('.btn');
             let bubbledEvent = { target: global.span, currentTarget: global.button };
 
-            clipboard.onClick(bubbledEvent);
-            assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+            clipboard.onClick(bubbledEvent).then(() => {
+                assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+            });
         });
 
-        it('should throw an exception when target is invalid', done => {
+        it('should throw an exception when target is invalid', () => {
             try {
                 var clipboard = new Clipboard('.btn', {
                     target: function() {
@@ -89,7 +91,6 @@ describe('Clipboard', () => {
             }
             catch(e) {
                 assert.equal(e.message, 'Invalid "target" value, use a valid Element');
-                done();
             }
         });
     });

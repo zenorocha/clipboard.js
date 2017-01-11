@@ -48,13 +48,24 @@ class Clipboard extends Emitter {
             this.clipboardAction = null;
         }
 
-        this.clipboardAction = new ClipboardAction({
-            action  : this.action(trigger),
-            target  : this.target(trigger),
-            text    : this.text(trigger),
-            trigger : trigger,
-            emitter : this
-        });
+        return Promise.resolve(this.text(trigger))
+            .then(text => {
+                this.clipboardAction = new ClipboardAction({
+                  action  : this.action(trigger),
+                  target  : this.target(trigger),
+                  text    : text,
+                  trigger : trigger,
+                  emitter : this
+                });
+            })
+            .catch(e => {
+                const errorMessage = e instanceof Error ? e.message : e;
+                this.emit('error', {
+                    action: this.action(trigger),
+                    trigger: trigger,
+                    errorMessage : errorMessage
+                });
+            });
     }
 
     /**
