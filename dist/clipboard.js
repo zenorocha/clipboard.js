@@ -702,8 +702,11 @@ module.exports = E;
                         emitter: _this3
                     });
                 }).catch(function (e) {
-                    setTimeout(function () {
-                        throw e;
+                    var errorMessage = e instanceof Error ? e.message : e;
+                    _this3.emit('error', {
+                        action: _this3.action(trigger),
+                        trigger: trigger,
+                        errorMessage: errorMessage
                     });
                 });
             }

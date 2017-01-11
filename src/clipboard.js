@@ -59,7 +59,12 @@ class Clipboard extends Emitter {
                 });
             })
             .catch(e => {
-                setTimeout(() => {throw e;});
+                const errorMessage = e instanceof Error ? e.message : e;
+                this.emit('error', {
+                    action: this.action(trigger),
+                    trigger: trigger,
+                    errorMessage : errorMessage
+                });
             });
     }
 
