@@ -151,6 +151,15 @@ new Clipboard('.btn', {
 });
 ```
 
+For use in bootstrap modals you'll want to set the modal element as the `container` value.
+See https://github.com/zenorocha/clipboard.js/issues/155#issuecomment-273124130
+
+```js
+new Clipboard('.btn', {
+    container: document.getElementById('#modal')
+});
+```
+
 Also, if you are working with single page apps, you may want to manage the lifecycle of the DOM more precisely. Here's how you clean up the events and objects that we create.
 
 ```js
