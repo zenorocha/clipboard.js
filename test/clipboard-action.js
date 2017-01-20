@@ -1,6 +1,8 @@
 import ClipboardAction from '../src/clipboard-action';
 import Emitter from 'tiny-emitter';
 
+console.log(new ClipboardAction());
+
 describe('ClipboardAction', () => {
     before(() => {
         global.input = document.createElement('input');
@@ -22,10 +24,12 @@ describe('ClipboardAction', () => {
         it('should set base properties', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
+                container: document.body,
                 text: 'foo'
             });
 
             assert.property(clip, 'action');
+            assert.property(clip, 'container');
             assert.property(clip, 'emitter');
             assert.property(clip, 'target');
             assert.property(clip, 'text');
@@ -41,6 +45,7 @@ describe('ClipboardAction', () => {
 
             let clip = new ClipboardAction({
                     emitter: new Emitter(),
+                    container: document.body,
                     text: 'foo'
                 });
 
@@ -82,6 +87,7 @@ describe('ClipboardAction', () => {
         it('should create a fake element and select its value', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
+                container: document.body,
                 text: 'blah'
             });
 
@@ -93,6 +99,7 @@ describe('ClipboardAction', () => {
         it('should remove a temporary fake element', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
+                container: document.body,
                 text: 'blah'
             });
 
@@ -106,6 +113,7 @@ describe('ClipboardAction', () => {
         it('should select text from editable element', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
+                container: document.body,
                 target: document.querySelector('#input')
             });
 
@@ -115,6 +123,7 @@ describe('ClipboardAction', () => {
         it('should select text from non-editable element', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
+                container: document.body,
                 target: document.querySelector('#paragraph')
             });
 
@@ -166,6 +175,7 @@ describe('ClipboardAction', () => {
         it('should fire a success event with certain properties', done => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
+                container: document.body,
                 target: document.querySelector('#input')
             });
 
@@ -184,6 +194,7 @@ describe('ClipboardAction', () => {
         it('should fire a error event with certain properties', done => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
+                container: document.body,
                 target: document.querySelector('#input')
             });
 
@@ -203,6 +214,7 @@ describe('ClipboardAction', () => {
         it('should remove focus from target and text selection', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
+                container: document.body,
                 target: document.querySelector('#input')
             });
 
@@ -220,6 +232,7 @@ describe('ClipboardAction', () => {
         it('should destroy an existing fake element', () => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
+                container: document.body,
                 text: 'blah'
             });
 

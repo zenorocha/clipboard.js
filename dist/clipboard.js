@@ -410,6 +410,7 @@ module.exports = E;
                 var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
                 this.action = options.action;
+                this.container = options.container;
                 this.emitter = options.emitter;
                 this.target = options.target;
                 this.text = options.text;
@@ -438,7 +439,7 @@ module.exports = E;
                 this.fakeHandlerCallback = function () {
                     return _this.removeFake();
                 };
-                this.fakeHandler = document.body.addEventListener('click', this.fakeHandlerCallback) || true;
+                this.fakeHandler = this.container.addEventListener('click', this.fakeHandlerCallback) || true;
 
                 this.fakeElem = document.createElement('textarea');
                 // Prevent zooming on iOS
@@ -458,7 +459,7 @@ module.exports = E;
                 this.fakeElem.setAttribute('readonly', '');
                 this.fakeElem.value = this.text;
 
-                document.body.appendChild(this.fakeElem);
+                this.container.appendChild(this.fakeElem);
 
                 this.selectedText = (0, _select2.default)(this.fakeElem);
                 this.copyText();
@@ -467,13 +468,13 @@ module.exports = E;
             key: 'removeFake',
             value: function removeFake() {
                 if (this.fakeHandler) {
-                    document.body.removeEventListener('click', this.fakeHandlerCallback);
+                    this.container.removeEventListener('click', this.fakeHandlerCallback);
                     this.fakeHandler = null;
                     this.fakeHandlerCallback = null;
                 }
 
                 if (this.fakeElem) {
-                    document.body.removeChild(this.fakeElem);
+                    this.container.removeChild(this.fakeElem);
                     this.fakeElem = null;
                 }
             }
@@ -592,6 +593,12 @@ module.exports = E;
         };
     }
 
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+        return typeof obj;
+    } : function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
             throw new TypeError("Cannot call a class as a function");
@@ -672,6 +679,7 @@ module.exports = E;
                 this.action = typeof options.action === 'function' ? options.action : this.defaultAction;
                 this.target = typeof options.target === 'function' ? options.target : this.defaultTarget;
                 this.text = typeof options.text === 'function' ? options.text : this.defaultText;
+                this.container = _typeof(options.container) === 'object' ? options.container : document.body;
             }
         }, {
             key: 'listenClick',
@@ -695,6 +703,7 @@ module.exports = E;
                     action: this.action(trigger),
                     target: this.target(trigger),
                     text: this.text(trigger),
+                    container: this.container,
                     trigger: trigger,
                     emitter: this
                 });
