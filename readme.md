@@ -152,7 +152,7 @@ new Clipboard('.btn', {
 ```
 
 For use in bootstrap modals you'll want to set the modal element as the `container` value.
-See https://github.com/zenorocha/clipboard.js/issues/155#issuecomment-273124130
+See [Issue #155 (comment)](https://github.com/zenorocha/clipboard.js/issues/155#issuecomment-273124130)
 
 ```js
 new Clipboard('.btn', {
