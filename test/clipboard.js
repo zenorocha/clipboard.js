@@ -26,7 +26,7 @@ describe('Clipboard', () => {
 
     describe('#resolveOptions', () => {
         before(() => {
-            global.fn  = function() {};
+            global.fn = function() {};
         });
 
         it('should set action as a function', () => {
