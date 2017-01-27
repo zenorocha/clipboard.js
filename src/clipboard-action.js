@@ -61,8 +61,12 @@ class ClipboardAction {
         this.fakeElem.style.margin = '0';
         // Move element out of screen horizontally
         this.fakeElem.style.position = 'absolute';
-        this.fakeElem.style[ isRTL ? 'right' : 'left' ] = '-9999px';
-        // Move element to the same position vertically
+        this.fakeElem.style.opacity = '0';
+        this.fakeElem.style.zIndex = "-1";
+        this.fakeElem.style.right = "0px";
+        this.fakeElem.style.height = "1px";
+        this.fakeElem.style.width = "1px";
+        this.fakeElem.style.pointerEvents = "none";        // Move element to the same position vertically
         let yPosition = window.pageYOffset || document.documentElement.scrollTop;
         this.fakeElem.addEventListener('focus', window.scrollTo(0, yPosition));
         this.fakeElem.style.top = yPosition + 'px';
