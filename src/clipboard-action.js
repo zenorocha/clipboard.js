@@ -54,7 +54,7 @@ class ClipboardAction {
 
         this.fakeElem = document.createElement('textarea');
         // Prevent zooming on iOS
-        this.fakeElem.style.fontSize = '12pt';
+        this.fakeElem.style.fontSize = 'initial';
         // Reset box model
         this.fakeElem.style.border = '0';
         this.fakeElem.style.padding = '0';
@@ -64,15 +64,17 @@ class ClipboardAction {
         this.fakeElem.style[ isRTL ? 'right' : 'left' ] = '-9999px';
         // Move element to the same position vertically
         let yPosition = window.pageYOffset || document.documentElement.scrollTop;
-        this.fakeElem.addEventListener('focus', window.scrollTo(0, yPosition));
+        console.log("yPosition", yPosition)
+        // this.fakeElem.addEventListener('focus', window.scrollTo(0, yPosition));
         this.fakeElem.style.top = yPosition + 'px';
 
         this.fakeElem.setAttribute('readonly', '');
         this.fakeElem.value = this.text;
 
         document.body.appendChild(this.fakeElem);
-
-        this.selectedText = select(this.fakeElem);
+        this.fakeElem.select();
+        this.fakeElem.setSelectionRange(0, this.fakeElem.value.length);
+        this.selectedText = this.fakeElem.value;
         this.copyText();
     }
 
