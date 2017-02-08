@@ -168,6 +168,8 @@ This library relies on both [Selection](https://developer.mozilla.org/en-US/docs
 
 The good news is that clipboard.js gracefully degrades if you need to support older browsers. All you have to do is show a tooltip saying `Copied!` when `success` event is called and `Press Ctrl+C to copy` when `error` event is called because the text is already selected.
 
+You can also check if clipboard.js is supported or not by running `Clipboard.isSupported()`, that way you can hide copy/cut buttons from the UI.
+
 ## License
 
 [MIT License](http://zenorocha.mit-license.org/) © Zeno Rocha
