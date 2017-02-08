@@ -78,6 +78,22 @@ class Clipboard extends Emitter {
     }
 
     /**
+     * Returns the support of the given action, or all actions if no action is
+     * given.
+     * @param {String} [action]
+     */
+    static isSupported(action = ['copy', 'cut']) {
+        const actions = (typeof action === 'string') ? [action] : action;
+        let support = !!document.queryCommandSupported;
+
+        actions.forEach((action) => {
+            support = support && !!document.queryCommandSupported(action);
+        });
+
+        return support;
+    }
+
+    /**
      * Default `text` lookup function.
      * @param {Element} trigger
      */
