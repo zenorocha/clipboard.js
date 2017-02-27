@@ -102,6 +102,13 @@ Truth is, you don't even need another element to copy its content from. You can 
 </button>
 ```
 
+#### Notice
+Right-to-left pages must provide a "dir" attribute on `<html>` tag otherwise it leads to a visual bug with firefox browser.
+```html
+<HTML dir="rtl">
+...
+```
+
 ## Events
 
 There are cases where you'd like to show some user feedback or capture what has been selected after a copy/cut operation.
