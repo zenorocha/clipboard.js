@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v1.6.0
+ * clipboard.js v1.6.1
  * https://zenorocha.github.io/clipboard.js
  *
  * Licensed MIT © Zeno Rocha
