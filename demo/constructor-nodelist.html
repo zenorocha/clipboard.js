@@ -16,14 +16,14 @@
 
     <!-- 3. Instantiate clipboard by passing a list of HTML elements -->
     <script>
-    var btns = document.querySelectorAll('button');
-    var clipboard = new Clipboard(btns);
+    const btns = document.querySelectorAll('button');
+    const clipboard = new Clipboard(btns);
 
-    clipboard.on('success', function(e) {
+    clipboard.on('success', e => {
         console.log(e);
     });
 
-    clipboard.on('error', function(e) {
+    clipboard.on('error', e => {
         console.log(e);
     });
     </script>
