@@ -14,17 +14,17 @@
 
     <!-- 3. Instantiate clipboard -->
     <script>
-    const clipboard = new Clipboard('.btn', {
-        text() {
+    var clipboard = new Clipboard('.btn', {
+        text: function() {
             return 'to be or not to be';
         }
     });
 
-    clipboard.on('success', e => {
+    clipboard.on('success', function(e) {
         console.log(e);
     });
 
-    clipboard.on('error', e => {
+    clipboard.on('error', function(e) {
         console.log(e);
     });
     </script>
