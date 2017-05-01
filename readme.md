@@ -170,6 +170,12 @@ The good news is that clipboard.js gracefully degrades if you need to support ol
 
 You can also check if clipboard.js is supported or not by running `Clipboard.isSupported()`, that way you can hide copy/cut buttons from the UI.
 
+## Bonus
+
+A browser extension that adds a "copy to clipboard" button to every code block on *GitHub, MDN, Gist, StackOverflow, StackExchange, npm, and even Medium.*
+
+Install for [Chrome](https://chrome.google.com/webstore/detail/codecopy/fkbfebkcoelajmhanocgppanfoojcdmg) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/codecopy/).
+
 ## License
 
 [MIT License](http://zenorocha.mit-license.org/) © Zeno Rocha
