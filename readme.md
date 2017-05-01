@@ -109,9 +109,9 @@ There are cases where you'd like to show some user feedback or capture what has 
 That's why we fire custom events such as `success` and `error` for you to listen and implement your custom logic.
 
 ```js
-var clipboard = new Clipboard('.btn');
+const clipboard = new Clipboard('.btn');
 
-clipboard.on('success', function(e) {
+clipboard.on('success', e => {
     console.info('Action:', e.action);
     console.info('Text:', e.text);
     console.info('Trigger:', e.trigger);
@@ -119,7 +119,7 @@ clipboard.on('success', function(e) {
     e.clearSelection();
 });
 
-clipboard.on('error', function(e) {
+clipboard.on('error', e => {
     console.error('Action:', e.action);
     console.error('Trigger:', e.trigger);
 });
@@ -135,7 +135,7 @@ For instance, if you want to dynamically set a `target`, you'll need to return a
 
 ```js
 new Clipboard('.btn', {
-    target: function(trigger) {
+    target(trigger) {
         return trigger.nextElementSibling;
     }
 });
@@ -145,7 +145,7 @@ If you want to dynamically set a `text`, you'll return a String.
 
 ```js
 new Clipboard('.btn', {
-    text: function(trigger) {
+    text(trigger) {
         return trigger.getAttribute('aria-label');
     }
 });
@@ -154,7 +154,7 @@ new Clipboard('.btn', {
 Also, if you are working with single page apps, you may want to manage the lifecycle of the DOM more precisely. Here's how you clean up the events and objects that we create.
 
 ```js
-var clipboard = new Clipboard('.btn');
+const clipboard = new Clipboard('.btn');
 clipboard.destroy();
 ```
 
