@@ -52,7 +52,7 @@ class Clipboard extends Emitter {
             action  : this.action(trigger),
             target  : this.target(trigger),
             text    : this.text(trigger),
-            trigger : trigger,
+            trigger,
             emitter : this
         });
     }
@@ -130,4 +130,4 @@ function getAttributeValue(suffix, element) {
     return element.getAttribute(attribute);
 }
 
-module.exports = Clipboard;
+export default Clipboard;
