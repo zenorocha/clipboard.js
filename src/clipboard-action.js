@@ -200,4 +200,4 @@ class ClipboardAction {
     }
 }
 
-export default ClipboardAction;
+module.exports = ClipboardAction;
