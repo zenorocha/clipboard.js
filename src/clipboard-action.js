@@ -49,8 +49,33 @@ class ClipboardAction {
 
         this.removeFake();
 
+        // Register a clipboard event callback to inject the clipboard data.
+        // This is used instead of adding the data directly into the textarea,
+        // as for large inputs it is considerably faster to avoid the long
+        // synchronous reflows triggered by selecting the textarea, and instead
+        // directly add the data to the clipboard's DataTransfer.
+        this.fakeClipboardCallback = event => {
+          // In Internet Explorer, we need to use the clipboardData global
+          // object instead of event.clipboardData.
+          if (event.clipboardData) {
+            event.clipboardData.setData('text/plain', this.text);
+          }
+          else {
+            clipboardData.setData('Text', this.text);
+          }
+          event.preventDefault();
+        };
+        // Register both cut and copy callbacks to catch all attempts to copy
+        // the data with clipboard.
+        document.body.addEventListener('cut', this.fakeClipboardCallback);
+        document.body.addEventListener('copy', this.fakeClipboardCallback);
+
         this.fakeHandlerCallback = () => this.removeFake();
         this.fakeHandler = document.body.addEventListener('click', this.fakeHandlerCallback) || true;
+
+        // Safari and Internet Explorer require that there is a valid selection
+        // to copy before firing the copy event, so set up a dummy textarea
+        // offscreen, and select it.
 
         this.fakeElem = document.createElement('textarea');
         // Prevent zooming on iOS
@@ -67,11 +92,20 @@ class ClipboardAction {
         this.fakeElem.style.top = `${yPosition}px`;
 
         this.fakeElem.setAttribute('readonly', '');
-        this.fakeElem.value = this.text;
+
+        // The dummy text area must have a short, non-empty value to create a
+        // valid copy selection.
+        this.fakeElem.value = 'a';
 
         document.body.appendChild(this.fakeElem);
+        select(this.fakeElem);
 
-        this.selectedText = select(this.fakeElem);
+        // The letter 'a' is the actual selection, but any attempts to copy this
+        // text will copy the intended text, so we can enhance the truth a bit.
+        this.selectedText = this.text;
+
+        // Trigger the 'copy' or 'cut' event, which will add our data to the
+        // clipboard.
         this.copyText();
     }
 
@@ -82,8 +116,11 @@ class ClipboardAction {
     removeFake() {
         if (this.fakeHandler) {
             document.body.removeEventListener('click', this.fakeHandlerCallback);
+            document.body.removeEventListener('cut', this.fakeClipboardCallback);
+            document.body.removeEventListener('copy', this.fakeClipboardCallback);
             this.fakeHandler = null;
             this.fakeHandlerCallback = null;
+            this.fakeClipboardCallback = null;
         }
 
         if (this.fakeElem) {
@@ -131,11 +168,14 @@ class ClipboardAction {
 
     /**
      * Removes current selection and focus from `target` element.
+     * Also clears the 'copy' or 'cut' listeners which were added, if any.
      */
     clearSelection() {
         if (this.target) {
             this.target.blur();
         }
+
+        this.removeFake();
 
         window.getSelection().removeAllRanges();
     }
