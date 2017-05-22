@@ -79,13 +79,22 @@ describe('ClipboardAction', () => {
     });
 
     describe('#selectText', () => {
-        it('should create a fake element and select its value', () => {
+        it('should create a fake element and setup a copy event listener', done => {
             let clip = new ClipboardAction({
                 emitter: new Emitter(),
                 text: 'blah'
             });
 
-            assert.equal(clip.selectedText, clip.fakeElem.value);
+            // Test that the copy event listener sets the correct data on the
+            // DataTransfer.
+            let clipboardData = {
+                setData(type, value) {
+                    assert.equal(type, 'text/plain');
+                    assert.equal(value, 'blah');
+                    done();
+                }
+            };
+            clip.fakeClipboardCallback({ clipboardData });
         });
     });
 
