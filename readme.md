@@ -135,6 +135,8 @@ new Clipboard('.btn', {
 });
 ```
 
+*Note: Due to [browser restrictions](https://github.com/zenorocha/clipboard.js/issues/127#issuecomment-156219577), it is required that the first argument refer to a valid element in the page.*
+
 If you want to dynamically set a `text`, you'll return a String.
 
 ```js
