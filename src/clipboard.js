@@ -44,6 +44,10 @@ class Clipboard extends Emitter {
     onClick(e) {
         const trigger = e.delegateTarget || e.currentTarget;
 
+        if ("disabled" in trigger.attributes) {
+            return ;
+        }
+
         if (this.clipboardAction) {
             this.clipboardAction = null;
         }
