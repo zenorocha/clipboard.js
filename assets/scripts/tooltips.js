@@ -1,10 +1,13 @@
 var btns = document.querySelectorAll('.btn');
 
 for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener('mouseleave', function(e) {
-        e.currentTarget.setAttribute('class', 'btn');
-        e.currentTarget.removeAttribute('aria-label');
-    });
+    btns[i].addEventListener('mouseleave', clearTooltip);
+    btns[i].addEventListener('blur', clearTooltip);
+}
+
+function clearTooltip(e) {
+    e.currentTarget.setAttribute('class', 'btn');
+    e.currentTarget.removeAttribute('aria-label');
 }
 
 function showTooltip(elem, msg) {
