@@ -181,7 +181,8 @@ textarea {
     top: 4px;
 }
 
-.snippet:hover .btn {
+.snippet:hover .btn,
+.snippet .btn:focus {
     opacity: 1;
 }
 
