@@ -131,11 +131,11 @@ class ClipboardAction {
     }
 
     /**
-     * Removes current selection and focus from `target` element.
+     * Moves focus away from `target` and back to the trigger, removes current selection.
      */
     clearSelection() {
-        if (this.target) {
-            this.target.blur();
+        if (this.trigger) {
+            this.trigger.focus();
         }
 
         window.getSelection().removeAllRanges();
