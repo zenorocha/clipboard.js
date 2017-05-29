@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v1.7.0
+ * clipboard.js v1.7.1
  * https://zenorocha.github.io/clipboard.js
  *
  * Licensed MIT © Zeno Rocha
@@ -522,8 +522,8 @@ module.exports = E;
         }, {
             key: 'clearSelection',
             value: function clearSelection() {
-                if (this.target) {
-                    this.target.blur();
+                if (this.trigger) {
+                    this.trigger.focus();
                 }
 
                 window.getSelection().removeAllRanges();
