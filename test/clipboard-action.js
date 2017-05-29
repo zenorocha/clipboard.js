@@ -148,7 +148,7 @@ describe('ClipboardAction', () => {
             });
 
             let clip = new ClipboardAction({
-                emitter: emitter,
+                emitter,
                 target: document.querySelector('#input')
             });
         });
@@ -163,7 +163,7 @@ describe('ClipboardAction', () => {
             });
 
             let clip = new ClipboardAction({
-                emitter: emitter,
+                emitter,
                 target: document.querySelector('#input')
             });
         });
