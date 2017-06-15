@@ -149,7 +149,7 @@ For use in Bootstrap Modals or with any other library that changes the focus you
 
 ```js
 new Clipboard('.btn', {
-    container: document.getElementById('#modal')
+    container: document.getElementById('modal')
 });
 ```
 
