@@ -243,23 +243,23 @@ function select(element) {
         selectedText = element.value;
     }
     else if (element.nodeName === 'INPUT' || element.nodeName === 'TEXTAREA') {
-        var isReadOnly = element.hasAttribute('readonly');
+        var isReadOnly = element.readOnly;
 
         if (!isReadOnly) {
-            element.setAttribute('readonly', '');
+            element.readOnly = true;
         }
 
         element.select();
         element.setSelectionRange(0, element.value.length);
 
         if (!isReadOnly) {
-            element.removeAttribute('readonly');
+            element.readOnly = false;
         }
 
         selectedText = element.value;
     }
     else {
-        if (element.hasAttribute('contenteditable')) {
+        if (element.contentEditable) {
             element.focus();
         }
 
@@ -445,8 +445,6 @@ module.exports = E;
             value: function selectFake() {
                 var _this = this;
 
-                var isRTL = document.documentElement.getAttribute('dir') == 'rtl';
-
                 this.removeFake();
 
                 this.fakeHandlerCallback = function () {
@@ -457,21 +455,14 @@ module.exports = E;
                 this.fakeElem = document.createElement('textarea');
                 // Prevent zooming on iOS
                 this.fakeElem.style.fontSize = '12pt';
-                // Reset box model
-                this.fakeElem.style.border = '0';
-                this.fakeElem.style.padding = '0';
-                this.fakeElem.style.margin = '0';
-                // Move element out of screen horizontally
-                this.fakeElem.style.position = 'absolute';
-                this.fakeElem.style[isRTL ? 'right' : 'left'] = '-9999px';
-                // Move element to the same position vertically
-                var yPosition = window.pageYOffset || document.documentElement.scrollTop;
-                this.fakeElem.style.top = yPosition + 'px';
+                // Move element out of screen vertically
+                this.fakeElem.style.position = 'fixed';
+                this.fakeElem.style.top = '100%';
 
-                this.fakeElem.setAttribute('readonly', '');
+                this.fakeElem.readOnly = true;
                 this.fakeElem.value = this.text;
 
-                this.container.appendChild(this.fakeElem);
+                document.body.appendChild(this.fakeElem);
 
                 this.selectedText = (0, _select2.default)(this.fakeElem);
                 this.copyText();
@@ -486,7 +477,7 @@ module.exports = E;
                 }
 
                 if (this.fakeElem) {
-                    this.container.removeChild(this.fakeElem);
+                    document.body.removeChild(this.fakeElem);
                     this.fakeElem = null;
                 }
             }
@@ -552,11 +543,11 @@ module.exports = E;
             set: function set(target) {
                 if (target !== undefined) {
                     if (target && (typeof target === 'undefined' ? 'undefined' : _typeof(target)) === 'object' && target.nodeType === 1) {
-                        if (this.action === 'copy' && target.hasAttribute('disabled')) {
+                        if (this.action === 'copy' && target.disabled) {
                             throw new Error('Invalid "target" attribute. Please use "readonly" instead of "disabled" attribute');
                         }
 
-                        if (this.action === 'cut' && (target.hasAttribute('readonly') || target.hasAttribute('disabled'))) {
+                        if (this.action === 'cut' && (target.readOnly || target.disabled)) {
                             throw new Error('Invalid "target" attribute. You can\'t cut text from elements with "readonly" or "disabled" attributes');
                         }
 
