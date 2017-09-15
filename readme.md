@@ -3,9 +3,9 @@
 [![Build Status](http://img.shields.io/travis/zenorocha/clipboard.js/master.svg?style=flat)](https://travis-ci.org/zenorocha/clipboard.js)
 ![Killing Flash](https://img.shields.io/badge/killing-flash-brightgreen.svg?style=flat)
 
-> Modern copy to clipboard. No Flash. Just 2kb
+> Modern copy to clipboard. No Flash. Just 3kb gzipped.
 
-<a href="http://clipboardjs.com/"><img width="728" src="https://cloud.githubusercontent.com/assets/398893/9983535/5ab0a950-5fb4-11e5-9602-e73c0b661883.jpg" alt="Demo"></a>
+<a href="https://clipboardjs.com/"><img width="728" src="https://cloud.githubusercontent.com/assets/398893/16165747/a0f6fc46-349a-11e6-8c9b-c5fd58d9099c.png" alt="Demo"></a>
 
 ## Why
 
@@ -21,13 +21,7 @@ You can get it on npm.
 npm install clipboard --save
 ```
 
-Or bower, too.
-
-```
-bower install clipboard --save
-```
-
-If you're not into package management, just [download a ZIP](https://github.com/zenorocha/clipboard.js/archive/master.zip) file.
+Or if you're not into package management, just [download a ZIP](https://github.com/zenorocha/clipboard.js/archive/master.zip) file.
 
 ## Setup
 
@@ -57,7 +51,7 @@ A pretty common use case is to copy content from another element. You can do tha
 
 The value you include on this attribute needs to match another's element selector.
 
-<a href="http://clipboardjs.com/#example-target"><img width="473" alt="example-2" src="https://cloud.githubusercontent.com/assets/398893/9983467/a4946aaa-5fb1-11e5-9780-f09fcd7ca6c8.png"></a>
+<a href="https://clipboardjs.com/#example-target"><img width="473" alt="example-2" src="https://cloud.githubusercontent.com/assets/398893/9983467/a4946aaa-5fb1-11e5-9780-f09fcd7ca6c8.png"></a>
 
 ```html
 <!-- Target -->
@@ -75,7 +69,7 @@ Additionally, you can define a `data-clipboard-action` attribute to specify if y
 
 If you omit this attribute, `copy` will be used by default.
 
-<a href="http://clipboardjs.com/#example-action"><img width="473" alt="example-3" src="https://cloud.githubusercontent.com/assets/398893/10000358/7df57b9c-6050-11e5-9cd1-fbc51d2fd0a7.png"></a>
+<a href="https://clipboardjs.com/#example-action"><img width="473" alt="example-3" src="https://cloud.githubusercontent.com/assets/398893/10000358/7df57b9c-6050-11e5-9cd1-fbc51d2fd0a7.png"></a>
 
 ```html
 <!-- Target -->
@@ -93,7 +87,7 @@ As you may expect, the `cut` action only works on `<input>` or `<textarea>` elem
 
 Truth is, you don't even need another element to copy its content from. You can just include a `data-clipboard-text` attribute in your trigger element.
 
-<a href="http://clipboardjs.com/#example-text"><img width="147" alt="example-1" src="https://cloud.githubusercontent.com/assets/398893/10000347/6e16cf8c-6050-11e5-9883-1c5681f9ec45.png"></a>
+<a href="https://clipboardjs.com/#example-text"><img width="147" alt="example-1" src="https://cloud.githubusercontent.com/assets/398893/10000347/6e16cf8c-6050-11e5-9883-1c5681f9ec45.png"></a>
 
 ```html
 <!-- Trigger -->
@@ -125,7 +119,13 @@ clipboard.on('error', function(e) {
 });
 ```
 
-For a live demonstration, open this [site](http://clipboardjs.com/) and just your console :)
+For a live demonstration, go to this [site](https://clipboardjs.com/) and open your console.
+
+## Tooltips
+
+Each application has different design needs, that's why clipboard.js does not include any CSS or built-in tooltip solution.
+
+The tooltips you see on the [demo site](https://clipboardjs.com/) were built using [GitHub's Primer](http://primercss.io/tooltips/). You may want to check that out if you're looking for a similar look and feel.
 
 ## Advanced Options
 
@@ -151,7 +151,15 @@ new Clipboard('.btn', {
 });
 ```
 
-Also, with are working with single page apps, you may want to manage the lifecycle of the DOM more precisely. Here's how you clean up the events and objects that we create.
+For use in Bootstrap Modals or with any other library that changes the focus you'll want to set the focused element as the `container` value.
+
+```js
+new Clipboard('.btn', {
+    container: document.getElementById('modal')
+});
+```
+
+Also, if you are working with single page apps, you may want to manage the lifecycle of the DOM more precisely. Here's how you clean up the events and objects that we create.
 
 ```js
 var clipboard = new Clipboard('.btn');
@@ -160,17 +168,21 @@ clipboard.destroy();
 
 ## Browser Support
 
-This library relies on both [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection) and [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand) APIs. The second one is supported in the following browsers.
+This library relies on both [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection) and [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand) APIs. The first one is [supported by all browsers](http://caniuse.com/#search=selection) while the second one is supported in the following browsers.
 
-| <img src="http://clipboardjs.com/assets/images/chrome.png" width="48px" height="48px" alt="Chrome logo"> | <img src="http://clipboardjs.com/assets/images/firefox.png" width="48px" height="48px" alt="Firefox logo"> | <img src="http://clipboardjs.com/assets/images/ie.png" width="48px" height="48px" alt="Internet Explorer logo"> | <img src="http://clipboardjs.com/assets/images/opera.png" width="48px" height="48px" alt="Opera logo"> | <img src="http://clipboardjs.com/assets/images/safari.png" width="48px" height="48px" alt="Safari logo"> |
-|:---:|:---:|:---:|:---:|:---:|
-| 42+ ✔ | 41+ ✔ | 9+ ✔ | 29+ ✔ | Nope ✘ |
+| <img src="https://clipboardjs.com/assets/images/chrome.png" width="48px" height="48px" alt="Chrome logo"> | <img src="https://clipboardjs.com/assets/images/edge.png" width="48px" height="48px" alt="Edge logo"> | <img src="https://clipboardjs.com/assets/images/firefox.png" width="48px" height="48px" alt="Firefox logo"> | <img src="https://clipboardjs.com/assets/images/ie.png" width="48px" height="48px" alt="Internet Explorer logo"> | <img src="https://clipboardjs.com/assets/images/opera.png" width="48px" height="48px" alt="Opera logo"> | <img src="https://clipboardjs.com/assets/images/safari.png" width="48px" height="48px" alt="Safari logo"> |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| 42+ ✔ | 12+ ✔ | 41+ ✔ | 9+ ✔ | 29+ ✔ | 10+ ✔ |
 
-Although copy/cut operations with [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand) aren't supported on Safari yet (including mobile), it gracefully degrades because [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection) is supported.
+The good news is that clipboard.js gracefully degrades if you need to support older browsers. All you have to do is show a tooltip saying `Copied!` when `success` event is called and `Press Ctrl+C to copy` when `error` event is called because the text is already selected.
 
-That means you can show a tooltip saying `Copied!` when `success` event is called and `Press Ctrl+C to copy` when `error` event is called because the text is already selected.
+You can also check if clipboard.js is supported or not by running `Clipboard.isSupported()`, that way you can hide copy/cut buttons from the UI.
 
-For a live demonstration, open this [site](http://clipboardjs.com) on Safari.
+## Bonus
+
+A browser extension that adds a "copy to clipboard" button to every code block on *GitHub, MDN, Gist, StackOverflow, StackExchange, npm, and even Medium.*
+
+Install for [Chrome](https://chrome.google.com/webstore/detail/codecopy/fkbfebkcoelajmhanocgppanfoojcdmg) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/codecopy/).
 
 ## License
 
