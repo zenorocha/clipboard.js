@@ -53,7 +53,7 @@ class ClipboardAction {
         this.fakeHandlerCallback = () => this.removeFake();
         this.fakeHandler = this.container.addEventListener('click', this.fakeHandlerCallback) || true;
 
-        this.fakeElem = document.createElement('textarea');
+        this.fakeElem = document.createElement('div');
         // Prevent zooming on iOS
         this.fakeElem.style.fontSize = '12pt';
         // Reset box model
@@ -66,10 +66,9 @@ class ClipboardAction {
         // Move element to the same position vertically
         let yPosition = window.pageYOffset || document.documentElement.scrollTop;
         this.fakeElem.style.top = `${yPosition}px`;
-
-        this.fakeElem.setAttribute('readonly', '');
+        this.fakeElem.setAttribute('contenteditable', 'true');
         this.fakeElem.value = this.text;
-
+        this.fakeElem.innerHTML = this.text;
         this.container.appendChild(this.fakeElem);
 
         this.selectedText = select(this.fakeElem);
