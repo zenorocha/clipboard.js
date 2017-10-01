@@ -684,6 +684,12 @@ module.exports = E;
 
 
         _createClass(Clipboard, [{
+            key: 'copy',
+            value: function copy(e, t){
+	                 this.resolveOptions({text:function(){return t}});
+	                 this.onClick(e);
+	           	}
+        }, {
             key: 'resolveOptions',
             value: function resolveOptions() {
                 var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
