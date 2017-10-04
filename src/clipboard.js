@@ -28,6 +28,7 @@ class Clipboard extends Emitter {
         this.target    = (typeof options.target    === 'function') ? options.target    : this.defaultTarget;
         this.text      = (typeof options.text      === 'function') ? options.text      : this.defaultText;
         this.container = (typeof options.container === 'object')   ? options.container : document.body;
+        this.stopPropagation = options.stopPropagation;
     }
 
     /**
@@ -57,6 +58,10 @@ class Clipboard extends Emitter {
             trigger   : trigger,
             emitter   : this
         });
+
+        if (this.stopPropagation) {
+            e.stopPropagation();
+        }
     }
 
     /**
