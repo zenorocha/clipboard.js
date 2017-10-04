@@ -27,6 +27,7 @@ describe('Clipboard', () => {
     describe('#resolveOptions', () => {
         before(() => {
             global.fn = () => {};
+            global.ctrl = true;
         });
 
         it('should set action as a function', () => {
@@ -65,6 +66,14 @@ describe('Clipboard', () => {
             let clipboard = new Clipboard('.btn');
 
             assert.equal(document.body, clipboard.container);
+        });
+
+        it('should set ctrlClick as a boolean', () => {
+            let clipboard = new Clipboard('.btn', {
+                ctrl: global.ctrl
+            });
+
+            assert.equal(global.ctrl, clipboard.ctrlClick);
         });
     });
 
@@ -105,6 +114,15 @@ describe('Clipboard', () => {
                 assert.equal(e.message, 'Invalid "target" value, use a valid Element');
                 done();
             }
+        });
+
+        it('should not create a new instance of ClipboardAction if ctrlClick required but not pressed', () => {
+            let clipboard = new Clipboard('.btn', {
+                ctrl: global.ctrl
+            });
+
+            clipboard.onClick(global.event);
+            assert.notInstanceOf(clipboard.clipboardAction, ClipboardAction);
         });
     });
 
