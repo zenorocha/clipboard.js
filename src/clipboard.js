@@ -15,7 +15,10 @@ class Clipboard extends Emitter {
         super();
 
         this.resolveOptions(options);
-        this.listenClick(trigger);
+
+        if (trigger) {
+          this.listenClick(trigger);
+        }
     }
 
     /**
@@ -96,6 +99,21 @@ class Clipboard extends Emitter {
     }
 
     /**
+     * Executes copy on given text without the need for a DOM element
+     * @param {String} text
+     */
+    copy(text = '') {
+      if (!text.length) return
+
+      this.clipboardAction = new ClipboardAction({
+          action    : 'copy',
+          text      : text,
+          container : document.body,
+          emitter   : this
+      });
+    }
+
+    /**
      * Default `text` lookup function.
      * @param {Element} trigger
      */
@@ -107,7 +125,9 @@ class Clipboard extends Emitter {
      * Destroy lifecycle.
      */
     destroy() {
-        this.listener.destroy();
+        if (this.listener) {
+          this.listener.destroy();
+        }
 
         if (this.clipboardAction) {
             this.clipboardAction.destroy();
