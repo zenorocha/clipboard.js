@@ -4,7 +4,7 @@ import select from 'select';
  * Inner class which performs selection from either `text` or `target`
  * properties and then executes copy or cut operations.
  */
-class ClipboardAction {
+class ClipboardJSAction {
     /**
      * @param {Object} options
      */
@@ -201,4 +201,4 @@ class ClipboardAction {
     }
 }
 
-module.exports = ClipboardAction;
+module.exports = ClipboardJSAction;

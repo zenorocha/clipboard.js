@@ -1,12 +1,12 @@
-import ClipboardAction from './clipboard-action';
+import ClipboardJSAction from './clipboard-action';
 import Emitter from 'tiny-emitter';
 import listen from 'good-listener';
 
 /**
  * Base class which takes one or more elements, adds event listeners to them,
- * and instantiates a new `ClipboardAction` on each click.
+ * and instantiates a new `ClipboardJSAction` on each click.
  */
-class Clipboard extends Emitter {
+class ClipboardJS extends Emitter {
     /**
      * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
      * @param {Object} options
@@ -39,7 +39,7 @@ class Clipboard extends Emitter {
     }
 
     /**
-     * Defines a new `ClipboardAction` on each click event.
+     * Defines a new `ClipboardJSAction` on each click event.
      * @param {Event} e
      */
     onClick(e) {
@@ -49,7 +49,7 @@ class Clipboard extends Emitter {
             this.clipboardAction = null;
         }
 
-        this.clipboardAction = new ClipboardAction({
+        this.clipboardAction = new ClipboardJSAction({
             action    : this.action(trigger),
             target    : this.target(trigger),
             text      : this.text(trigger),
@@ -132,4 +132,4 @@ function getAttributeValue(suffix, element) {
     return element.getAttribute(attribute);
 }
 
-module.exports = Clipboard;
+module.exports = ClipboardJS;
