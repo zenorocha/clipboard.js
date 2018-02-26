@@ -1,10 +1,10 @@
 /*!
- * clipboard.js v1.7.1
+ * clipboard.js v2.0.1
  * https://zenorocha.github.io/clipboard.js
  *
  * Licensed MIT © Zeno Rocha
  */
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Clipboard = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ClipboardJS = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var DOCUMENT_NODE_TYPE = 9;
 
 /**
@@ -52,7 +52,7 @@ var closest = require('./closest');
  * @param {Boolean} useCapture
  * @return {Object}
  */
-function delegate(element, selector, type, callback, useCapture) {
+function _delegate(element, selector, type, callback, useCapture) {
     var listenerFn = listener.apply(this, arguments);
 
     element.addEventListener(type, listenerFn, useCapture);
@@ -62,6 +62,40 @@ function delegate(element, selector, type, callback, useCapture) {
             element.removeEventListener(type, listenerFn, useCapture);
         }
     }
+}
+
+/**
+ * Delegates event to a selector.
+ *
+ * @param {Element|String|Array} [elements]
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @param {Boolean} useCapture
+ * @return {Object}
+ */
+function delegate(elements, selector, type, callback, useCapture) {
+    // Handle the regular Element usage
+    if (typeof elements.addEventListener === 'function') {
+        return _delegate.apply(null, arguments);
+    }
+
+    // Handle Element-less usage, it defaults to global delegation
+    if (typeof type === 'function') {
+        // Use `document` as the first parameter, then apply arguments
+        // This is a short way to .unshift `arguments` without running into deoptimizations
+        return _delegate.bind(null, document).apply(null, arguments);
+    }
+
+    // Handle Selector-based usage
+    if (typeof elements === 'string') {
+        elements = document.querySelectorAll(elements);
+    }
+
+    // Handle Array-like based usage
+    return Array.prototype.map.call(elements, function (element) {
+        return _delegate(element, selector, type, callback, useCapture);
+    });
 }
 
 /**
@@ -400,12 +434,12 @@ module.exports = E;
         };
     }();
 
-    var ClipboardAction = function () {
+    var ClipboardJSAction = function () {
         /**
          * @param {Object} options
          */
-        function ClipboardAction(options) {
-            _classCallCheck(this, ClipboardAction);
+        function ClipboardJSAction(options) {
+            _classCallCheck(this, ClipboardJSAction);
 
             this.resolveOptions(options);
             this.initSelection();
@@ -417,7 +451,7 @@ module.exports = E;
          */
 
 
-        _createClass(ClipboardAction, [{
+        _createClass(ClipboardJSAction, [{
             key: 'resolveOptions',
             value: function resolveOptions() {
                 var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -571,10 +605,10 @@ module.exports = E;
             }
         }]);
 
-        return ClipboardAction;
+        return ClipboardJSAction;
     }();
 
-    module.exports = ClipboardAction;
+    module.exports = ClipboardJSAction;
 });
 
 },{"select":5}],8:[function(require,module,exports){
@@ -659,17 +693,17 @@ module.exports = E;
         if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
     }
 
-    var Clipboard = function (_Emitter) {
-        _inherits(Clipboard, _Emitter);
+    var ClipboardJS = function (_Emitter) {
+        _inherits(ClipboardJS, _Emitter);
 
         /**
          * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
          * @param {Object} options
          */
-        function Clipboard(trigger, options) {
-            _classCallCheck(this, Clipboard);
+        function ClipboardJS(trigger, options) {
+            _classCallCheck(this, ClipboardJS);
 
-            var _this = _possibleConstructorReturn(this, (Clipboard.__proto__ || Object.getPrototypeOf(Clipboard)).call(this));
+            var _this = _possibleConstructorReturn(this, (ClipboardJS.__proto__ || Object.getPrototypeOf(ClipboardJS)).call(this));
 
             _this.resolveOptions(options);
             _this.listenClick(trigger);
@@ -683,7 +717,7 @@ module.exports = E;
          */
 
 
-        _createClass(Clipboard, [{
+        _createClass(ClipboardJS, [{
             key: 'resolveOptions',
             value: function resolveOptions() {
                 var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -765,7 +799,7 @@ module.exports = E;
             }
         }]);
 
-        return Clipboard;
+        return ClipboardJS;
     }(_tinyEmitter2.default);
 
     /**
@@ -783,7 +817,7 @@ module.exports = E;
         return element.getAttribute(attribute);
     }
 
-    module.exports = Clipboard;
+    module.exports = ClipboardJS;
 });
 
 },{"./clipboard-action":7,"good-listener":4,"tiny-emitter":6}]},{},[8])(8)

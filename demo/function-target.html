@@ -15,7 +15,7 @@
 
     <!-- 3. Instantiate clipboard -->
     <script>
-    var clipboard = new Clipboard('.btn', {
+    var clipboard = new ClipboardJS('.btn', {
         target: function() {
             return document.querySelector('div');
         }

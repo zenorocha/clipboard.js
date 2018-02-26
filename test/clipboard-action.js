@@ -1,7 +1,7 @@
-import ClipboardAction from '../src/clipboard-action';
+import ClipboardJSAction from '../src/clipboard-action';
 import Emitter from 'tiny-emitter';
 
-describe('ClipboardAction', () => {
+describe('ClipboardJSAction', () => {
     before(() => {
         global.input = document.createElement('input');
         global.input.setAttribute('id', 'input');
@@ -20,7 +20,7 @@ describe('ClipboardAction', () => {
 
     describe('#resolveOptions', () => {
         it('should set base properties', () => {
-            let clip = new ClipboardAction({
+            let clip = new ClipboardJSAction({
                 emitter: new Emitter(),
                 container: document.body,
                 text: 'foo'
@@ -41,7 +41,7 @@ describe('ClipboardAction', () => {
             // Set document direction
             document.documentElement.setAttribute('dir', 'rtl');
 
-            let clip = new ClipboardAction({
+            let clip = new ClipboardJSAction({
                     emitter: new Emitter(),
                     container: document.body,
                     text: 'foo'
@@ -55,7 +55,7 @@ describe('ClipboardAction', () => {
     describe('#set action', () => {
         it('should throw an error since "action" is invalid', done => {
             try {
-                new ClipboardAction({
+                new ClipboardJSAction({
                     text: 'foo',
                     action: 'paste'
                 });
@@ -70,7 +70,7 @@ describe('ClipboardAction', () => {
     describe('#set target', () => {
         it('should throw an error since "target" do not match any element', done => {
             try {
-                new ClipboardAction({
+                new ClipboardJSAction({
                     target: document.querySelector('#foo')
                 });
             }
@@ -83,7 +83,7 @@ describe('ClipboardAction', () => {
 
     describe('#selectText', () => {
         it('should create a fake element and select its value', () => {
-            let clip = new ClipboardAction({
+            let clip = new ClipboardJSAction({
                 emitter: new Emitter(),
                 container: document.body,
                 text: 'blah'
@@ -95,7 +95,7 @@ describe('ClipboardAction', () => {
 
     describe('#removeFake', () => {
         it('should remove a temporary fake element', () => {
-            let clip = new ClipboardAction({
+            let clip = new ClipboardJSAction({
                 emitter: new Emitter(),
                 container: document.body,
                 text: 'blah'
@@ -109,7 +109,7 @@ describe('ClipboardAction', () => {
 
     describe('#selectTarget', () => {
         it('should select text from editable element', () => {
-            let clip = new ClipboardAction({
+            let clip = new ClipboardJSAction({
                 emitter: new Emitter(),
                 container: document.body,
                 target: document.querySelector('#input')
@@ -119,7 +119,7 @@ describe('ClipboardAction', () => {
         });
 
         it('should select text from non-editable element', () => {
-            let clip = new ClipboardAction({
+            let clip = new ClipboardJSAction({
                 emitter: new Emitter(),
                 container: document.body,
                 target: document.querySelector('#paragraph')
@@ -147,7 +147,7 @@ describe('ClipboardAction', () => {
                 done();
             });
 
-            let clip = new ClipboardAction({
+            let clip = new ClipboardJSAction({
                 emitter,
                 target: document.querySelector('#input')
             });
@@ -162,7 +162,7 @@ describe('ClipboardAction', () => {
                 done();
             });
 
-            let clip = new ClipboardAction({
+            let clip = new ClipboardJSAction({
                 emitter,
                 target: document.querySelector('#input')
             });
@@ -171,7 +171,7 @@ describe('ClipboardAction', () => {
 
     describe('#handleResult', () => {
         it('should fire a success event with certain properties', done => {
-            let clip = new ClipboardAction({
+            let clip = new ClipboardJSAction({
                 emitter: new Emitter(),
                 container: document.body,
                 target: document.querySelector('#input')
@@ -190,7 +190,7 @@ describe('ClipboardAction', () => {
         });
 
         it('should fire a error event with certain properties', done => {
-            let clip = new ClipboardAction({
+            let clip = new ClipboardJSAction({
                 emitter: new Emitter(),
                 container: document.body,
                 target: document.querySelector('#input')
@@ -210,7 +210,7 @@ describe('ClipboardAction', () => {
 
     describe('#clearSelection', () => {
         it('should remove focus from target and text selection', () => {
-            let clip = new ClipboardAction({
+            let clip = new ClipboardJSAction({
                 emitter: new Emitter(),
                 container: document.body,
                 target: document.querySelector('#input')
@@ -228,7 +228,7 @@ describe('ClipboardAction', () => {
 
     describe('#destroy', () => {
         it('should destroy an existing fake element', () => {
-            let clip = new ClipboardAction({
+            let clip = new ClipboardJSAction({
                 emitter: new Emitter(),
                 container: document.body,
                 text: 'blah'

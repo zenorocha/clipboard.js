@@ -1,8 +1,8 @@
-import Clipboard from '../src/clipboard';
-import ClipboardAction from '../src/clipboard-action';
+import ClipboardJS from '../src/clipboard';
+import ClipboardJSAction from '../src/clipboard-action';
 import listen from 'good-listener';
 
-describe('Clipboard', () => {
+describe('ClipboardJS', () => {
     before(() => {
         global.button = document.createElement('button');
         global.button.setAttribute('class', 'btn');
@@ -30,7 +30,7 @@ describe('Clipboard', () => {
         });
 
         it('should set action as a function', () => {
-            let clipboard = new Clipboard('.btn', {
+            let clipboard = new ClipboardJS('.btn', {
                 action: global.fn
             });
 
@@ -38,7 +38,7 @@ describe('Clipboard', () => {
         });
 
         it('should set target as a function', () => {
-            let clipboard = new Clipboard('.btn', {
+            let clipboard = new ClipboardJS('.btn', {
                 target: global.fn
             });
 
@@ -46,7 +46,7 @@ describe('Clipboard', () => {
         });
 
         it('should set text as a function', () => {
-            let clipboard = new Clipboard('.btn', {
+            let clipboard = new ClipboardJS('.btn', {
                 text: global.fn
             });
 
@@ -54,7 +54,7 @@ describe('Clipboard', () => {
         });
 
         it('should set container as an object', () => {
-            let clipboard = new Clipboard('.btn', {
+            let clipboard = new ClipboardJS('.btn', {
                 container: document.body
             });
 
@@ -62,7 +62,7 @@ describe('Clipboard', () => {
         });
 
         it('should set container as body by default', () => {
-            let clipboard = new Clipboard('.btn');
+            let clipboard = new ClipboardJS('.btn');
 
             assert.equal(document.body, clipboard.container);
         });
@@ -70,30 +70,30 @@ describe('Clipboard', () => {
 
     describe('#listenClick', () => {
         it('should add a click event listener to the passed selector', () => {
-            let clipboard = new Clipboard('.btn');
+            let clipboard = new ClipboardJS('.btn');
             assert.isObject(clipboard.listener);
         });
     });
 
     describe('#onClick', () => {
-        it('should create a new instance of ClipboardAction', () => {
-            let clipboard = new Clipboard('.btn');
+        it('should create a new instance of ClipboardJSAction', () => {
+            let clipboard = new ClipboardJS('.btn');
 
             clipboard.onClick(global.event);
-            assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+            assert.instanceOf(clipboard.clipboardAction, ClipboardJSAction);
         });
 
         it('should use an event\'s currentTarget when not equal to target', () => {
-            let clipboard = new Clipboard('.btn');
+            let clipboard = new ClipboardJS('.btn');
             let bubbledEvent = { target: global.span, currentTarget: global.button };
 
             clipboard.onClick(bubbledEvent);
-            assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+            assert.instanceOf(clipboard.clipboardAction, ClipboardJSAction);
         });
 
         it('should throw an exception when target is invalid', done => {
             try {
-                const clipboard = new Clipboard('.btn', {
+                const clipboard = new ClipboardJS('.btn', {
                     target() {
                         return null;
                     }
@@ -110,18 +110,18 @@ describe('Clipboard', () => {
 
     describe('#static isSupported', () => {
         it('should return the support of the given action', () => {
-            assert.equal(Clipboard.isSupported('copy'), false);
-            assert.equal(Clipboard.isSupported('cut'), false);
+            assert.equal(ClipboardJS.isSupported('copy'), false);
+            assert.equal(ClipboardJS.isSupported('cut'), false);
         });
 
         it('should return the support of the cut and copy actions', () => {
-            assert.equal(Clipboard.isSupported(), false);
+            assert.equal(ClipboardJS.isSupported(), false);
         });
     });
 
     describe('#destroy', () => {
-        it('should destroy an existing instance of ClipboardAction', () => {
-            let clipboard = new Clipboard('.btn');
+        it('should destroy an existing instance of ClipboardJSAction', () => {
+            let clipboard = new ClipboardJS('.btn');
 
             clipboard.onClick(global.event);
             clipboard.destroy();

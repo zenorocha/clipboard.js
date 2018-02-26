@@ -1,6 +1,6 @@
 {
   "name": "clipboard",
-  "version": "1.7.1",
+  "version": "2.0.1",
   "description": "Modern copy to clipboard. No Flash. Just 2kb",
   "repository": "zenorocha/clipboard.js",
   "license": "MIT",
@@ -39,9 +39,9 @@
   },
   "scripts": {
     "build": "npm run build-debug && npm run build-min",
-    "build-debug": "browserify src/clipboard.js -s Clipboard -t [babelify] -p [bannerify --file .banner ] -o dist/clipboard.js",
+    "build-debug": "browserify src/clipboard.js -s ClipboardJS -t [babelify] -p [bannerify --file .banner ] -o dist/clipboard.js",
     "build-min": "uglifyjs dist/clipboard.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/clipboard.min.js",
-    "build-watch": "watchify src/clipboard.js -s Clipboard -t [babelify] -o dist/clipboard.js -v",
+    "build-watch": "watchify src/clipboard.js -s ClipboardJS -t [babelify] -o dist/clipboard.js -v",
     "test": "karma start --single-run",
     "prepublish": "babel src --out-dir lib"
   }
