@@ -1,7 +1,7 @@
 {
   "name": "clipboard",
-  "version": "1.7.1",
-  "description": "Modern copy to clipboard. No Flash. Just 2kb",
+  "version": "2.0.0",
+  "description": "Modern copy to clipboard. No Flash. Just 3kb",
   "license": "MIT",
   "main": "dist/clipboard.js",
   "ignore": [
