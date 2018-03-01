@@ -1,4 +1,4 @@
-var clipboardDemos = new Clipboard('[data-clipboard-demo]');
+var clipboardDemos = new ClipboardJS('[data-clipboard-demo]');
 
 clipboardDemos.on('success', function(e) {
     e.clearSelection();
