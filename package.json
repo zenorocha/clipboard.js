@@ -1,6 +1,6 @@
 {
   "name": "clipboard",
-  "version": "1.6.0",
+  "version": "1.7.1",
   "description": "Modern copy to clipboard. No Flash. Just 2kb",
   "repository": "zenorocha/clipboard.js",
   "license": "MIT",
@@ -12,9 +12,9 @@
     "cut"
   ],
   "dependencies": {
-    "good-listener": "^1.2.0",
+    "good-listener": "^1.2.2",
     "select": "^1.1.2",
-    "tiny-emitter": "^1.0.0"
+    "tiny-emitter": "^2.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",
@@ -34,6 +34,7 @@
     "phantomjs-prebuilt": "^2.1.4",
     "sinon": "^1.17.2",
     "webpack": "^2.2.1"
+    "sinon": "^2.2.0",
   },
   "scripts": {
     "build": "npm run build-debug && npm run build-min",

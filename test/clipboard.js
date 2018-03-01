@@ -26,7 +26,7 @@ describe('Clipboard', () => {
 
     describe('#resolveOptions', () => {
         before(() => {
-            global.fn = function() {};
+            global.fn = () => {};
         });
 
         it('should set action as a function', () => {
@@ -51,6 +51,20 @@ describe('Clipboard', () => {
             });
 
             assert.equal(global.fn, clipboard.text);
+        });
+
+        it('should set container as an object', () => {
+            let clipboard = new Clipboard('.btn', {
+                container: document.body
+            });
+
+            assert.equal(document.body, clipboard.container);
+        });
+
+        it('should set container as body by default', () => {
+            let clipboard = new Clipboard('.btn');
+
+            assert.equal(document.body, clipboard.container);
         });
     });
 
@@ -79,8 +93,8 @@ describe('Clipboard', () => {
 
         it('should throw an exception when target is invalid', done => {
             try {
-                var clipboard = new Clipboard('.btn', {
-                    target: function() {
+                const clipboard = new Clipboard('.btn', {
+                    target() {
                         return null;
                     }
                 });
