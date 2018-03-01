@@ -14,7 +14,7 @@ module.exports = {
     output: {
         filename: production ? 'clipboard.min.js' : 'clipboard.js',
         path: path.resolve(__dirname, 'dist'),
-        library: 'Clipboard',
+        library: 'ClipboardJS',
         libraryTarget: 'umd'
     },
     module: {
