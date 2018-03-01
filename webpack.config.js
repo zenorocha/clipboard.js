@@ -1,7 +1,13 @@
-var path = require('path');
-var webpack = require('webpack');
+const pkg = require('./package.json');
+const path = require('path');
+const webpack = require('webpack');
 
-var production = process.env.NODE_ENV === 'production' || false;
+const production = process.env.NODE_ENV === 'production' || false;
+
+const banner = `clipboard.js v${pkg.version}
+https://zenorocha.github.io/clipboard.js
+
+Licensed MIT © Zeno Rocha`;
 
 module.exports = {
     entry: './src/clipboard.js',
@@ -13,7 +19,7 @@ module.exports = {
     },
     module: {
         rules: [
-            {test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
+            {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
         ]
     },
     plugins: production ? [
@@ -27,6 +33,9 @@ module.exports = {
                     screw_ie8: true
                 },
                 comments: false
-            })
-        ] : []
+            }),
+            new webpack.BannerPlugin({banner})
+        ] : [
+            new webpack.BannerPlugin({banner})
+        ]
 };
