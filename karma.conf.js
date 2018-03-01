@@ -1,8 +1,10 @@
-module.exports = function(karma) {
-    karma.set({
-        plugins: ['karma-browserify', 'karma-chai', 'karma-sinon', 'karma-mocha', 'karma-phantomjs-launcher'],
+var webpackConfig = require('./webpack.config.js');
 
-        frameworks: ['browserify', 'chai', 'sinon', 'mocha'],
+module.exports = function (karma) {
+    karma.set({
+        plugins: ['karma-webpack', 'karma-chai', 'karma-sinon', 'karma-mocha', 'karma-phantomjs-launcher'],
+
+        frameworks: ['chai', 'sinon', 'mocha'],
 
         files: [
             'src/**/*.js',
@@ -10,18 +12,20 @@ module.exports = function(karma) {
             './node_modules/phantomjs-polyfill/bind-polyfill.js'
         ],
 
-        exclude: ['test/module-systems.js'],
-
         preprocessors: {
-            'src/**/*.js' : ['browserify'],
-            'test/**/*.js': ['browserify']
+            'src/**/*.js': ['webpack'],
+            'test/**/*.js': ['webpack']
         },
 
-        browserify: {
-            debug: true,
-            transform: ['babelify']
+        webpack: {
+            module: webpackConfig.module,
+            plugins: webpackConfig.plugins
+        },
+
+        webpackMiddleware: {
+            stats: 'errors-only'
         },
 
         browsers: ['PhantomJS']
     });
-}
+};
