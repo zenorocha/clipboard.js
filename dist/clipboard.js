@@ -672,7 +672,10 @@ module.exports = E;
             var _this = _possibleConstructorReturn(this, (Clipboard.__proto__ || Object.getPrototypeOf(Clipboard)).call(this));
 
             _this.resolveOptions(options);
-            _this.listenClick(trigger);
+
+            if (trigger) {
+                _this.listenClick(trigger);
+            }
             return _this;
         }
 
@@ -735,6 +738,20 @@ module.exports = E;
                 }
             }
         }, {
+            key: 'copy',
+            value: function copy() {
+                var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+                if (!text.length) return;
+
+                this.clipboardAction = new _clipboardAction2.default({
+                    action: 'copy',
+                    text: text,
+                    container: document.body,
+                    emitter: this
+                });
+            }
+        }, {
             key: 'defaultText',
             value: function defaultText(trigger) {
                 return getAttributeValue('text', trigger);
@@ -742,7 +759,9 @@ module.exports = E;
         }, {
             key: 'destroy',
             value: function destroy() {
-                this.listener.destroy();
+                if (this.listener) {
+                    this.listener.destroy();
+                }
 
                 if (this.clipboardAction) {
                     this.clipboardAction.destroy();

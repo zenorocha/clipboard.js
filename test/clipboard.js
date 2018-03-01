@@ -129,4 +129,20 @@ describe('Clipboard', () => {
             assert.equal(clipboard.clipboardAction, null);
         });
     });
+
+    describe("#copy", () => {
+      it('should create a new instance of ClipboardAction', () => {
+          let clipboard = new Clipboard();
+
+          clipboard.copy('Hello World');
+          assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+      });
+
+      it('should not create a new instance of ClipboardAction when no text is given', () => {
+        let clipboard = new Clipboard();
+
+        clipboard.copy();
+        assert.equal(clipboard.clipboardAction, null);
+      })
+    })
 });
