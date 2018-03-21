@@ -106,27 +106,30 @@ class ClipboardAction {
      */
     copyText() {
         let succeeded;
+        let error = undefined;
 
         try {
             succeeded = document.execCommand(this.action);
         }
         catch (err) {
             succeeded = false;
+            error = err
         }
 
-        this.handleResult(succeeded);
+        this.handleResult(succeeded, error);
     }
 
     /**
      * Fires an event based on the copy operation result.
      * @param {Boolean} succeeded
      */
-    handleResult(succeeded) {
+    handleResult(succeeded, error) {
         this.emitter.emit(succeeded ? 'success' : 'error', {
             action: this.action,
             text: this.selectedText,
             trigger: this.trigger,
-            clearSelection: this.clearSelection.bind(this)
+            clearSelection: this.clearSelection.bind(this),
+            error
         });
     }
 
