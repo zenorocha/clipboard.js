@@ -24,6 +24,7 @@ class ClipboardAction {
         this.target    = options.target;
         this.text      = options.text;
         this.trigger   = options.trigger;
+        this.originalEvent = options.originalEvent
 
         this.selectedText = '';
     }
@@ -126,7 +127,8 @@ class ClipboardAction {
             action: this.action,
             text: this.selectedText,
             trigger: this.trigger,
-            clearSelection: this.clearSelection.bind(this)
+            clearSelection: this.clearSelection.bind(this),
+            originalEvent: this.originalEvent
         });
     }
 
