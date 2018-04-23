@@ -205,7 +205,8 @@ var Clipboard = function (_Emitter) {
                 text: this.text(trigger),
                 container: this.container,
                 trigger: trigger,
-                emitter: this
+                emitter: this,
+                originalEvent: e
             });
         }
 
@@ -356,6 +357,7 @@ var ClipboardAction = function () {
             this.target = options.target;
             this.text = options.text;
             this.trigger = options.trigger;
+            this.originalEvent = options.originalEvent;
 
             this.selectedText = '';
         }
@@ -478,7 +480,8 @@ var ClipboardAction = function () {
                 action: this.action,
                 text: this.selectedText,
                 trigger: this.trigger,
-                clearSelection: this.clearSelection.bind(this)
+                clearSelection: this.clearSelection.bind(this),
+                originalEvent: this.originalEvent
             });
         }
 
