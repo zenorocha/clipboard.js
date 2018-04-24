@@ -40,7 +40,7 @@
   "scripts": {
     "build": "npm run build-debug && npm run build-min",
     "build-debug": "webpack --mode=development",
-    "build-analyze": "cross-env ANALYZE_BUIlD=true npm run prepublish",
+    "build-analyze": "cross-env ANALYZE_BUILD=true npm run prepublish",
     "build-min": "cross-env NODE_ENV=production webpack --mode=production",
     "build-watch": "webpack --watch",
     "test": "karma start --single-run",
