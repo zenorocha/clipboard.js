@@ -42,7 +42,7 @@ module.exports = {
     plugins: production ? [
             new webpack.BannerPlugin({ banner }),
             new BundleAnalyzerPlugin({
-                analyzerMode: process.env.ANALYZE_BUIlD ? 'server' : 'disabled'
+                analyzerMode: process.env.ANALYZE_BUILD ? 'server' : 'disabled'
             })
         ] : [
             new webpack.BannerPlugin({ banner })
