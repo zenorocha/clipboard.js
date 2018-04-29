@@ -6,6 +6,9 @@ import listen from 'good-listener';
  * Base class which takes one or more elements, adds event listeners to them,
  * and instantiates a new `ClipboardAction` on each click.
  */
+
+const $ = document.querySelector.bind(document);
+
 class Clipboard extends Emitter {
     /**
      * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
@@ -75,7 +78,7 @@ class Clipboard extends Emitter {
         const selector = getAttributeValue('target', trigger);
 
         if (selector) {
-            return document.querySelector(selector);
+            return $(selector);
         }
     }
 
