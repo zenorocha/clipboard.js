@@ -1,8 +1,6 @@
-var webpackConfig = require('./webpack.config.js');
-
 module.exports = function (karma) {
     karma.set({
-        plugins: ['karma-webpack', 'karma-chai', 'karma-sinon', 'karma-mocha', 'karma-phantomjs-launcher'],
+        plugins: ['karma-rollup-preprocessor', 'karma-chai', 'karma-sinon', 'karma-mocha', 'karma-phantomjs-launcher'],
 
         frameworks: ['chai', 'sinon', 'mocha'],
 
@@ -13,17 +11,21 @@ module.exports = function (karma) {
         ],
 
         preprocessors: {
-            'src/**/*.js': ['webpack'],
-            'test/**/*.js': ['webpack']
+            'src/**/*.js': ['rollup'],
+            'test/**/*.js': ['rollup']
         },
 
-        webpack: {
-            module: webpackConfig.module,
-            plugins: webpackConfig.plugins
-        },
-
-        webpackMiddleware: {
-            stats: 'errors-only'
+        rollupPreprocessor: {
+          plugins: [
+            require('rollup-plugin-node-resolve')(),
+            require('rollup-plugin-commonjs')(),
+            require('rollup-plugin-babel')()
+          ],
+          output: {
+            format: 'iife',
+            name: 'ClipboardJS',
+            sourcemap: 'inline'
+          }
         },
 
         browsers: ['PhantomJS']

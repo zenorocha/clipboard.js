@@ -2,6 +2,8 @@ import Clipboard from '../src/clipboard';
 import ClipboardAction from '../src/clipboard-action';
 import listen from 'good-listener';
 
+const global = {};
+
 describe('Clipboard', () => {
     before(() => {
         global.button = document.createElement('button');
@@ -12,7 +14,7 @@ describe('Clipboard', () => {
         global.span = document.createElement('span');
         global.span.innerHTML = 'bar';
 
-        global.button.appendChild(span);
+        global.button.appendChild(global.span);
 
         global.event = {
             target: global.button,

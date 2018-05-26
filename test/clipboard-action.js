@@ -1,6 +1,8 @@
 import ClipboardAction from '../src/clipboard-action';
 import Emitter from 'tiny-emitter';
 
+const global = {};
+
 describe('ClipboardAction', () => {
     before(() => {
         global.input = document.createElement('input');
