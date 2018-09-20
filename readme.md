@@ -55,7 +55,7 @@ The value you include on this attribute needs to match another's element selecto
 
 ```html
 <!-- Target -->
-<input id="foo" value="https://github.com/zenorocha/clipboard.js.git">
+<input id="foo" value="https://github.com/zenorocha/clipboard.js.git" />
 
 <!-- Trigger -->
 <button class="btn" data-clipboard-target="#foo">
