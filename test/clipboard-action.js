@@ -240,4 +240,19 @@ describe('ClipboardAction', () => {
             assert.equal(clip.fakeElem, null);
         });
     });
+
+    describe('#selectFake', () => {
+        it('should call element focus on the element', () => {
+            let clip = new ClipboardAction({
+                emitter: new Emitter(),
+                container: document.body,
+                text: 'blah'
+            });
+
+            clip.selectFake();
+            let selectedElem = document.activeElement;
+
+            assert.equal(clip.fakeElem, selectedElem);
+        });
+    });
 });

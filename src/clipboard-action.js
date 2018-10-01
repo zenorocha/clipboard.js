@@ -73,6 +73,7 @@ class ClipboardAction {
         this.container.appendChild(this.fakeElem);
 
         this.selectedText = select(this.fakeElem);
+        this.fakeElem.focus();
         this.copyText();
     }
 

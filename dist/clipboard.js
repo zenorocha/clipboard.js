@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v2.0.0
+ * clipboard.js v2.0.1
  * https://zenorocha.github.io/clipboard.js
  * 
  * Licensed MIT © Zeno Rocha
@@ -216,6 +216,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
                 this.container.appendChild(this.fakeElem);
 
                 this.selectedText = (0, _select2.default)(this.fakeElem);
+                this.fakeElem.focus();
                 this.copyText();
             }
         }, {
