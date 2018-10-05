@@ -11,6 +11,10 @@
     "copy",
     "cut"
   ],
+  "files": [
+    "src",
+    "dist"
+  ],
   "dependencies": {
     "good-listener": "^1.2.2",
     "select": "^1.1.2",
