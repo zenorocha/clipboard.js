@@ -1,6 +1,6 @@
 import ClipboardAction from './clipboard-action';
 import Emitter from 'tiny-emitter';
-import listen from 'good-listener';
+import listen from '@migrate-to-esm/good-listener';
 
 /**
  * Base class which takes one or more elements, adds event listeners to them,
@@ -132,4 +132,4 @@ function getAttributeValue(suffix, element) {
     return element.getAttribute(attribute);
 }
 
-module.exports = Clipboard;
+export default Clipboard;

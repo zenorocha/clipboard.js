@@ -12,8 +12,8 @@
     "cut"
   ],
   "dependencies": {
-    "good-listener": "^1.2.2",
-    "select": "^1.1.2",
+    "@migrate-to-esm/good-listener": "^1.2.2",
+    "@migrate-to-esm/select": "^1.1.2",
     "tiny-emitter": "^2.0.0"
   },
   "devDependencies": {

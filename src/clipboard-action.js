@@ -1,4 +1,4 @@
-import select from 'select';
+import select from '@migrate-to-esm/select';
 
 /**
  * Inner class which performs selection from either `text` or `target`
@@ -201,4 +201,4 @@ class ClipboardAction {
     }
 }
 
-module.exports = ClipboardAction;
+export default ClipboardAction;
