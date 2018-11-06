@@ -1,5 +1,5 @@
 import ClipboardAction from './clipboard-action';
-import Emitter from 'tiny-emitter';
+import Emitter from '@migrate-to-esm/tiny-emitter';
 import listen from '@migrate-to-esm/good-listener';
 
 /**

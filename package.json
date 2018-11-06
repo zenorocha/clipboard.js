@@ -14,7 +14,7 @@
   "dependencies": {
     "@migrate-to-esm/good-listener": "^1.2.2",
     "@migrate-to-esm/select": "^1.1.2",
-    "tiny-emitter": "^2.0.0"
+    "@migrate-to-esm/tiny-emitter": "^2.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",
