@@ -34,13 +34,11 @@
     "sinon": "^1.17.2",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "webpack": "^4.5.0",
-    "webpack-bundle-analyzer": "^2.11.1",
     "webpack-cli": "^3.1.2"
   },
   "scripts": {
     "build": "npm run build-debug && npm run build-min",
     "build-debug": "webpack --mode=development",
-    "build-analyze": "cross-env ANALYZE_BUILD=true npm run prepublish",
     "build-min": "cross-env NODE_ENV=production webpack --mode=production",
     "build-watch": "webpack --watch",
     "test": "karma start --single-run",
