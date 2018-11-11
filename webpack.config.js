@@ -12,6 +12,7 @@ Licensed MIT © Zeno Rocha`;
 
 module.exports = {
     entry: './src/clipboard.js',
+    mode: 'production',
     output: {
         filename: production ? 'clipboard.min.js' : 'clipboard.js',
         path: path.resolve(__dirname, 'dist'),
@@ -24,6 +25,7 @@ module.exports = {
         ]
     },
     optimization: {
+        minimize: production,
         minimizer: [
             new UglifyJSPlugin({
                 parallel: require('os').cpus().length,
