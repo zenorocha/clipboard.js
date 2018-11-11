@@ -1,11 +1,9 @@
 {
   "presets": [
     [
-      "env",
+      "@babel/env",
       {
-        "targets": {
-          "uglify": true
-        },
+        "forceAllTransforms": true,
         "modules": false
       }
     ]

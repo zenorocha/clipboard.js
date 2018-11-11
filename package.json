@@ -16,9 +16,9 @@
     "tiny-emitter": "^2.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.7.0",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "babel-loader": "^8.1.0",
     "chai": "^4.2.0",
     "cross-env": "^5.2.0",
     "karma": "^3.1.1",
