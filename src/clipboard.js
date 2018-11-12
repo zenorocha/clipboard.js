@@ -132,4 +132,4 @@ function getAttributeValue(suffix, element) {
     return element.getAttribute(attribute);
 }
 
-module.exports = Clipboard;
+export default Clipboard;
