@@ -37,8 +37,8 @@
   },
   "scripts": {
     "build": "npm run build-debug && npm run build-min",
-    "build-debug": "webpack --mode=development",
-    "build-min": "cross-env NODE_ENV=production webpack --mode=production",
+    "build-debug": "webpack",
+    "build-min": "cross-env NODE_ENV=production webpack",
     "build-watch": "webpack --watch",
     "test": "karma start --single-run",
     "prepublish": "npm run build"
