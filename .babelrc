@@ -1,7 +1,13 @@
 {
-  "presets": [["env", {
-    "targets": {
-      "uglify": true
-    }
-  }]]
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "uglify": true
+        },
+        "modules": false
+      }
+    ]
+  ]
 }
