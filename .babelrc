@@ -1,7 +1,3 @@
 {
-  "presets": [["env", {
-    "targets": {
-      "uglify": true
-    }
-  }]]
+  "presets": [["@babel/preset-env"]]
 }
