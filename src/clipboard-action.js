@@ -42,7 +42,7 @@ class ClipboardAction {
     }
 
     /**
-     * Creates a fake textarea element, sets its value from `text` property,
+     * Creates a fake div element, sets its innerHTML from `text` property,
      * and makes a selection on it.
      */
     selectFake() {
@@ -53,7 +53,7 @@ class ClipboardAction {
         this.fakeHandlerCallback = () => this.removeFake();
         this.fakeHandler = this.container.addEventListener('click', this.fakeHandlerCallback) || true;
 
-        this.fakeElem = document.createElement('textarea');
+        this.fakeElem = document.createElement('div');
         // Prevent zooming on iOS
         this.fakeElem.style.fontSize = '12pt';
         // Reset box model
@@ -67,8 +67,7 @@ class ClipboardAction {
         let yPosition = window.pageYOffset || document.documentElement.scrollTop;
         this.fakeElem.style.top = `${yPosition}px`;
 
-        this.fakeElem.setAttribute('readonly', '');
-        this.fakeElem.value = this.text;
+        this.fakeElem.innerHTML = this.text;
 
         this.container.appendChild(this.fakeElem);
 

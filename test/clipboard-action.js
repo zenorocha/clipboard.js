@@ -89,7 +89,7 @@ describe('ClipboardAction', () => {
                 text: 'blah'
             });
 
-            assert.equal(clip.selectedText, clip.fakeElem.value);
+            assert.equal(clip.selectedText, clip.fakeElem.innerHTML);
         });
     });
 
