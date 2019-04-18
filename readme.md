@@ -125,7 +125,7 @@ For a live demonstration, go to this [site](https://clipboardjs.com/) and open y
 
 Each application has different design needs, that's why clipboard.js does not include any CSS or built-in tooltip solution.
 
-The tooltips you see on the [demo site](https://clipboardjs.com/) were built using [GitHub's Primer](https://github.com/primer/primer-css/tree/master/modules/primer-tooltips). You may want to check that out if you're looking for a similar look and feel.
+The tooltips you see on the [demo site](https://clipboardjs.com/) were built using [GitHub's Primer](https://primer.style/css/components/tooltips). You may want to check that out if you're looking for a similar look and feel.
 
 ## Advanced Options
 
