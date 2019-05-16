@@ -39,7 +39,7 @@ new ClipboardJS('.btn');
 
 Internally, we need to fetch all elements that matches with your selector and attach event listeners for each one. But guess what? If you have hundreds of matches, this operation can consume a lot of memory.
 
-For this reason we use [event delegation](http://stackoverflow.com/questions/1687296/what-is-dom-event-delegation) which replaces multiple event listeners with just a single listener. After all, [#perfmatters](https://twitter.com/hashtag/perfmatters).
+For this reason we use [event delegation](https://stackoverflow.com/questions/1687296/what-is-dom-event-delegation) which replaces multiple event listeners with just a single listener. After all, [#perfmatters](https://twitter.com/hashtag/perfmatters).
 
 # Usage
 
@@ -168,7 +168,7 @@ clipboard.destroy();
 
 ## Browser Support
 
-This library relies on both [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection) and [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand) APIs. The first one is [supported by all browsers](http://caniuse.com/#search=selection) while the second one is supported in the following browsers.
+This library relies on both [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection) and [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand) APIs. The first one is [supported by all browsers](https://caniuse.com/#search=selection) while the second one is supported in the following browsers.
 
 | <img src="https://clipboardjs.com/assets/images/chrome.png" width="48px" height="48px" alt="Chrome logo"> | <img src="https://clipboardjs.com/assets/images/edge.png" width="48px" height="48px" alt="Edge logo"> | <img src="https://clipboardjs.com/assets/images/firefox.png" width="48px" height="48px" alt="Firefox logo"> | <img src="https://clipboardjs.com/assets/images/ie.png" width="48px" height="48px" alt="Internet Explorer logo"> | <img src="https://clipboardjs.com/assets/images/opera.png" width="48px" height="48px" alt="Opera logo"> | <img src="https://clipboardjs.com/assets/images/safari.png" width="48px" height="48px" alt="Safari logo"> |
 |:---:|:---:|:---:|:---:|:---:|:---:|
@@ -186,4 +186,4 @@ Install for [Chrome](https://chrome.google.com/webstore/detail/codecopy/fkbfebkc
 
 ## License
 
-[MIT License](http://zenorocha.mit-license.org/) © Zeno Rocha
+[MIT License](https://zenorocha.mit-license.org/) © Zeno Rocha
