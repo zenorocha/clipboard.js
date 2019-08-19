@@ -31,6 +31,7 @@ class ClipboardAction {
     /**
      * Decides which selection strategy is going to be applied based
      * on the existence of `text` and `target` properties.
+     * If no selection strategy can be applied, emit error event
      */
     initSelection() {
         if (this.text) {
@@ -38,6 +39,9 @@ class ClipboardAction {
         }
         else if (this.target) {
             this.selectTarget();
+        }
+        else {
+          this.handleResult(false);
         }
     }
 

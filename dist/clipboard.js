@@ -1,6 +1,6 @@
 /*!
  * clipboard.js v2.0.4
- * https://zenorocha.github.io/clipboard.js
+ * https://clipboardjs.com/
  * 
  * Licensed MIT © Zeno Rocha
  */
@@ -363,6 +363,7 @@ var ClipboardAction = function () {
         /**
          * Decides which selection strategy is going to be applied based
          * on the existence of `text` and `target` properties.
+         * If no selection strategy can be applied, emit error event
          */
 
     }, {
@@ -372,6 +373,8 @@ var ClipboardAction = function () {
                 this.selectFake();
             } else if (this.target) {
                 this.selectTarget();
+            } else {
+                this.handleResult(false);
             }
         }
 
@@ -692,6 +695,7 @@ E.prototype = {
 };
 
 module.exports = E;
+module.exports.TinyEmitter = E;
 
 
 /***/ }),

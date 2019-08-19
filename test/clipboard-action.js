@@ -50,6 +50,17 @@ describe('ClipboardAction', () => {
             assert.equal(clip.fakeElem.style.right, '-9999px');
             done();
         });
+        it('should emit error when text or target is undefined', done => {
+          let emitter = new Emitter();
+
+          emitter.on('error', () => {
+            done();
+          });
+
+          let clip = new ClipboardAction({
+            emitter
+          });
+        });
     });
 
     describe('#set action', () => {
