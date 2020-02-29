@@ -1,6 +1,6 @@
 /*!
  * clipboard.js v2.0.4
- * https://zenorocha.github.io/clipboard.js
+ * https://clipboardjs.com/
  * 
  * Licensed MIT © Zeno Rocha
  */
@@ -273,10 +273,10 @@ var Clipboard = function (_Emitter) {
             var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['copy', 'cut'];
 
             var actions = typeof action === 'string' ? [action] : action;
-            var support = !!document.queryCommandSupported;
+            var support = !document.queryCommandSupported;
 
             actions.forEach(function (action) {
-                support = support && !!document.queryCommandSupported(action);
+                support = support && !document.queryCommandSupported(action);
             });
 
             return support;
@@ -492,7 +492,7 @@ var ClipboardAction = function () {
             if (this.trigger) {
                 this.trigger.focus();
             }
-
+            document.activeElement.blur();
             window.getSelection().removeAllRanges();
         }
 
@@ -692,6 +692,7 @@ E.prototype = {
 };
 
 module.exports = E;
+module.exports.TinyEmitter = E;
 
 
 /***/ }),
