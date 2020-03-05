@@ -110,12 +110,12 @@ describe('Clipboard', () => {
 
     describe('#static isSupported', () => {
         it('should return the support of the given action', () => {
-            assert.equal(Clipboard.isSupported('copy'), false);
-            assert.equal(Clipboard.isSupported('cut'), false);
+            assert.equal(Clipboard.isSupported('copy'), true);
+            assert.equal(Clipboard.isSupported('cut'), true);
         });
 
         it('should return the support of the cut and copy actions', () => {
-            assert.equal(Clipboard.isSupported(), false);
+            assert.equal(Clipboard.isSupported(), true);
         });
     });
 
