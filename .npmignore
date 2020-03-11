@@ -1,0 +1,9 @@
+/.*
+/demo/
+/test/
+bower.json
+composer.json
+contributing.md
+karma.conf.js
+package.js
+webpack.config.js
