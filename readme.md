@@ -18,7 +18,7 @@ That's why clipboard.js exists.
 You can get it on npm.
 
 ```
-npm install clipboard --save
+npm install clipboard 
 ```
 
 Or if you're not into package management, just [download a ZIP](https://github.com/zenorocha/clipboard.js/archive/master.zip) file.
