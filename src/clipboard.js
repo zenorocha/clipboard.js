@@ -54,7 +54,7 @@ class Clipboard extends Emitter {
             target    : this.target(trigger),
             text      : this.text(trigger),
             container : this.container,
-            trigger   : trigger,
+            trigger,
             emitter   : this
         });
     }
