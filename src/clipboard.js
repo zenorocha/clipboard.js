@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime.js';
 import ClipboardAction from './clipboard-action';
 import Emitter from 'tiny-emitter';
 import listen from 'good-listener';
@@ -42,7 +43,7 @@ class Clipboard extends Emitter {
      * Defines a new `ClipboardAction` on each click event.
      * @param {Event} e
      */
-    onClick(e) {
+    async onClick(e) {
         const trigger = e.delegateTarget || e.currentTarget;
 
         if (this.clipboardAction) {
@@ -50,9 +51,9 @@ class Clipboard extends Emitter {
         }
 
         this.clipboardAction = new ClipboardAction({
-            action    : this.action(trigger),
-            target    : this.target(trigger),
-            text      : this.text(trigger),
+            action    : await this.action(trigger),
+            target    : await this.target(trigger),
+            text      : await this.text(trigger),
             container : this.container,
             trigger   : trigger,
             emitter   : this

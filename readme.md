@@ -129,24 +129,24 @@ The tooltips you see on the [demo site](https://clipboardjs.com/) were built usi
 
 ## Advanced Options
 
-If you don't want to modify your HTML, there's a pretty handy imperative API for you to use. All you need to do is declare a function, do your thing, and return a value.
+If you don't want to modify your HTML, there's a pretty handy imperative API for you to use. All you need to do is declare a function, do your thing, and return a value or a Promise.
 
 For instance, if you want to dynamically set a `target`, you'll need to return a Node.
 
 ```js
 new ClipboardJS('.btn', {
     target: function(trigger) {
-        return trigger.nextElementSibling;
+        return Promise.resolve(trigger.nextElementSibling);
     }
 });
 ```
 
-If you want to dynamically set a `text`, you'll return a String.
+If you want to dynamically set a `text`, you'll return a String or a Promise<String>.
 
 ```js
 new ClipboardJS('.btn', {
     text: function(trigger) {
-        return trigger.getAttribute('aria-label');
+        return Promise.resolve(trigger.getAttribute('aria-label'));
     }
 });
 ```

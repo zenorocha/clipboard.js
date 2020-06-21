@@ -12,6 +12,7 @@
   ],
   "dependencies": {
     "good-listener": "^1.2.2",
+    "regenerator-runtime": "^0.13.5",
     "select": "^1.1.2",
     "tiny-emitter": "^2.0.0"
   },
@@ -23,8 +24,8 @@
     "cross-env": "^5.2.0",
     "karma": "^3.1.1",
     "karma-chai": "^0.1.0",
-    "karma-mocha": "^1.2.0",
     "karma-chrome-launcher": "^2.2.0",
+    "karma-mocha": "^1.2.0",
     "karma-sinon": "^1.0.4",
     "karma-webpack": "^3.0.5",
     "mocha": "^5.2.0",

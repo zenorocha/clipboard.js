@@ -8,6 +8,7 @@
 <body>
     <!-- 1. Define some markup -->
     <button class="btn">Copy</button>
+    <button class="btnAsync">Copy after 1 sec</button>
 
     <!-- 2. Include library -->
     <script src="../dist/clipboard.min.js"></script>
@@ -19,14 +20,20 @@
             return 'to be or not to be';
         }
     });
+    clipboard.on('success', console.log);
+    clipboard.on('error', console.log);
 
-    clipboard.on('success', function(e) {
-        console.log(e);
+    var clipboardAsync = new ClipboardJS('.btnAsync', {
+        text: function() {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve('to be or not to be async');
+                }, 1000);
+            });
+        }
     });
-
-    clipboard.on('error', function(e) {
-        console.log(e);
-    });
+    clipboardAsync.on('success', console.log);
+    clipboardAsync.on('error', console.log);
     </script>
 </body>
 </html>
