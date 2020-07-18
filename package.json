@@ -5,6 +5,10 @@
   "repository": "zenorocha/clipboard.js",
   "license": "MIT",
   "main": "dist/clipboard.js",
+  "files": [
+    "dist/**",
+    "src/**"
+  ],
   "keywords": [
     "clipboard",
     "copy",
