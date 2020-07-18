@@ -39,6 +39,6 @@
     "build-min": "cross-env NODE_ENV=production webpack",
     "build-watch": "webpack --watch",
     "test": "karma start --single-run",
-    "prepublishOnly": "npm run build"
+    "prepublish": "npm run build"
   }
 }
