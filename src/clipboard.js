@@ -82,7 +82,7 @@ class Clipboard extends Emitter {
     /**
      * Returns the support of the given action, or all actions if no action is
      * given.
-     * @param {String} [action]
+     * @param {string[]} [action]
      */
     static isSupported(action = ['copy', 'cut']) {
         const actions = (typeof action === 'string') ? [action] : action;
