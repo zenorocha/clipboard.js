@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v2.0.5
+ * clipboard.js v2.0.6
  * https://clipboardjs.com/
  * 
  * Licensed MIT © Zeno Rocha
@@ -936,10 +936,10 @@ var clipboard_Clipboard = function (_Emitter) {
             var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['copy', 'cut'];
 
             var actions = typeof action === 'string' ? [action] : action;
-            var support = !document.queryCommandSupported;
+            var support = !!document.queryCommandSupported;
 
             actions.forEach(function (action) {
-                support = support && !document.queryCommandSupported(action);
+                support = support && !!document.queryCommandSupported(action);
             });
 
             return support;
