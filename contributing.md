@@ -24,5 +24,6 @@ Implement your bug fix or feature, write tests to cover it and make sure all tes
 Documentation is extremely important and takes a fair deal of time and effort to write and keep updated. Please submit any and all improvements you can make to the repository's docs.
 
 ## Known issues
+
 If you're using npm@3 you'll probably face some issues related to peerDependencies.
 https://github.com/npm/npm/issues/9204
