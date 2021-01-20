@@ -10,9 +10,12 @@ module.exports = function (karma) {
       "karma-chrome-launcher",
     ],
 
-    frameworks: ["chai", "sinon", "mocha"],
+    frameworks: ["chai", "sinon", "mocha", "webpack"],
 
-    files: ["src/**/*.js", "test/**/*.js"],
+    files: [
+      { pattern: "src/**/*.js", watched: false },
+      { pattern: "test/**/*.js", watched: false },
+    ],
 
     preprocessors: {
       "src/**/*.js": ["webpack"],
