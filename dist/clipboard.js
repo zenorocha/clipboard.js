@@ -71,7 +71,7 @@ var ClipboardAction = /*#__PURE__*/function () {
       this.target = options.target;
       this.text = options.text;
       this.trigger = options.trigger;
-      this.selectedText = "";
+      this.selectedText = '';
     }
     /**
      * Decides which selection strategy is going to be applied based
@@ -97,28 +97,28 @@ var ClipboardAction = /*#__PURE__*/function () {
     value: function selectFake() {
       var _this = this;
 
-      var isRTL = document.documentElement.getAttribute("dir") == "rtl";
+      var isRTL = document.documentElement.getAttribute('dir') == 'rtl';
       this.removeFake();
 
       this.fakeHandlerCallback = function () {
         return _this.removeFake();
       };
 
-      this.fakeHandler = this.container.addEventListener("click", this.fakeHandlerCallback) || true;
-      this.fakeElem = document.createElement("textarea"); // Prevent zooming on iOS
+      this.fakeHandler = this.container.addEventListener('click', this.fakeHandlerCallback) || true;
+      this.fakeElem = document.createElement('textarea'); // Prevent zooming on iOS
 
-      this.fakeElem.style.fontSize = "12pt"; // Reset box model
+      this.fakeElem.style.fontSize = '12pt'; // Reset box model
 
-      this.fakeElem.style.border = "0";
-      this.fakeElem.style.padding = "0";
-      this.fakeElem.style.margin = "0"; // Move element out of screen horizontally
+      this.fakeElem.style.border = '0';
+      this.fakeElem.style.padding = '0';
+      this.fakeElem.style.margin = '0'; // Move element out of screen horizontally
 
-      this.fakeElem.style.position = "absolute";
-      this.fakeElem.style[isRTL ? "right" : "left"] = "-9999px"; // Move element to the same position vertically
+      this.fakeElem.style.position = 'absolute';
+      this.fakeElem.style[isRTL ? 'right' : 'left'] = '-9999px'; // Move element to the same position vertically
 
       var yPosition = window.pageYOffset || document.documentElement.scrollTop;
       this.fakeElem.style.top = "".concat(yPosition, "px");
-      this.fakeElem.setAttribute("readonly", "");
+      this.fakeElem.setAttribute('readonly', '');
       this.fakeElem.value = this.text;
       this.container.appendChild(this.fakeElem);
       this.selectedText = select_default()(this.fakeElem);
@@ -133,7 +133,7 @@ var ClipboardAction = /*#__PURE__*/function () {
     key: "removeFake",
     value: function removeFake() {
       if (this.fakeHandler) {
-        this.container.removeEventListener("click", this.fakeHandlerCallback);
+        this.container.removeEventListener('click', this.fakeHandlerCallback);
         this.fakeHandler = null;
         this.fakeHandlerCallback = null;
       }
@@ -178,7 +178,7 @@ var ClipboardAction = /*#__PURE__*/function () {
   }, {
     key: "handleResult",
     value: function handleResult(succeeded) {
-      this.emitter.emit(succeeded ? "success" : "error", {
+      this.emitter.emit(succeeded ? 'success' : 'error', {
         action: this.action,
         text: this.selectedText,
         trigger: this.trigger,
@@ -216,10 +216,10 @@ var ClipboardAction = /*#__PURE__*/function () {
   }, {
     key: "action",
     set: function set() {
-      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "copy";
+      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'copy';
       this._action = action;
 
-      if (this._action !== "copy" && this._action !== "cut") {
+      if (this._action !== 'copy' && this._action !== 'cut') {
         throw new Error('Invalid "action" value, use either "copy" or "cut"');
       }
     }
@@ -241,12 +241,12 @@ var ClipboardAction = /*#__PURE__*/function () {
     key: "target",
     set: function set(target) {
       if (target !== undefined) {
-        if (target && _typeof(target) === "object" && target.nodeType === 1) {
-          if (this.action === "copy" && target.hasAttribute("disabled")) {
+        if (target && _typeof(target) === 'object' && target.nodeType === 1) {
+          if (this.action === 'copy' && target.hasAttribute('disabled')) {
             throw new Error('Invalid "target" attribute. Please use "readonly" instead of "disabled" attribute');
           }
 
-          if (this.action === "cut" && (target.hasAttribute("readonly") || target.hasAttribute("disabled"))) {
+          if (this.action === 'cut' && (target.hasAttribute('readonly') || target.hasAttribute('disabled'))) {
             throw new Error('Invalid "target" attribute. You can\'t cut text from elements with "readonly" or "disabled" attributes');
           }
 
@@ -340,10 +340,10 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
     key: "resolveOptions",
     value: function resolveOptions() {
       var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      this.action = typeof options.action === "function" ? options.action : this.defaultAction;
-      this.target = typeof options.target === "function" ? options.target : this.defaultTarget;
-      this.text = typeof options.text === "function" ? options.text : this.defaultText;
-      this.container = clipboard_typeof(options.container) === "object" ? options.container : document.body;
+      this.action = typeof options.action === 'function' ? options.action : this.defaultAction;
+      this.target = typeof options.target === 'function' ? options.target : this.defaultTarget;
+      this.text = typeof options.text === 'function' ? options.text : this.defaultText;
+      this.container = clipboard_typeof(options.container) === 'object' ? options.container : document.body;
     }
     /**
      * Adds a click event listener to the passed trigger.
@@ -355,7 +355,7 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
     value: function listenClick(trigger) {
       var _this2 = this;
 
-      this.listener = listen_default()(trigger, "click", function (e) {
+      this.listener = listen_default()(trigger, 'click', function (e) {
         return _this2.onClick(e);
       });
     }
@@ -390,7 +390,7 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
   }, {
     key: "defaultAction",
     value: function defaultAction(trigger) {
-      return getAttributeValue("action", trigger);
+      return getAttributeValue('action', trigger);
     }
     /**
      * Default `target` lookup function.
@@ -400,7 +400,7 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
   }, {
     key: "defaultTarget",
     value: function defaultTarget(trigger) {
-      var selector = getAttributeValue("target", trigger);
+      var selector = getAttributeValue('target', trigger);
 
       if (selector) {
         return document.querySelector(selector);
@@ -420,7 +420,7 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
      * @param {Element} trigger
      */
     value: function defaultText(trigger) {
-      return getAttributeValue("text", trigger);
+      return getAttributeValue('text', trigger);
     }
     /**
      * Destroy lifecycle.
@@ -439,8 +439,8 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
   }], [{
     key: "isSupported",
     value: function isSupported() {
-      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ["copy", "cut"];
-      var actions = typeof action === "string" ? [action] : action;
+      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['copy', 'cut'];
+      var actions = typeof action === 'string' ? [action] : action;
       var support = !!document.queryCommandSupported;
       actions.forEach(function (action) {
         support = support && !!document.queryCommandSupported(action);

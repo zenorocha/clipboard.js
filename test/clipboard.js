@@ -1,6 +1,5 @@
 import Clipboard from '../src/clipboard';
 import ClipboardAction from '../src/clipboard-action';
-import listen from 'good-listener';
 
 describe('Clipboard', () => {
   before(() => {
