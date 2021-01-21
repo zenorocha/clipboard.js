@@ -55,11 +55,11 @@ The value you include on this attribute needs to match another's element selecto
 
 ```html
 <!-- Target -->
-<input id="foo" value="https://github.com/zenorocha/clipboard.js.git">
+<input id="foo" value="https://github.com/zenorocha/clipboard.js.git" />
 
 <!-- Trigger -->
 <button class="btn" data-clipboard-target="#foo">
-    <img src="assets/clippy.svg" alt="Copy to clipboard">
+  <img src="assets/clippy.svg" alt="Copy to clipboard" />
 </button>
 ```
 
@@ -77,7 +77,7 @@ If you omit this attribute, `copy` will be used by default.
 
 <!-- Trigger -->
 <button class="btn" data-clipboard-action="cut" data-clipboard-target="#bar">
-    Cut to clipboard
+  Cut to clipboard
 </button>
 ```
 
@@ -91,8 +91,11 @@ Truth is, you don't even need another element to copy its content from. You can 
 
 ```html
 <!-- Trigger -->
-<button class="btn" data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">
-    Copy to clipboard
+<button
+  class="btn"
+  data-clipboard-text="Just because you can doesn't mean you should — clipboard.js"
+>
+  Copy to clipboard
 </button>
 ```
 
@@ -105,17 +108,17 @@ That's why we fire custom events such as `success` and `error` for you to listen
 ```js
 var clipboard = new ClipboardJS('.btn');
 
-clipboard.on('success', function(e) {
-    console.info('Action:', e.action);
-    console.info('Text:', e.text);
-    console.info('Trigger:', e.trigger);
+clipboard.on('success', function (e) {
+  console.info('Action:', e.action);
+  console.info('Text:', e.text);
+  console.info('Trigger:', e.trigger);
 
-    e.clearSelection();
+  e.clearSelection();
 });
 
-clipboard.on('error', function(e) {
-    console.error('Action:', e.action);
-    console.error('Trigger:', e.trigger);
+clipboard.on('error', function (e) {
+  console.error('Action:', e.action);
+  console.error('Trigger:', e.trigger);
 });
 ```
 
@@ -135,9 +138,9 @@ For instance, if you want to dynamically set a `target`, you'll need to return a
 
 ```js
 new ClipboardJS('.btn', {
-    target: function(trigger) {
-        return trigger.nextElementSibling;
-    }
+  target: function (trigger) {
+    return trigger.nextElementSibling;
+  },
 });
 ```
 
@@ -145,9 +148,9 @@ If you want to dynamically set a `text`, you'll return a String.
 
 ```js
 new ClipboardJS('.btn', {
-    text: function(trigger) {
-        return trigger.getAttribute('aria-label');
-    }
+  text: function (trigger) {
+    return trigger.getAttribute('aria-label');
+  },
 });
 ```
 
@@ -155,7 +158,7 @@ For use in Bootstrap Modals or with any other library that changes the focus you
 
 ```js
 new ClipboardJS('.btn', {
-    container: document.getElementById('modal')
+  container: document.getElementById('modal'),
 });
 ```
 
@@ -171,8 +174,8 @@ clipboard.destroy();
 This library relies on both [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection) and [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand) APIs. The first one is [supported by all browsers](https://caniuse.com/#search=selection) while the second one is supported in the following browsers.
 
 | <img src="https://clipboardjs.com/assets/images/chrome.png" width="48px" height="48px" alt="Chrome logo"> | <img src="https://clipboardjs.com/assets/images/edge.png" width="48px" height="48px" alt="Edge logo"> | <img src="https://clipboardjs.com/assets/images/firefox.png" width="48px" height="48px" alt="Firefox logo"> | <img src="https://clipboardjs.com/assets/images/ie.png" width="48px" height="48px" alt="Internet Explorer logo"> | <img src="https://clipboardjs.com/assets/images/opera.png" width="48px" height="48px" alt="Opera logo"> | <img src="https://clipboardjs.com/assets/images/safari.png" width="48px" height="48px" alt="Safari logo"> |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| 42+ ✔ | 12+ ✔ | 41+ ✔ | 9+ ✔ | 29+ ✔ | 10+ ✔ |
+| :-------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: |
+|                                                   42+ ✔                                                   |                                                 12+ ✔                                                 |                                                    41+ ✔                                                    |                                                       9+ ✔                                                       |                                                  29+ ✔                                                  |                                                   10+ ✔                                                   |
 
 The good news is that clipboard.js gracefully degrades if you need to support older browsers. All you have to do is show a tooltip saying `Copied!` when `success` event is called and `Press Ctrl+C to copy` when `error` event is called because the text is already selected.
 
@@ -180,7 +183,7 @@ You can also check if clipboard.js is supported or not by running `ClipboardJS.i
 
 ## Bonus
 
-A browser extension that adds a "copy to clipboard" button to every code block on *GitHub, MDN, Gist, StackOverflow, StackExchange, npm, and even Medium.*
+A browser extension that adds a "copy to clipboard" button to every code block on _GitHub, MDN, Gist, StackOverflow, StackExchange, npm, and even Medium._
 
 Install for [Chrome](https://chrome.google.com/webstore/detail/codecopy/fkbfebkcoelajmhanocgppanfoojcdmg) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/codecopy/).
 

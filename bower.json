@@ -14,9 +14,5 @@
     "/src",
     "/lib"
   ],
-  "keywords": [
-    "clipboard",
-    "copy",
-    "cut"
-  ]
+  "keywords": ["clipboard", "copy", "cut"]
 }
