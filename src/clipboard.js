@@ -1,6 +1,6 @@
-import ClipboardAction from "./clipboard-action";
-import Emitter from "tiny-emitter";
-import listen from "good-listener";
+import ClipboardAction from './clipboard-action';
+import Emitter from 'tiny-emitter';
+import listen from 'good-listener';
 
 /**
  * Base class which takes one or more elements, adds event listeners to them,
@@ -25,17 +25,17 @@ class Clipboard extends Emitter {
    */
   resolveOptions(options = {}) {
     this.action =
-      typeof options.action === "function"
+      typeof options.action === 'function'
         ? options.action
         : this.defaultAction;
     this.target =
-      typeof options.target === "function"
+      typeof options.target === 'function'
         ? options.target
         : this.defaultTarget;
     this.text =
-      typeof options.text === "function" ? options.text : this.defaultText;
+      typeof options.text === 'function' ? options.text : this.defaultText;
     this.container =
-      typeof options.container === "object" ? options.container : document.body;
+      typeof options.container === 'object' ? options.container : document.body;
   }
 
   /**
@@ -43,7 +43,7 @@ class Clipboard extends Emitter {
    * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
    */
   listenClick(trigger) {
-    this.listener = listen(trigger, "click", (e) => this.onClick(e));
+    this.listener = listen(trigger, 'click', (e) => this.onClick(e));
   }
 
   /**
@@ -72,7 +72,7 @@ class Clipboard extends Emitter {
    * @param {Element} trigger
    */
   defaultAction(trigger) {
-    return getAttributeValue("action", trigger);
+    return getAttributeValue('action', trigger);
   }
 
   /**
@@ -80,7 +80,7 @@ class Clipboard extends Emitter {
    * @param {Element} trigger
    */
   defaultTarget(trigger) {
-    const selector = getAttributeValue("target", trigger);
+    const selector = getAttributeValue('target', trigger);
 
     if (selector) {
       return document.querySelector(selector);
@@ -92,8 +92,8 @@ class Clipboard extends Emitter {
    * given.
    * @param {String} [action]
    */
-  static isSupported(action = ["copy", "cut"]) {
-    const actions = typeof action === "string" ? [action] : action;
+  static isSupported(action = ['copy', 'cut']) {
+    const actions = typeof action === 'string' ? [action] : action;
     let support = !!document.queryCommandSupported;
 
     actions.forEach((action) => {
@@ -108,7 +108,7 @@ class Clipboard extends Emitter {
    * @param {Element} trigger
    */
   defaultText(trigger) {
-    return getAttributeValue("text", trigger);
+    return getAttributeValue('text', trigger);
   }
 
   /**

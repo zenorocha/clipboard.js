@@ -1,25 +1,25 @@
-var webpackConfig = require("./webpack.config.js");
+var webpackConfig = require('./webpack.config.js');
 
 module.exports = function (karma) {
   karma.set({
     plugins: [
-      "karma-webpack",
-      "karma-chai",
-      "karma-sinon",
-      "karma-mocha",
-      "karma-chrome-launcher",
+      'karma-webpack',
+      'karma-chai',
+      'karma-sinon',
+      'karma-mocha',
+      'karma-chrome-launcher',
     ],
 
-    frameworks: ["chai", "sinon", "mocha", "webpack"],
+    frameworks: ['chai', 'sinon', 'mocha', 'webpack'],
 
     files: [
-      { pattern: "src/**/*.js", watched: false },
-      { pattern: "test/**/*.js", watched: false },
+      { pattern: 'src/**/*.js', watched: false },
+      { pattern: 'test/**/*.js', watched: false },
     ],
 
     preprocessors: {
-      "src/**/*.js": ["webpack"],
-      "test/**/*.js": ["webpack"],
+      'src/**/*.js': ['webpack'],
+      'test/**/*.js': ['webpack'],
     },
 
     webpack: {
@@ -28,9 +28,9 @@ module.exports = function (karma) {
     },
 
     webpackMiddleware: {
-      stats: "errors-only",
+      stats: 'errors-only',
     },
 
-    browsers: ["ChromeHeadless"],
+    browsers: ['ChromeHeadless'],
   });
 };

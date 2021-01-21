@@ -15,17 +15,17 @@
 
     <!-- 3. Instantiate clipboard -->
     <script>
-      var clipboard = new ClipboardJS(".btn", {
+      var clipboard = new ClipboardJS('.btn', {
         target: function () {
-          return document.querySelector("div");
+          return document.querySelector('div');
         },
       });
 
-      clipboard.on("success", function (e) {
+      clipboard.on('success', function (e) {
         console.log(e);
       });
 
-      clipboard.on("error", function (e) {
+      clipboard.on('error', function (e) {
         console.log(e);
       });
     </script>

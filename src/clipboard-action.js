@@ -1,4 +1,4 @@
-import select from "select";
+import select from 'select';
 
 /**
  * Inner class which performs selection from either `text` or `target`
@@ -25,7 +25,7 @@ class ClipboardAction {
     this.text = options.text;
     this.trigger = options.trigger;
 
-    this.selectedText = "";
+    this.selectedText = '';
   }
 
   /**
@@ -45,30 +45,30 @@ class ClipboardAction {
    * and makes a selection on it.
    */
   selectFake() {
-    const isRTL = document.documentElement.getAttribute("dir") == "rtl";
+    const isRTL = document.documentElement.getAttribute('dir') == 'rtl';
 
     this.removeFake();
 
     this.fakeHandlerCallback = () => this.removeFake();
     this.fakeHandler =
-      this.container.addEventListener("click", this.fakeHandlerCallback) ||
+      this.container.addEventListener('click', this.fakeHandlerCallback) ||
       true;
 
-    this.fakeElem = document.createElement("textarea");
+    this.fakeElem = document.createElement('textarea');
     // Prevent zooming on iOS
-    this.fakeElem.style.fontSize = "12pt";
+    this.fakeElem.style.fontSize = '12pt';
     // Reset box model
-    this.fakeElem.style.border = "0";
-    this.fakeElem.style.padding = "0";
-    this.fakeElem.style.margin = "0";
+    this.fakeElem.style.border = '0';
+    this.fakeElem.style.padding = '0';
+    this.fakeElem.style.margin = '0';
     // Move element out of screen horizontally
-    this.fakeElem.style.position = "absolute";
-    this.fakeElem.style[isRTL ? "right" : "left"] = "-9999px";
+    this.fakeElem.style.position = 'absolute';
+    this.fakeElem.style[isRTL ? 'right' : 'left'] = '-9999px';
     // Move element to the same position vertically
     let yPosition = window.pageYOffset || document.documentElement.scrollTop;
     this.fakeElem.style.top = `${yPosition}px`;
 
-    this.fakeElem.setAttribute("readonly", "");
+    this.fakeElem.setAttribute('readonly', '');
     this.fakeElem.value = this.text;
 
     this.container.appendChild(this.fakeElem);
@@ -83,7 +83,7 @@ class ClipboardAction {
    */
   removeFake() {
     if (this.fakeHandler) {
-      this.container.removeEventListener("click", this.fakeHandlerCallback);
+      this.container.removeEventListener('click', this.fakeHandlerCallback);
       this.fakeHandler = null;
       this.fakeHandlerCallback = null;
     }
@@ -122,7 +122,7 @@ class ClipboardAction {
    * @param {Boolean} succeeded
    */
   handleResult(succeeded) {
-    this.emitter.emit(succeeded ? "success" : "error", {
+    this.emitter.emit(succeeded ? 'success' : 'error', {
       action: this.action,
       text: this.selectedText,
       trigger: this.trigger,
@@ -145,10 +145,10 @@ class ClipboardAction {
    * Sets the `action` to be performed which can be either 'copy' or 'cut'.
    * @param {String} action
    */
-  set action(action = "copy") {
+  set action(action = 'copy') {
     this._action = action;
 
-    if (this._action !== "copy" && this._action !== "cut") {
+    if (this._action !== 'copy' && this._action !== 'cut') {
       throw new Error('Invalid "action" value, use either "copy" or "cut"');
     }
   }
@@ -168,16 +168,16 @@ class ClipboardAction {
    */
   set target(target) {
     if (target !== undefined) {
-      if (target && typeof target === "object" && target.nodeType === 1) {
-        if (this.action === "copy" && target.hasAttribute("disabled")) {
+      if (target && typeof target === 'object' && target.nodeType === 1) {
+        if (this.action === 'copy' && target.hasAttribute('disabled')) {
           throw new Error(
             'Invalid "target" attribute. Please use "readonly" instead of "disabled" attribute'
           );
         }
 
         if (
-          this.action === "cut" &&
-          (target.hasAttribute("readonly") || target.hasAttribute("disabled"))
+          this.action === 'cut' &&
+          (target.hasAttribute('readonly') || target.hasAttribute('disabled'))
         ) {
           throw new Error(
             'Invalid "target" attribute. You can\'t cut text from elements with "readonly" or "disabled" attributes'
