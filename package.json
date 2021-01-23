@@ -39,6 +39,7 @@
     "build-debug": "webpack",
     "build-min": "cross-env NODE_ENV=production webpack",
     "build-watch": "webpack --watch",
+    "build-minimal-api": "cross-env NODE_ENV=production webpack --config ./minimal-webpack.config.js",
     "test": "karma start --single-run",
     "prepublish": "npm run build"
   }
