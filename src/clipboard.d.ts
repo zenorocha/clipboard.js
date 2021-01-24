@@ -1,5 +1,7 @@
 /// <reference lib="dom"/>
 
+import { TinyEmitter } from 'tiny-emitter';
+
 type Action = 'cut' | 'copy';
 
 type Target = string | HTMLElement;
@@ -7,7 +9,7 @@ type Target = string | HTMLElement;
 type Trigger = string | HTMLElement | HTMLCollection | NodeList;
 
 type Options = {
-  emmiter?: any;
+  emmiter?: TinyEmitter;
   text?: string;
   action?: Action;
   target?: Element;
