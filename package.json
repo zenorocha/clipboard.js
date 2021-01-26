@@ -6,6 +6,7 @@
   "repository": "zenorocha/clipboard.js",
   "license": "MIT",
   "main": "dist/clipboard.js",
+  "types": "src/clipboard.d.ts",
   "keywords": [
     "clipboard",
     "copy",
@@ -32,12 +33,14 @@
     "lint-staged": "^10.5.3",
     "mocha": "^8.2.1",
     "prettier": "2.2.1",
+    "tsd": "^0.7.2",
     "sinon": "^9.2.3",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^5.15.0",
     "webpack-cli": "^4.4.0"
   },
   "scripts": {
+    "test:types": "tsd",
     "build": "npm run build-debug && npm run build-min",
     "build-debug": "webpack",
     "build-min": "cross-env NODE_ENV=production webpack",
