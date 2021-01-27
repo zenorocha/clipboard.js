@@ -22,7 +22,9 @@
     "@babel/preset-env": "^7.12.11",
     "babel-loader": "^8.2.2",
     "chai": "^4.2.0",
+    "closure-webpack-plugin": "^2.5.0",
     "cross-env": "^7.0.3",
+    "google-closure-compiler": "^20210106.0.0",
     "husky": "^4.3.8",
     "karma": "^6.0.0",
     "karma-chai": "^0.1.0",
@@ -33,9 +35,8 @@
     "lint-staged": "^10.5.3",
     "mocha": "^8.2.1",
     "prettier": "2.2.1",
-    "tsd": "^0.7.2",
     "sinon": "^9.2.3",
-    "uglifyjs-webpack-plugin": "^2.2.0",
+    "tsd": "^0.7.2",
     "webpack": "^5.15.0",
     "webpack-cli": "^4.4.0"
   },
@@ -45,7 +46,6 @@
     "build-debug": "webpack",
     "build-min": "cross-env NODE_ENV=production webpack",
     "build-watch": "webpack --watch",
-    "build-minimal-api": "cross-env NODE_ENV=production webpack --config ./minimal-webpack.config.js",
     "test": "karma start --single-run",
     "prepublish": "npm run build"
   },
