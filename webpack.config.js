@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ClosurePlugin = require('closure-webpack-plugin');
 
-const production = process.env.NODE_ENV === 'production' || false;
+const production = process.env.NODE_ENV === 'production';
 
 const banner = `clipboard.js v${pkg.version}
 https://clipboardjs.com/
