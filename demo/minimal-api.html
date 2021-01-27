@@ -8,7 +8,7 @@
     <button id="btn" type="button">Copy</button>
     <script src="../dist-minimal/clipboard.min.js"></script>
     <script>
-      let btn = document.getElementById('btn');
+      const btn = document.getElementById('btn');
       btn.addEventListener('click', () => {
         clipboard.copy('clipboard.js');
       });
