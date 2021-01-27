@@ -16,10 +16,10 @@ module.exports = {
   output: {
     filename: production ? 'clipboard.min.js' : 'clipboard.js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'ClipboardJS',
+    library: 'clipboard',
     globalObject: 'this',
     libraryExport: 'default',
-    libraryTarget: 'umd',
+    libraryTarget: 'window',
   },
   module: {
     rules: [{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }],
