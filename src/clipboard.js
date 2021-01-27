@@ -1,7 +1,7 @@
 function clipboard() {
   return {
     copy: (input) => {
-      const isRTL = document.documentElement.getAttribute('dir') == 'rtl';
+      const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
 
       const fakeElem = document.createElement('textarea');
       // Prevent zooming on iOS
