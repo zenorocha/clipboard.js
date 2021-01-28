@@ -51,3 +51,7 @@ Instead of '...', what I saw was that '...' happened instead.
 ### Browsers Affected
 
 I tested on all major browsers and only IE 11 does not work.
+
+### Operational System
+
+(Place here your Operational System.)
