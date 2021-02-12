@@ -1,6 +1,6 @@
 # clipboard.js
 
-[![Build Status](https://github.com/zenorocha/clipboard.js/workflows/build/badge.svg)
+![Build Status](https://github.com/zenorocha/clipboard.js/workflows/build/badge.svg)
 ![Killing Flash](https://img.shields.io/badge/killing-flash-brightgreen.svg?style=flat)
 
 > Modern copy to clipboard. No Flash. Just 3kb gzipped.
