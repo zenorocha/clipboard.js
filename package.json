@@ -39,6 +39,7 @@
     "mocha": "^8.2.1",
     "prettier": "2.2.1",
     "sinon": "^9.2.3",
+    "sort-package-json": "^1.48.1",
     "tsd": "^0.7.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^5.15.0",
@@ -51,9 +52,16 @@
     "build-min": "cross-env NODE_ENV=production webpack",
     "build-watch": "webpack --watch",
     "test": "karma start --single-run",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "lint": "eslint --ext .js src/"
   },
   "lint-staged": {
-    "*.{js,css,md}": "prettier --write"
+    "*.{js,css,md}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "package.json": [
+      "sort-package-json"
+    ]
   }
 }
