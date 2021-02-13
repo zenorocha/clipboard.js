@@ -1,11 +1,28 @@
-import ClipboardAction from './clipboard-action';
+/* eslint-disable class-methods-use-this */
+/* eslint-disable consistent-return */
 import Emitter from 'tiny-emitter';
 import listen from 'good-listener';
+import ClipboardAction from './clipboard-action';
 
 /**
  * Base class which takes one or more elements, adds event listeners to them,
  * and instantiates a new `ClipboardAction` on each click.
  */
+
+/**
+ * Helper function to retrieve attribute value.
+ * @param {String} suffix
+ * @param {Element} element
+ */
+function getAttributeValue(suffix, element) {
+  const attribute = `data-clipboard-${suffix}`;
+
+  if (!element.hasAttribute(attribute)) {
+    return;
+  }
+
+  return element.getAttribute(attribute);
+}
 class Clipboard extends Emitter {
   /**
    * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
@@ -62,7 +79,7 @@ class Clipboard extends Emitter {
       target: this.target(trigger),
       text: this.text(trigger),
       container: this.container,
-      trigger: trigger,
+      trigger,
       emitter: this,
     });
   }
@@ -96,6 +113,7 @@ class Clipboard extends Emitter {
     const actions = typeof action === 'string' ? [action] : action;
     let support = !!document.queryCommandSupported;
 
+    // eslint-disable-next-line no-shadow
     actions.forEach((action) => {
       support = support && !!document.queryCommandSupported(action);
     });
@@ -122,21 +140,6 @@ class Clipboard extends Emitter {
       this.clipboardAction = null;
     }
   }
-}
-
-/**
- * Helper function to retrieve attribute value.
- * @param {String} suffix
- * @param {Element} element
- */
-function getAttributeValue(suffix, element) {
-  const attribute = `data-clipboard-${suffix}`;
-
-  if (!element.hasAttribute(attribute)) {
-    return;
-  }
-
-  return element.getAttribute(attribute);
 }
 
 export default Clipboard;
