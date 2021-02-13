@@ -13,6 +13,7 @@
   "rules": {
     "prettier/prettier": "error",
     "prefer-const": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "no-underscore-dangle": "off"
   }
 }
