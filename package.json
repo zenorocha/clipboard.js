@@ -39,7 +39,6 @@
     "mocha": "^8.2.1",
     "prettier": "2.2.1",
     "sinon": "^9.2.3",
-    "sort-package-json": "^1.48.1",
     "tsd": "^0.7.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^5.15.0",
@@ -59,9 +58,6 @@
     "*.{js,css,md}": [
       "prettier --write",
       "eslint --fix"
-    ],
-    "package.json": [
-      "sort-package-json"
     ]
   }
 }
