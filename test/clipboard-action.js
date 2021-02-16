@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import Emitter from 'tiny-emitter';
 import ClipboardAction from '../src/clipboard-action';
 
