@@ -10,24 +10,6 @@ on:
     branches: [ master ]
 
 jobs:
-  code:
-    name: lint code
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Use Node.js 12
-        uses: actions/setup-node@v1
-        with:
-          node-version: "12"
-
-      - name: Install dependencies
-        uses: bahmutov/npm-install@v1
-
-      - name: Run ESLint
-        run: npm run lint
-
   build:
     runs-on: ubuntu-latest
 
@@ -45,5 +27,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run build --if-present
+    - run: npm run lint
     - run: npm test
 
