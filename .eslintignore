@@ -1,0 +1,12 @@
+# Ignore artifacts:
+dist
+
+lib
+npm-debug.log
+bower_components
+node_modules
+yarn-error.log
+yarn.lock
+
+src/*.ts
+/*.js

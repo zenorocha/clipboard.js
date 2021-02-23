@@ -7,7 +7,11 @@
   "license": "MIT",
   "main": "dist/clipboard.js",
   "types": "src/clipboard.d.ts",
-  "keywords": ["clipboard", "copy", "cut"],
+  "keywords": [
+    "clipboard",
+    "copy",
+    "cut"
+  ],
   "dependencies": {
     "good-listener": "^1.2.2",
     "select": "^1.1.2",
@@ -19,6 +23,11 @@
     "babel-loader": "^8.2.2",
     "chai": "^4.2.0",
     "cross-env": "^7.0.3",
+    "eslint": "^7.20.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
     "husky": "^5.0.9",
     "karma": "^6.0.0",
     "karma-chai": "^0.1.0",
@@ -42,9 +51,13 @@
     "build-min": "cross-env NODE_ENV=production webpack",
     "build-watch": "webpack --watch",
     "test": "karma start --single-run",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "lint": "eslint --ext .js src/"
   },
   "lint-staged": {
-    "*.{js,css,md}": "prettier --write"
+    "*.{js,css,md}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }

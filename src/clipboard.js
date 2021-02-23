@@ -1,6 +1,21 @@
-import ClipboardAction from './clipboard-action';
 import Emitter from 'tiny-emitter';
 import listen from 'good-listener';
+import ClipboardAction from './clipboard-action';
+
+/**
+ * Helper function to retrieve attribute value.
+ * @param {String} suffix
+ * @param {Element} element
+ */
+function getAttributeValue(suffix, element) {
+  const attribute = `data-clipboard-${suffix}`;
+
+  if (!element.hasAttribute(attribute)) {
+    return;
+  }
+
+  return element.getAttribute(attribute);
+}
 
 /**
  * Base class which takes one or more elements, adds event listeners to them,
@@ -62,7 +77,7 @@ class Clipboard extends Emitter {
       target: this.target(trigger),
       text: this.text(trigger),
       container: this.container,
-      trigger: trigger,
+      trigger,
       emitter: this,
     });
   }
@@ -122,21 +137,6 @@ class Clipboard extends Emitter {
       this.clipboardAction = null;
     }
   }
-}
-
-/**
- * Helper function to retrieve attribute value.
- * @param {String} suffix
- * @param {Element} element
- */
-function getAttributeValue(suffix, element) {
-  const attribute = `data-clipboard-${suffix}`;
-
-  if (!element.hasAttribute(attribute)) {
-    return;
-  }
-
-  return element.getAttribute(attribute);
 }
 
 export default Clipboard;
