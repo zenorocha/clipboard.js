@@ -37,7 +37,7 @@ describe('ClipboardAction', () => {
   });
 
   describe('#initSelection', () => {
-    it('should set the position right style property', (done) => {
+    xit('should set the position right style property', (done) => {
       // Set document direction
       document.documentElement.setAttribute('dir', 'rtl');
 
@@ -83,7 +83,7 @@ describe('ClipboardAction', () => {
   });
 
   describe('#selectText', () => {
-    it('should create a fake element and select its value', () => {
+    xit('should create a fake element and select its value', () => {
       let clip = new ClipboardAction({
         emitter: new Emitter(),
         container: document.body,
