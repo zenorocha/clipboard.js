@@ -47,8 +47,6 @@ class ClipboardAction {
   selectFake() {
     const isRTL = document.documentElement.getAttribute('dir') == 'rtl';
 
-    this.removeFake();
-
     this.fakeHandlerCallback = () => this.removeFake();
     this.fakeHandler =
       this.container.addEventListener('click', this.fakeHandlerCallback) ||
@@ -75,6 +73,8 @@ class ClipboardAction {
 
     this.selectedText = select(this.fakeElem);
     this.copyText();
+
+    this.removeFake();
   }
 
   /**
