@@ -39,18 +39,11 @@ class ClipboardAction {
       this.selectTarget();
     }
   }
-
   /**
    * Creates a fake textarea element, sets its value from `text` property,
-   * and makes a selection on it.
    */
-  selectFake() {
+  createFakeElement() {
     const isRTL = document.documentElement.getAttribute('dir') == 'rtl';
-
-    this.fakeHandlerCallback = () => this.removeFake();
-    this.fakeHandler =
-      this.container.addEventListener('click', this.fakeHandlerCallback) ||
-      true;
 
     this.fakeElem = document.createElement('textarea');
     // Prevent zooming on iOS
@@ -69,9 +62,26 @@ class ClipboardAction {
     this.fakeElem.setAttribute('readonly', '');
     this.fakeElem.value = this.text;
 
-    this.container.appendChild(this.fakeElem);
+    return this.fakeElem;
+  }
 
-    this.selectedText = select(this.fakeElem);
+  /**
+   * Get's the value of fakeElem,
+   * and makes a selection on it.
+   */
+  selectFake() {
+    const fakeElem = this.createFakeElement();
+
+    this.fakeHandlerCallback = () => this.removeFake();
+
+    this.fakeHandler =
+      this.container.addEventListener('click', this.fakeHandlerCallback) ||
+      true;
+
+    this.container.appendChild(fakeElem);
+
+    this.selectedText = select(fakeElem);
+
     this.copyText();
 
     this.removeFake();
