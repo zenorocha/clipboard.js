@@ -37,7 +37,7 @@ describe('ClipboardAction', () => {
   });
 
   describe('#initSelection', () => {
-    xit('should set the position right style property', (done) => {
+    it('should set the position right style property', (done) => {
       // Set document direction
       document.documentElement.setAttribute('dir', 'rtl');
 
@@ -47,7 +47,9 @@ describe('ClipboardAction', () => {
         text: 'foo',
       });
 
-      assert.equal(clip.fakeElem.style.right, '-9999px');
+      const el = clip.createFakeElement();
+
+      assert.equal(el.style.right, '-9999px');
       done();
     });
   });
@@ -83,14 +85,16 @@ describe('ClipboardAction', () => {
   });
 
   describe('#selectText', () => {
-    xit('should create a fake element and select its value', () => {
+    it('should create a fake element and select its value', () => {
       let clip = new ClipboardAction({
         emitter: new Emitter(),
         container: document.body,
         text: 'blah',
       });
 
-      assert.equal(clip.selectedText, clip.fakeElem.value);
+      const el = clip.createFakeElement();
+
+      assert.equal(clip.selectedText, el.value);
     });
   });
 
