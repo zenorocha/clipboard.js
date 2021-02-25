@@ -1,5 +1,5 @@
-import ClipboardAction from '../src/clipboard-action';
 import Emitter from 'tiny-emitter';
+import ClipboardAction from '../src/clipboard-action';
 
 describe('ClipboardAction', () => {
   before(() => {
@@ -57,7 +57,7 @@ describe('ClipboardAction', () => {
   describe('#set action', () => {
     it('should throw an error since "action" is invalid', (done) => {
       try {
-        new ClipboardAction({
+        let clip = new ClipboardAction({
           text: 'foo',
           action: 'paste',
         });
@@ -74,7 +74,7 @@ describe('ClipboardAction', () => {
   describe('#set target', () => {
     it('should throw an error since "target" do not match any element', (done) => {
       try {
-        new ClipboardAction({
+        let clip = new ClipboardAction({
           target: document.querySelector('#foo'),
         });
       } catch (e) {

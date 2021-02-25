@@ -1,0 +1,24 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "mocha": true
+  },
+  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "prefer-const": "off",
+    "camelcase": "off",
+    "no-underscore-dangle": "off",
+    "consistent-return": "off",
+    /* Remove the necessity to use this on classes */
+    "class-methods-use-this": "off",
+    /* Enable variables declarations from shadowing variables declared in the outer scope */
+    "no-shadow": "off"
+  }
+}
