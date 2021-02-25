@@ -39,6 +39,7 @@ class ClipboardAction {
       this.selectTarget();
     }
   }
+
   /**
    * Creates a fake textarea element, sets its value from `text` property,
    */
