@@ -43,7 +43,7 @@ class ClipboardAction {
    * Creates a fake textarea element, sets its value from `text` property,
    */
   createFakeElement() {
-    const isRTL = document.documentElement.getAttribute('dir') == 'rtl';
+    const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
 
     this.fakeElem = document.createElement('textarea');
     // Prevent zooming on iOS
