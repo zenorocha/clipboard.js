@@ -47,7 +47,9 @@ describe('ClipboardAction', () => {
         text: 'foo',
       });
 
-      assert.equal(clip.fakeElem.style.right, '-9999px');
+      const el = clip.createFakeElement();
+
+      assert.equal(el.style.right, '-9999px');
       done();
     });
   });
@@ -90,7 +92,9 @@ describe('ClipboardAction', () => {
         text: 'blah',
       });
 
-      assert.equal(clip.selectedText, clip.fakeElem.value);
+      const el = clip.createFakeElement();
+
+      assert.equal(clip.selectedText, el.value);
     });
   });
 
