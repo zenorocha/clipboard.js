@@ -13,6 +13,7 @@ Licensed MIT © Zeno Rocha`;
 module.exports = {
   entry: './src/clipboard.js',
   mode: 'production',
+  target: ['web', 'es5'],
   output: {
     filename: production ? 'clipboard.min.js' : 'clipboard.js',
     path: path.resolve(__dirname, 'dist'),
