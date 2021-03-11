@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v2.0.6
+ * clipboard.js v2.0.8
  * https://clipboardjs.com/
  *
  * Licensed MIT © Zeno Rocha
@@ -14,19 +14,25 @@
 	else
 		root["ClipboardJS"] = factory();
 })(this, function() {
-return /******/ (() => { // webpackBootstrap
+return /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 134:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  "default": () => /* binding */ clipboard
+  "default": function() { return /* binding */ clipboard; }
 });
 
+// EXTERNAL MODULE: ./node_modules/tiny-emitter/index.js
+var tiny_emitter = __webpack_require__(279);
+var tiny_emitter_default = /*#__PURE__*/__webpack_require__.n(tiny_emitter);
+// EXTERNAL MODULE: ./node_modules/good-listener/src/listen.js
+var listen = __webpack_require__(370);
+var listen_default = /*#__PURE__*/__webpack_require__.n(listen);
 // EXTERNAL MODULE: ./node_modules/select/src/select.js
 var src_select = __webpack_require__(817);
 var select_default = /*#__PURE__*/__webpack_require__.n(src_select);
@@ -89,22 +95,12 @@ var ClipboardAction = /*#__PURE__*/function () {
     }
     /**
      * Creates a fake textarea element, sets its value from `text` property,
-     * and makes a selection on it.
      */
 
   }, {
-    key: "selectFake",
-    value: function selectFake() {
-      var _this = this;
-
-      var isRTL = document.documentElement.getAttribute('dir') == 'rtl';
-      this.removeFake();
-
-      this.fakeHandlerCallback = function () {
-        return _this.removeFake();
-      };
-
-      this.fakeHandler = this.container.addEventListener('click', this.fakeHandlerCallback) || true;
+    key: "createFakeElement",
+    value: function createFakeElement() {
+      var isRTL = document.documentElement.getAttribute('dir') === 'rtl';
       this.fakeElem = document.createElement('textarea'); // Prevent zooming on iOS
 
       this.fakeElem.style.fontSize = '12pt'; // Reset box model
@@ -120,9 +116,29 @@ var ClipboardAction = /*#__PURE__*/function () {
       this.fakeElem.style.top = "".concat(yPosition, "px");
       this.fakeElem.setAttribute('readonly', '');
       this.fakeElem.value = this.text;
-      this.container.appendChild(this.fakeElem);
-      this.selectedText = select_default()(this.fakeElem);
+      return this.fakeElem;
+    }
+    /**
+     * Get's the value of fakeElem,
+     * and makes a selection on it.
+     */
+
+  }, {
+    key: "selectFake",
+    value: function selectFake() {
+      var _this = this;
+
+      var fakeElem = this.createFakeElement();
+
+      this.fakeHandlerCallback = function () {
+        return _this.removeFake();
+      };
+
+      this.fakeHandler = this.container.addEventListener('click', this.fakeHandlerCallback) || true;
+      this.container.appendChild(fakeElem);
+      this.selectedText = select_default()(fakeElem);
       this.copyText();
+      this.removeFake();
     }
     /**
      * Only removes the fake element after another click event, that way
@@ -269,13 +285,7 @@ var ClipboardAction = /*#__PURE__*/function () {
   return ClipboardAction;
 }();
 
-/* harmony default export */ const clipboard_action = (ClipboardAction);
-// EXTERNAL MODULE: ./node_modules/tiny-emitter/index.js
-var tiny_emitter = __webpack_require__(279);
-var tiny_emitter_default = /*#__PURE__*/__webpack_require__.n(tiny_emitter);
-// EXTERNAL MODULE: ./node_modules/good-listener/src/listen.js
-var listen = __webpack_require__(370);
-var listen_default = /*#__PURE__*/__webpack_require__.n(listen);
+/* harmony default export */ var clipboard_action = (ClipboardAction);
 ;// CONCATENATED MODULE: ./src/clipboard.js
 function clipboard_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { clipboard_typeof = function _typeof(obj) { return typeof obj; }; } else { clipboard_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return clipboard_typeof(obj); }
 
@@ -303,9 +313,25 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 /**
+ * Helper function to retrieve attribute value.
+ * @param {String} suffix
+ * @param {Element} element
+ */
+
+function getAttributeValue(suffix, element) {
+  var attribute = "data-clipboard-".concat(suffix);
+
+  if (!element.hasAttribute(attribute)) {
+    return;
+  }
+
+  return element.getAttribute(attribute);
+}
+/**
  * Base class which takes one or more elements, adds event listeners to them,
  * and instantiates a new `ClipboardAction` on each click.
  */
+
 
 var Clipboard = /*#__PURE__*/function (_Emitter) {
   _inherits(Clipboard, _Emitter);
@@ -451,29 +477,13 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
 
   return Clipboard;
 }((tiny_emitter_default()));
-/**
- * Helper function to retrieve attribute value.
- * @param {String} suffix
- * @param {Element} element
- */
 
-
-function getAttributeValue(suffix, element) {
-  var attribute = "data-clipboard-".concat(suffix);
-
-  if (!element.hasAttribute(attribute)) {
-    return;
-  }
-
-  return element.getAttribute(attribute);
-}
-
-/* harmony default export */ const clipboard = (Clipboard);
+/* harmony default export */ var clipboard = (Clipboard);
 
 /***/ }),
 
 /***/ 828:
-/***/ ((module) => {
+/***/ (function(module) {
 
 var DOCUMENT_NODE_TYPE = 9;
 
@@ -513,7 +523,7 @@ module.exports = closest;
 /***/ }),
 
 /***/ 438:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 var closest = __webpack_require__(828);
 
@@ -598,7 +608,7 @@ module.exports = delegate;
 /***/ }),
 
 /***/ 879:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ (function(__unused_webpack_module, exports) {
 
 /**
  * Check if argument is a HTML element.
@@ -654,7 +664,7 @@ exports.fn = function(value) {
 /***/ }),
 
 /***/ 370:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 var is = __webpack_require__(879);
 var delegate = __webpack_require__(438);
@@ -756,7 +766,7 @@ module.exports = listen;
 /***/ }),
 
 /***/ 817:
-/***/ ((module) => {
+/***/ (function(module) {
 
 function select(element) {
     var selectedText;
@@ -806,7 +816,7 @@ module.exports = select;
 /***/ }),
 
 /***/ 279:
-/***/ ((module) => {
+/***/ (function(module) {
 
 function E () {
   // Keep this empty so it's easier to inherit from
@@ -906,33 +916,33 @@ module.exports.TinyEmitter = E;
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
+/******/ 	!function() {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
+/******/ 		__webpack_require__.n = function(module) {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				() => module['default'] :
-/******/ 				() => module;
+/******/ 				function() { return module['default']; } :
+/******/ 				function() { return module; };
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
-/******/ 	})();
+/******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
+/******/ 	!function() {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 		__webpack_require__.d = function(exports, definition) {
 /******/ 			for(var key in definition) {
 /******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
 /******/ 		};
-/******/ 	})();
+/******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
-/******/ 	})();
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
 /******/ 	
 /************************************************************************/
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
