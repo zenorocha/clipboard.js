@@ -1,5 +1,5 @@
 import Clipboard from '../src/clipboard';
-import ClipboardAction from '../src/clipboard-action';
+import ClipboardActionDefault from '../src/clipboard-action-default';
 
 describe('Clipboard', () => {
   before(() => {
@@ -75,11 +75,14 @@ describe('Clipboard', () => {
   });
 
   describe('#onClick', () => {
-    it('should create a new instance of ClipboardAction', () => {
+    it('should create a new instance of ClipboardActionDefault', () => {
       let clipboard = new Clipboard('.btn');
 
       clipboard.onClick(global.event);
-      assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+      assert.instanceOf(
+        clipboard.clipboardActionDefault,
+        ClipboardActionDefault
+      );
     });
 
     it("should use an event's currentTarget when not equal to target", () => {
@@ -90,7 +93,10 @@ describe('Clipboard', () => {
       };
 
       clipboard.onClick(bubbledEvent);
-      assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
+      assert.instanceOf(
+        clipboard.clipboardActionDefault,
+        ClipboardActionDefault
+      );
     });
 
     it('should throw an exception when target is invalid', (done) => {
@@ -121,7 +127,7 @@ describe('Clipboard', () => {
   });
 
   describe('#destroy', () => {
-    it('should destroy an existing instance of ClipboardAction', () => {
+    it('should destroy an existing instance of ClipboardActionDefault', () => {
       let clipboard = new Clipboard('.btn');
 
       clipboard.onClick(global.event);
