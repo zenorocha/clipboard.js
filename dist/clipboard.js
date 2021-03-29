@@ -394,11 +394,11 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
     value: function onClick(e) {
       var trigger = e.delegateTarget || e.currentTarget;
 
-      if (this.ClipboardActionDefault) {
-        this.ClipboardActionDefault = null;
+      if (this.clipboardActionDefault) {
+        this.clipboardActionDefault = null;
       }
 
-      this.ClipboardActionDefault = new clipboard_action_default({
+      this.clipboardActionDefault = new clipboard_action_default({
         action: this.action(trigger),
         target: this.target(trigger),
         text: this.text(trigger),
@@ -450,14 +450,17 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
     value: function destroy() {
       this.listener.destroy();
 
-      if (this.ClipboardActionDefault) {
-        this.ClipboardActionDefault = null;
+      if (this.clipboardActionDefault) {
+        this.clipboardActionDefault = null;
       }
     }
   }], [{
     key: "copy",
     value: function copy(target) {
-      return clipboard_action_copy(target);
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+        container: document.body
+      };
+      return clipboard_action_copy(target, options);
     }
   }, {
     key: "cut",

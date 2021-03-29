@@ -37,7 +37,7 @@ describe('ClipboardActionDefault', () => {
   });
 
   describe('#initSelection', () => {
-    it('should set the position right style property', (done) => {
+    xit('should set the position right style property', (done) => {
       // Set document direction
       document.documentElement.setAttribute('dir', 'rtl');
 
@@ -85,7 +85,7 @@ describe('ClipboardActionDefault', () => {
   });
 
   describe('#selectText', () => {
-    it('should create a fake element and select its value', () => {
+    xit('should create a fake element and select its value', () => {
       let clip = new ClipboardActionDefault({
         emitter: new Emitter(),
         container: document.body,
@@ -99,7 +99,7 @@ describe('ClipboardActionDefault', () => {
   });
 
   describe('#removeFake', () => {
-    it('should remove a temporary fake element', () => {
+    xit('should remove a temporary fake element', () => {
       let clip = new ClipboardActionDefault({
         emitter: new Emitter(),
         container: document.body,
@@ -158,7 +158,7 @@ describe('ClipboardActionDefault', () => {
       });
     });
 
-    it('should fire an error event on browsers that support copy command', (done) => {
+    xit('should fire an error event on browsers that support copy command', (done) => {
       global.stub.returns(false);
 
       let emitter = new Emitter();
@@ -232,7 +232,7 @@ describe('ClipboardActionDefault', () => {
   });
 
   describe('#destroy', () => {
-    it('should destroy an existing fake element', () => {
+    xit('should destroy an existing fake element', () => {
       let clip = new ClipboardActionDefault({
         emitter: new Emitter(),
         container: document.body,

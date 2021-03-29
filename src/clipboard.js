@@ -72,11 +72,11 @@ class Clipboard extends Emitter {
   onClick(e) {
     const trigger = e.delegateTarget || e.currentTarget;
 
-    if (this.ClipboardActionDefault) {
-      this.ClipboardActionDefault = null;
+    if (this.clipboardActionDefault) {
+      this.clipboardActionDefault = null;
     }
 
-    this.ClipboardActionDefault = new ClipboardActionDefault({
+    this.clipboardActionDefault = new ClipboardActionDefault({
       action: this.action(trigger),
       target: this.target(trigger),
       text: this.text(trigger),
@@ -106,8 +106,8 @@ class Clipboard extends Emitter {
     }
   }
 
-  static copy(target) {
-    return ClipboardActionCopy(target);
+  static copy(target, options = { container: document.body }) {
+    return ClipboardActionCopy(target, options);
   }
 
   static cut(target) {
@@ -144,8 +144,8 @@ class Clipboard extends Emitter {
   destroy() {
     this.listener.destroy();
 
-    if (this.ClipboardActionDefault) {
-      this.ClipboardActionDefault = null;
+    if (this.clipboardActionDefault) {
+      this.clipboardActionDefault = null;
     }
   }
 }
