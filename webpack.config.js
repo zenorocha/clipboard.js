@@ -1,7 +1,7 @@
 const pkg = require('./package.json');
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 
 const production = process.env.NODE_ENV === 'production' || false;
 
@@ -28,15 +28,11 @@ module.exports = {
   optimization: {
     minimize: production,
     minimizer: [
-      new UglifyJSPlugin({
-        parallel: require('os').cpus().length,
-        uglifyOptions: {
-          ie8: false,
-          keep_fnames: false,
+      new TerserPlugin({
+        extractComments: false,
+        terserOptions: {
           output: {
-            beautify: false,
-            comments: (node, { value, type }) =>
-              type == 'comment2' && value.startsWith('!'),
+            comments: /^!/
           },
         },
       }),
