@@ -13,7 +13,7 @@
     "cut"
   ],
   "dependencies": {
-    "good-listener": "^1.2.2",
+    "delegate-it": "^2.0.2",
     "select": "^1.1.2",
     "tiny-emitter": "^2.0.0"
   },

@@ -1,5 +1,5 @@
+import delegate from 'delegate-it';
 import Emitter from 'tiny-emitter';
-import listen from 'good-listener';
 import ClipboardAction from './clipboard-action';
 
 /**
@@ -58,7 +58,23 @@ class Clipboard extends Emitter {
    * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
    */
   listenClick(trigger) {
-    this.listener = listen(trigger, 'click', (e) => this.onClick(e));
+    const listener = (e) => this.onClick(e);
+    if (typeof trigger === 'string') {
+      this.listener = delegate(document, trigger, 'click', listener);
+      return;
+    }
+
+    for (let i = 0; i < trigger.length; i++) {
+      trigger.addEventListener('click', listener);
+    }
+
+    this.listener = {
+      destroy() {
+        for (let i = 0; i < trigger.length; i++) {
+          trigger.removeEventListener('click', listener);
+        }
+      }
+    }
   }
 
   /**
