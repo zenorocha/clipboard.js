@@ -36,24 +36,6 @@ describe('ClipboardActionDefault', () => {
     });
   });
 
-  describe('#initSelection', () => {
-    xit('should set the position right style property', (done) => {
-      // Set document direction
-      document.documentElement.setAttribute('dir', 'rtl');
-
-      let clip = new ClipboardActionDefault({
-        emitter: new Emitter(),
-        container: document.body,
-        text: 'foo',
-      });
-
-      const el = clip.createFakeElement();
-
-      assert.equal(el.style.right, '-9999px');
-      done();
-    });
-  });
-
   describe('#set action', () => {
     it('should throw an error since "action" is invalid', (done) => {
       try {
@@ -81,34 +63,6 @@ describe('ClipboardActionDefault', () => {
         assert.equal(e.message, 'Invalid "target" value, use a valid Element');
         done();
       }
-    });
-  });
-
-  describe('#selectText', () => {
-    xit('should create a fake element and select its value', () => {
-      let clip = new ClipboardActionDefault({
-        emitter: new Emitter(),
-        container: document.body,
-        text: 'blah',
-      });
-
-      const el = clip.createFakeElement();
-
-      assert.equal(clip.selectedText, el.value);
-    });
-  });
-
-  describe('#removeFake', () => {
-    xit('should remove a temporary fake element', () => {
-      let clip = new ClipboardActionDefault({
-        emitter: new Emitter(),
-        container: document.body,
-        text: 'blah',
-      });
-
-      clip.removeFake();
-
-      assert.equal(clip.fakeElem, null);
     });
   });
 
@@ -158,9 +112,7 @@ describe('ClipboardActionDefault', () => {
       });
     });
 
-    xit('should fire an error event on browsers that support copy command', (done) => {
-      global.stub.returns(false);
-
+    it('should fire an error event on browsers that support cut command', (done) => {
       let emitter = new Emitter();
 
       emitter.on('error', () => {
@@ -171,6 +123,8 @@ describe('ClipboardActionDefault', () => {
         emitter,
         target: document.querySelector('#input'),
       });
+
+      clip.handleResult(false);
     });
   });
 
@@ -228,21 +182,6 @@ describe('ClipboardActionDefault', () => {
 
       assert.equal(selectedElem, document.body);
       assert.equal(selectedText, '');
-    });
-  });
-
-  describe('#destroy', () => {
-    xit('should destroy an existing fake element', () => {
-      let clip = new ClipboardActionDefault({
-        emitter: new Emitter(),
-        container: document.body,
-        text: 'blah',
-      });
-
-      clip.selectFake();
-      clip.destroy();
-
-      assert.equal(clip.fakeElem, null);
     });
   });
 });
