@@ -39,13 +39,12 @@ class ClipboardActionDefault {
         container: this.container,
       });
     } else if (this.target) {
-      if (this.action === 'cut') {
-        this.selectedText = ClipboardActionCut(this.target);
-      } else if (this.action === 'copy') {
-        this.selectedText = ClipboardActionCopy(this.target, {
-          container: this.container,
-        });
-      }
+      this.selectedText =
+        this.action === 'cut'
+          ? ClipboardActionCut(this.target)
+          : ClipboardActionCopy(this.target, {
+              container: this.container,
+            });
     }
 
     this.handleResult(Boolean(this.selectedText));
