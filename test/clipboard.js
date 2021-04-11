@@ -126,6 +126,22 @@ describe('Clipboard', () => {
     });
   });
 
+  describe('#static copy', () => {
+    it('should copy in an programatic way based on text', () => {
+      assert.equal(Clipboard.copy('lorem'), 'lorem');
+    });
+
+    it('should copy in an programatic way based on target', () => {
+      assert.equal(Clipboard.copy(document.querySelector('span')), 'bar');
+    });
+  });
+
+  describe('#static cut', () => {
+    it('should cut in an programatic way based on text', () => {
+      assert.equal(Clipboard.cut(document.querySelector('span')), 'bar');
+    });
+  });
+
   describe('#destroy', () => {
     it('should destroy an existing instance of ClipboardActionDefault', () => {
       let clipboard = new Clipboard('.btn');
