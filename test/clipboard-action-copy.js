@@ -17,7 +17,7 @@ describe('ClipboardActionCopy', () => {
     document.body.innerHTML = '';
   });
 
-  describe.only('#selectText', () => {
+  describe('#selectText', () => {
     it('should select its value based on input target', () => {
       const selectedText = ClipboardActionCopy(
         document.querySelector('#input'),

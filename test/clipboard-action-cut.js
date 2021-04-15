@@ -17,7 +17,7 @@ describe('ClipboardActionCut', () => {
     document.body.innerHTML = '';
   });
 
-  describe.only('#selectText', () => {
+  describe('#selectText', () => {
     it('should select its value', () => {
       const selectedText = ClipboardActionCut(
         document.querySelector('#input'),

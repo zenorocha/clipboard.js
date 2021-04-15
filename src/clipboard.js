@@ -71,18 +71,25 @@ class Clipboard extends Emitter {
    */
   onClick(e) {
     const trigger = e.delegateTarget || e.currentTarget;
-
-    if (this.clipboardActionDefault) {
-      this.clipboardActionDefault = null;
-    }
-
-    this.clipboardActionDefault = new ClipboardActionDefault({
+    const selectedText = ClipboardActionDefault({
       action: this.action(trigger),
+      container: this.container,
       target: this.target(trigger),
       text: this.text(trigger),
-      container: this.container,
+    });
+
+    // Fires an event based on the copy operation result.
+    this.emit(selectedText ? 'success' : 'error', {
+      action: this.action,
+      text: selectedText,
       trigger,
-      emitter: this,
+      clearSelection() {
+        if (trigger) {
+          trigger.focus();
+        }
+        document.activeElement.blur();
+        window.getSelection().removeAllRanges();
+      },
     });
   }
 
@@ -143,10 +150,6 @@ class Clipboard extends Emitter {
    */
   destroy() {
     this.listener.destroy();
-
-    if (this.clipboardActionDefault) {
-      this.clipboardActionDefault = null;
-    }
   }
 }
 

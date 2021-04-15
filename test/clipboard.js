@@ -1,5 +1,4 @@
 import Clipboard from '../src/clipboard';
-import ClipboardActionDefault from '../src/clipboard-action-default';
 
 describe('Clipboard', () => {
   before(() => {
@@ -75,28 +74,28 @@ describe('Clipboard', () => {
   });
 
   describe('#onClick', () => {
-    it('should create a new instance of ClipboardActionDefault', () => {
+    it('should create a new instance of ClipboardActionDefault', (done) => {
       let clipboard = new Clipboard('.btn');
 
+      clipboard.on('success', () => {
+        done();
+      });
+
       clipboard.onClick(global.event);
-      assert.instanceOf(
-        clipboard.clipboardActionDefault,
-        ClipboardActionDefault
-      );
     });
 
-    it("should use an event's currentTarget when not equal to target", () => {
+    it("should use an event's currentTarget when not equal to target", (done) => {
       let clipboard = new Clipboard('.btn');
       let bubbledEvent = {
         target: global.span,
         currentTarget: global.button,
       };
 
+      clipboard.on('success', () => {
+        done();
+      });
+
       clipboard.onClick(bubbledEvent);
-      assert.instanceOf(
-        clipboard.clipboardActionDefault,
-        ClipboardActionDefault
-      );
     });
 
     it('should throw an exception when target is invalid', (done) => {
@@ -150,6 +149,43 @@ describe('Clipboard', () => {
       clipboard.destroy();
 
       assert.equal(clipboard.clipboardAction, null);
+    });
+  });
+
+  describe('#events', () => {
+    it('should fire a success event with certain properties', (done) => {
+      let clipboard = new Clipboard('.btn');
+
+      clipboard.on('success', (e) => {
+        assert.property(e, 'action');
+        assert.property(e, 'text');
+        assert.property(e, 'trigger');
+        assert.property(e, 'clearSelection');
+
+        done();
+      });
+
+      clipboard.onClick(global.event);
+    });
+  });
+
+  describe('#clearSelection', () => {
+    it('should remove focus from target and text selection', (done) => {
+      let clipboard = new Clipboard('.btn');
+
+      clipboard.on('success', (e) => {
+        let selectedElem = document.activeElement;
+        let selectedText = window.getSelection().toString();
+
+        e.clearSelection();
+
+        assert.equal(selectedElem, document.body);
+        assert.equal(selectedText, '');
+
+        done();
+      });
+
+      clipboard.onClick(global.event);
     });
   });
 });
