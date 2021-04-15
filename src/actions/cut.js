@@ -1,5 +1,5 @@
 import select from 'select';
-import command from './common/command';
+import command from '../common/command';
 
 /**
  * Cut action wrapper.

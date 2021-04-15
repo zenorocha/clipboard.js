@@ -1,4 +1,4 @@
-import ClipboardActionCopy from '../src/clipboard-action-copy';
+import ClipboardActionCopy from '../../src/actions/copy';
 
 describe('ClipboardActionCopy', () => {
   before(() => {

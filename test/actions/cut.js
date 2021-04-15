@@ -1,4 +1,4 @@
-import ClipboardActionCut from '../src/clipboard-action-cut';
+import ClipboardActionCut from '../../src/actions/cut';
 
 describe('ClipboardActionCut', () => {
   before(() => {

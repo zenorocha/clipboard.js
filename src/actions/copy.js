@@ -1,6 +1,6 @@
 import select from 'select';
-import command from './common/command';
-import createFakeElement from './common/create-fake-element';
+import command from '../common/command';
+import createFakeElement from '../common/create-fake-element';
 
 /**
  * Copy action wrapper.

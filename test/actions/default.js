@@ -1,4 +1,4 @@
-import ClipboardActionDefault from '../src/clipboard-action-default';
+import ClipboardActionDefault from '../../src/actions/default';
 
 describe('ClipboardActionDefault', () => {
   before(() => {

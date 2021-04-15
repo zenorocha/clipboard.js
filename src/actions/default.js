@@ -1,5 +1,5 @@
-import ClipboardActionCut from './clipboard-action-cut';
-import ClipboardActionCopy from './clipboard-action-copy';
+import ClipboardActionCut from './cut';
+import ClipboardActionCopy from './copy';
 
 /**
  * Inner function which performs selection from either `text` or `target`

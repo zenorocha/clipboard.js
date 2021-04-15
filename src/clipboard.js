@@ -1,8 +1,8 @@
 import Emitter from 'tiny-emitter';
 import listen from 'good-listener';
-import ClipboardActionDefault from './clipboard-action-default';
-import ClipboardActionCut from './clipboard-action-cut';
-import ClipboardActionCopy from './clipboard-action-copy';
+import ClipboardActionDefault from './actions/default';
+import ClipboardActionCut from './actions/cut';
+import ClipboardActionCopy from './actions/copy';
 
 /**
  * Helper function to retrieve attribute value.
@@ -31,8 +31,6 @@ class Clipboard extends Emitter {
   constructor(trigger, options) {
     super();
 
-    this.ClipboardActionCut = ClipboardActionCut.bind(this);
-    this.ClipboardActionCopy = ClipboardActionCopy.bind(this);
     this.resolveOptions(options);
     this.listenClick(trigger);
   }

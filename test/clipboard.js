@@ -74,7 +74,7 @@ describe('Clipboard', () => {
   });
 
   describe('#onClick', () => {
-    it('should create a new instance of ClipboardActionDefault', (done) => {
+    it('should init when called', (done) => {
       let clipboard = new Clipboard('.btn');
 
       clipboard.on('success', () => {
