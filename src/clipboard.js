@@ -64,17 +64,17 @@ class Clipboard extends Emitter {
       return;
     }
 
-    for (let i = 0; i < trigger.length; i++) {
+    for (let i = 0; i < trigger.length; i += 1) {
       trigger.addEventListener('click', listener);
     }
 
     this.listener = {
       destroy() {
-        for (let i = 0; i < trigger.length; i++) {
+        for (let i = 0; i < trigger.length; i += 1) {
           trigger.removeEventListener('click', listener);
         }
-      }
-    }
+      },
+    };
   }
 
   /**
