@@ -111,10 +111,21 @@ class Clipboard extends Emitter {
     }
   }
 
+  /**
+   * Allow fire programmatically a copy action
+   * @param {Element} target
+   * @param {Object} options
+   * @returns Text copied.
+   */
   static copy(target, options = { container: document.body }) {
     return ClipboardActionCopy(target, options);
   }
 
+  /**
+   * Allow fire programmatically a cut action
+   * @param {Element} target
+   * @returns Text cutted.
+   */
   static cut(target) {
     return ClipboardActionCut(target);
   }
