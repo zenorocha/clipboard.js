@@ -3,7 +3,7 @@ import command from '../common/command';
 
 /**
  * Cut action wrapper.
- * @param {HTMLElement} target
+ * @param {String|HTMLElement} target
  * @return {String}
  */
 const ClipboardActionCut = (target) => {

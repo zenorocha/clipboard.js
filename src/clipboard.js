@@ -113,7 +113,7 @@ class Clipboard extends Emitter {
 
   /**
    * Allow fire programmatically a copy action
-   * @param {Element} target
+   * @param {String|HTMLElement} target
    * @param {Object} options
    * @returns Text copied.
    */
@@ -123,7 +123,7 @@ class Clipboard extends Emitter {
 
   /**
    * Allow fire programmatically a cut action
-   * @param {Element} target
+   * @param {String|HTMLElement} target
    * @returns Text cutted.
    */
   static cut(target) {
