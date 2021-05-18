@@ -1,5 +1,4 @@
 import Clipboard from '../src/clipboard';
-import ClipboardAction from '../src/clipboard-action';
 
 describe('Clipboard', () => {
   before(() => {
@@ -75,22 +74,28 @@ describe('Clipboard', () => {
   });
 
   describe('#onClick', () => {
-    it('should create a new instance of ClipboardAction', () => {
+    it('should init when called', (done) => {
       let clipboard = new Clipboard('.btn');
 
+      clipboard.on('success', () => {
+        done();
+      });
+
       clipboard.onClick(global.event);
-      assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
     });
 
-    it("should use an event's currentTarget when not equal to target", () => {
+    it("should use an event's currentTarget when not equal to target", (done) => {
       let clipboard = new Clipboard('.btn');
       let bubbledEvent = {
         target: global.span,
         currentTarget: global.button,
       };
 
+      clipboard.on('success', () => {
+        done();
+      });
+
       clipboard.onClick(bubbledEvent);
-      assert.instanceOf(clipboard.clipboardAction, ClipboardAction);
     });
 
     it('should throw an exception when target is invalid', (done) => {
@@ -120,14 +125,67 @@ describe('Clipboard', () => {
     });
   });
 
+  describe('#static copy', () => {
+    it('should copy in an programatic way based on text', () => {
+      assert.equal(Clipboard.copy('lorem'), 'lorem');
+    });
+
+    it('should copy in an programatic way based on target', () => {
+      assert.equal(Clipboard.copy(document.querySelector('span')), 'bar');
+    });
+  });
+
+  describe('#static cut', () => {
+    it('should cut in an programatic way based on text', () => {
+      assert.equal(Clipboard.cut(document.querySelector('span')), 'bar');
+    });
+  });
+
   describe('#destroy', () => {
-    it('should destroy an existing instance of ClipboardAction', () => {
+    it('should destroy an existing instance of ClipboardActionDefault', () => {
       let clipboard = new Clipboard('.btn');
 
       clipboard.onClick(global.event);
       clipboard.destroy();
 
       assert.equal(clipboard.clipboardAction, null);
+    });
+  });
+
+  describe('#events', () => {
+    it('should fire a success event with certain properties', (done) => {
+      let clipboard = new Clipboard('.btn');
+
+      clipboard.on('success', (e) => {
+        assert.property(e, 'action');
+        assert.property(e, 'text');
+        assert.property(e, 'trigger');
+        assert.property(e, 'clearSelection');
+
+        done();
+      });
+
+      clipboard.onClick(global.event);
+    });
+  });
+
+  describe('#clearSelection', () => {
+    it('should remove focus from target and text selection', (done) => {
+      let clipboard = new Clipboard('.btn');
+
+      clipboard.on('success', (e) => {
+        let selectedElem = document.activeElement;
+        let selectedText = window.getSelection().toString();
+
+        e.clearSelection();
+
+        assert.equal(selectedElem, document.body);
+        assert.equal(selectedText, '');
+
+        done();
+      });
+
+      clipboard.onClick(global.event);
     });
   });
 });
