@@ -16,9 +16,9 @@
 
     <!-- 3. Instantiate clipboard -->
     <script>
-      var btn = document.querySelector('#btn');
+      var link = document.querySelector('#btn');
 
-      btn.addEventListener('click', (e) => {
+      link.addEventListener('click', (e) => {
         e.preventDefault();
         const textCopied = ClipboardJS.copy('123');
         console.log('copied!', textCopied);
