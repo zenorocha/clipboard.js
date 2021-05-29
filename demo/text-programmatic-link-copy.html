@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>text-programmatic-copy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <!-- 1. Define some markup -->
+    <a href="#" id="btn">
+      Copy
+    </a>
+
+    <!-- 2. Include library -->
+    <script src="../dist/clipboard.min.js"></script>
+
+    <!-- 3. Instantiate clipboard -->
+    <script>
+      var btn = document.querySelector('#btn');
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const textCopied = ClipboardJS.copy('123');
+        console.log('copied!', textCopied);
+      })
+    </script>
+  </body>
+</html>
