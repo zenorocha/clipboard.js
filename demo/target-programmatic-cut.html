@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>target-programmatic-cut</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <!-- 1. Define some markup -->
+    <textarea id="bar">hello</textarea>
+    <button id="btn">
+      Cut
+    </button>
+
+    <!-- 2. Include library -->
+    <script src="../dist/clipboard.min.js"></script>
+
+    <!-- 3. Instantiate clipboard -->
+    <script>
+      var btn = document.querySelector('#btn');
+
+      btn.addEventListener('click', () => {
+        const textCut = ClipboardJS.cut(document.querySelector('#bar'));
+        console.log('cut!', textCut);
+      })
+    </script>
+  </body>
+</html>

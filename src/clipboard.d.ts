@@ -2,11 +2,7 @@
 
 type Action = 'cut' | 'copy';
 type Response = 'success' | 'error';
-
-type Options = {
-  text?: string;
-  action?: Action;
-  target?: Element;
+type CopyActionOptions = {
   container?: Element;
 };
 
@@ -38,6 +34,17 @@ declare class ClipboardJS {
    * Checks if clipboard.js is supported
    */
   static isSupported(): boolean;
+
+
+  /**
+   * Fires a copy action
+   */
+   static copy(target: string | Element, options: CopyActionOptions): string;
+
+   /**
+   * Fires a cut action
+   */
+  static cut(target: string | Element): string;
 }
 
 declare namespace ClipboardJS {

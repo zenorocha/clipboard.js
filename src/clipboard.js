@@ -1,6 +1,8 @@
 import delegate from 'delegate-it';
 import Emitter from 'tiny-emitter';
-import ClipboardAction from './clipboard-action';
+import ClipboardActionDefault from './actions/default';
+import ClipboardActionCut from './actions/cut';
+import ClipboardActionCopy from './actions/copy';
 
 /**
  * Helper function to retrieve attribute value.
@@ -83,18 +85,25 @@ class Clipboard extends Emitter {
    */
   onClick(e) {
     const trigger = e.delegateTarget || e.currentTarget;
-
-    if (this.clipboardAction) {
-      this.clipboardAction = null;
-    }
-
-    this.clipboardAction = new ClipboardAction({
+    const selectedText = ClipboardActionDefault({
       action: this.action(trigger),
+      container: this.container,
       target: this.target(trigger),
       text: this.text(trigger),
-      container: this.container,
+    });
+
+    // Fires an event based on the copy operation result.
+    this.emit(selectedText ? 'success' : 'error', {
+      action: this.action,
+      text: selectedText,
       trigger,
-      emitter: this,
+      clearSelection() {
+        if (trigger) {
+          trigger.focus();
+        }
+        document.activeElement.blur();
+        window.getSelection().removeAllRanges();
+      },
     });
   }
 
@@ -116,6 +125,25 @@ class Clipboard extends Emitter {
     if (selector) {
       return document.querySelector(selector);
     }
+  }
+
+  /**
+   * Allow fire programmatically a copy action
+   * @param {String|HTMLElement} target
+   * @param {Object} options
+   * @returns Text copied.
+   */
+  static copy(target, options = { container: document.body }) {
+    return ClipboardActionCopy(target, options);
+  }
+
+  /**
+   * Allow fire programmatically a cut action
+   * @param {String|HTMLElement} target
+   * @returns Text cutted.
+   */
+  static cut(target) {
+    return ClipboardActionCut(target);
   }
 
   /**
@@ -147,11 +175,6 @@ class Clipboard extends Emitter {
    */
   destroy() {
     this.listener.destroy();
-
-    if (this.clipboardAction) {
-      this.clipboardAction.destroy();
-      this.clipboardAction = null;
-    }
   }
 }
 
