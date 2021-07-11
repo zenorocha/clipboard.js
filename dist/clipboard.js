@@ -17,7 +17,7 @@
 return /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 747:
+/***/ 137:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27,12 +27,94 @@ __webpack_require__.d(__webpack_exports__, {
   "default": function() { return /* binding */ clipboard; }
 });
 
+;// CONCATENATED MODULE: ./node_modules/delegate-it/index.js
+/** Keeps track of raw listeners added to the base elements to avoid duplication */
+const ledger = new WeakMap();
+function editLedger(wanted, baseElement, callback, setup) {
+    var _a, _b;
+    if (!wanted && !ledger.has(baseElement)) {
+        return false;
+    }
+    const elementMap = (_a = ledger.get(baseElement)) !== null && _a !== void 0 ? _a : new WeakMap();
+    ledger.set(baseElement, elementMap);
+    if (!wanted && !ledger.has(baseElement)) {
+        return false;
+    }
+    const setups = (_b = elementMap.get(callback)) !== null && _b !== void 0 ? _b : new Set();
+    elementMap.set(callback, setups);
+    const existed = setups.has(setup);
+    if (wanted) {
+        setups.add(setup);
+    }
+    else {
+        setups.delete(setup);
+    }
+    return existed && wanted;
+}
+function isEventTarget(elements) {
+    return typeof elements.addEventListener === 'function';
+}
+function safeClosest(event, selector) {
+    let target = event.target;
+    if (target instanceof Text) {
+        target = target.parentElement;
+    }
+    if (target instanceof Element && event.currentTarget instanceof Element) {
+        // `.closest()` may match ancestors of `currentTarget` but we only need its children
+        const closest = target.closest(selector);
+        if (closest && event.currentTarget.contains(closest)) {
+            return closest;
+        }
+    }
+}
+/**
+ * Delegates event to a selector.
+ */
+function delegate(base, selector, type, callback, options) {
+    // Handle Selector-based usage
+    if (typeof base === 'string') {
+        base = document.querySelectorAll(base);
+    }
+    // Handle Array-like based usage
+    if (!isEventTarget(base)) {
+        const subscriptions = Array.prototype.map.call(base, (element) => {
+            return delegate(element, selector, type, callback, options);
+        });
+        return {
+            destroy() {
+                subscriptions.forEach(subscription => subscription.destroy());
+            }
+        };
+    }
+    // `document` should never be the base, it's just an easy way to define "global event listeners"
+    const baseElement = base instanceof Document ? base.documentElement : base;
+    // Handle the regular Element usage
+    const capture = Boolean(typeof options === 'object' ? options.capture : options);
+    const listenerFn = (event) => {
+        const delegateTarget = safeClosest(event, selector);
+        if (delegateTarget) {
+            event.delegateTarget = delegateTarget;
+            callback.call(baseElement, event);
+        }
+    };
+    const setup = JSON.stringify({ selector, type, capture });
+    const isAlreadyListening = editLedger(true, baseElement, callback, setup);
+    const delegateSubscription = {
+        destroy() {
+            baseElement.removeEventListener(type, listenerFn, options);
+            editLedger(false, baseElement, callback, setup);
+        }
+    };
+    if (!isAlreadyListening) {
+        baseElement.addEventListener(type, listenerFn, options);
+    }
+    return delegateSubscription;
+}
+/* harmony default export */ var delegate_it = (delegate);
+
 // EXTERNAL MODULE: ./node_modules/tiny-emitter/index.js
 var tiny_emitter = __webpack_require__(279);
 var tiny_emitter_default = /*#__PURE__*/__webpack_require__.n(tiny_emitter);
-// EXTERNAL MODULE: ./node_modules/good-listener/src/listen.js
-var listen = __webpack_require__(370);
-var listen_default = /*#__PURE__*/__webpack_require__.n(listen);
 // EXTERNAL MODULE: ./node_modules/select/src/select.js
 var src_select = __webpack_require__(817);
 var select_default = /*#__PURE__*/__webpack_require__.n(src_select);
@@ -49,12 +131,12 @@ function command(type) {
     return false;
   }
 }
-;// CONCATENATED MODULE: ./src/clipboard-action-cut.js
+;// CONCATENATED MODULE: ./src/actions/cut.js
 
 
 /**
  * Cut action wrapper.
- * @param {HTMLElement} target
+ * @param {String|HTMLElement} target
  * @return {String}
  */
 
@@ -64,7 +146,7 @@ var ClipboardActionCut = function ClipboardActionCut(target) {
   return selectedText;
 };
 
-/* harmony default export */ var clipboard_action_cut = (ClipboardActionCut);
+/* harmony default export */ var actions_cut = (ClipboardActionCut);
 ;// CONCATENATED MODULE: ./src/common/create-fake-element.js
 /**
  * Creates a fake textarea element with a value.
@@ -90,7 +172,7 @@ function createFakeElement(value) {
   fakeElement.value = value;
   return fakeElement;
 }
-;// CONCATENATED MODULE: ./src/clipboard-action-copy.js
+;// CONCATENATED MODULE: ./src/actions/copy.js
 
 
 
@@ -121,8 +203,8 @@ var ClipboardActionCopy = function ClipboardActionCopy(target) {
   return selectedText;
 };
 
-/* harmony default export */ var clipboard_action_copy = (ClipboardActionCopy);
-;// CONCATENATED MODULE: ./src/clipboard-action-default.js
+/* harmony default export */ var actions_copy = (ClipboardActionCopy);
+;// CONCATENATED MODULE: ./src/actions/default.js
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 
@@ -163,20 +245,20 @@ var ClipboardActionDefault = function ClipboardActionDefault() {
 
 
   if (text) {
-    return clipboard_action_copy(text, {
+    return actions_copy(text, {
       container: container
     });
   } // Defines which selection strategy based on `target` property.
 
 
   if (target) {
-    return action === 'cut' ? clipboard_action_cut(target) : clipboard_action_copy(target, {
+    return action === 'cut' ? actions_cut(target) : actions_copy(target, {
       container: container
     });
   }
 };
 
-/* harmony default export */ var clipboard_action_default = (ClipboardActionDefault);
+/* harmony default export */ var actions_default = (ClipboardActionDefault);
 ;// CONCATENATED MODULE: ./src/clipboard.js
 function clipboard_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { clipboard_typeof = function _typeof(obj) { return typeof obj; }; } else { clipboard_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return clipboard_typeof(obj); }
 
@@ -241,8 +323,6 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
     _classCallCheck(this, Clipboard);
 
     _this = _super.call(this);
-    _this.ClipboardActionCut = clipboard_action_cut.bind(_assertThisInitialized(_this));
-    _this.ClipboardActionCopy = clipboard_action_copy.bind(_assertThisInitialized(_this));
 
     _this.resolveOptions(options);
 
@@ -276,9 +356,26 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
     value: function listenClick(trigger) {
       var _this2 = this;
 
-      this.listener = listen_default()(trigger, 'click', function (e) {
+      var listener = function listener(e) {
         return _this2.onClick(e);
-      });
+      };
+
+      if (typeof trigger === 'string') {
+        this.listener = delegate_it(document, trigger, 'click', listener);
+        return;
+      }
+
+      for (var i = 0; i < trigger.length; i += 1) {
+        trigger.addEventListener('click', listener);
+      }
+
+      this.listener = {
+        destroy: function destroy() {
+          for (var _i = 0; _i < trigger.length; _i += 1) {
+            trigger.removeEventListener('click', listener);
+          }
+        }
+      };
     }
     /**
      * Defines a new `ClipboardAction` on each click event.
@@ -289,7 +386,7 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
     key: "onClick",
     value: function onClick(e) {
       var trigger = e.delegateTarget || e.currentTarget;
-      var selectedText = clipboard_action_default({
+      var selectedText = actions_default({
         action: this.action(trigger),
         container: this.container,
         target: this.target(trigger),
@@ -334,6 +431,13 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
         return document.querySelector(selector);
       }
     }
+    /**
+     * Allow fire programmatically a copy action
+     * @param {String|HTMLElement} target
+     * @param {Object} options
+     * @returns Text copied.
+     */
+
   }, {
     key: "defaultText",
 
@@ -359,12 +463,18 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
       var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
         container: document.body
       };
-      return clipboard_action_copy(target, options);
+      return actions_copy(target, options);
     }
+    /**
+     * Allow fire programmatically a cut action
+     * @param {String|HTMLElement} target
+     * @returns Text cutted.
+     */
+
   }, {
     key: "cut",
     value: function cut(target) {
-      return clipboard_action_cut(target);
+      return actions_cut(target);
     }
     /**
      * Returns the support of the given action, or all actions if no action is
@@ -389,289 +499,6 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
 }((tiny_emitter_default()));
 
 /* harmony default export */ var clipboard = (Clipboard);
-
-/***/ }),
-
-/***/ 828:
-/***/ (function(module) {
-
-var DOCUMENT_NODE_TYPE = 9;
-
-/**
- * A polyfill for Element.matches()
- */
-if (typeof Element !== 'undefined' && !Element.prototype.matches) {
-    var proto = Element.prototype;
-
-    proto.matches = proto.matchesSelector ||
-                    proto.mozMatchesSelector ||
-                    proto.msMatchesSelector ||
-                    proto.oMatchesSelector ||
-                    proto.webkitMatchesSelector;
-}
-
-/**
- * Finds the closest parent that matches a selector.
- *
- * @param {Element} element
- * @param {String} selector
- * @return {Function}
- */
-function closest (element, selector) {
-    while (element && element.nodeType !== DOCUMENT_NODE_TYPE) {
-        if (typeof element.matches === 'function' &&
-            element.matches(selector)) {
-          return element;
-        }
-        element = element.parentNode;
-    }
-}
-
-module.exports = closest;
-
-
-/***/ }),
-
-/***/ 438:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-var closest = __webpack_require__(828);
-
-/**
- * Delegates event to a selector.
- *
- * @param {Element} element
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @param {Boolean} useCapture
- * @return {Object}
- */
-function _delegate(element, selector, type, callback, useCapture) {
-    var listenerFn = listener.apply(this, arguments);
-
-    element.addEventListener(type, listenerFn, useCapture);
-
-    return {
-        destroy: function() {
-            element.removeEventListener(type, listenerFn, useCapture);
-        }
-    }
-}
-
-/**
- * Delegates event to a selector.
- *
- * @param {Element|String|Array} [elements]
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @param {Boolean} useCapture
- * @return {Object}
- */
-function delegate(elements, selector, type, callback, useCapture) {
-    // Handle the regular Element usage
-    if (typeof elements.addEventListener === 'function') {
-        return _delegate.apply(null, arguments);
-    }
-
-    // Handle Element-less usage, it defaults to global delegation
-    if (typeof type === 'function') {
-        // Use `document` as the first parameter, then apply arguments
-        // This is a short way to .unshift `arguments` without running into deoptimizations
-        return _delegate.bind(null, document).apply(null, arguments);
-    }
-
-    // Handle Selector-based usage
-    if (typeof elements === 'string') {
-        elements = document.querySelectorAll(elements);
-    }
-
-    // Handle Array-like based usage
-    return Array.prototype.map.call(elements, function (element) {
-        return _delegate(element, selector, type, callback, useCapture);
-    });
-}
-
-/**
- * Finds closest match and invokes callback.
- *
- * @param {Element} element
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @return {Function}
- */
-function listener(element, selector, type, callback) {
-    return function(e) {
-        e.delegateTarget = closest(e.target, selector);
-
-        if (e.delegateTarget) {
-            callback.call(element, e);
-        }
-    }
-}
-
-module.exports = delegate;
-
-
-/***/ }),
-
-/***/ 879:
-/***/ (function(__unused_webpack_module, exports) {
-
-/**
- * Check if argument is a HTML element.
- *
- * @param {Object} value
- * @return {Boolean}
- */
-exports.node = function(value) {
-    return value !== undefined
-        && value instanceof HTMLElement
-        && value.nodeType === 1;
-};
-
-/**
- * Check if argument is a list of HTML elements.
- *
- * @param {Object} value
- * @return {Boolean}
- */
-exports.nodeList = function(value) {
-    var type = Object.prototype.toString.call(value);
-
-    return value !== undefined
-        && (type === '[object NodeList]' || type === '[object HTMLCollection]')
-        && ('length' in value)
-        && (value.length === 0 || exports.node(value[0]));
-};
-
-/**
- * Check if argument is a string.
- *
- * @param {Object} value
- * @return {Boolean}
- */
-exports.string = function(value) {
-    return typeof value === 'string'
-        || value instanceof String;
-};
-
-/**
- * Check if argument is a function.
- *
- * @param {Object} value
- * @return {Boolean}
- */
-exports.fn = function(value) {
-    var type = Object.prototype.toString.call(value);
-
-    return type === '[object Function]';
-};
-
-
-/***/ }),
-
-/***/ 370:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-var is = __webpack_require__(879);
-var delegate = __webpack_require__(438);
-
-/**
- * Validates all params and calls the right
- * listener function based on its target type.
- *
- * @param {String|HTMLElement|HTMLCollection|NodeList} target
- * @param {String} type
- * @param {Function} callback
- * @return {Object}
- */
-function listen(target, type, callback) {
-    if (!target && !type && !callback) {
-        throw new Error('Missing required arguments');
-    }
-
-    if (!is.string(type)) {
-        throw new TypeError('Second argument must be a String');
-    }
-
-    if (!is.fn(callback)) {
-        throw new TypeError('Third argument must be a Function');
-    }
-
-    if (is.node(target)) {
-        return listenNode(target, type, callback);
-    }
-    else if (is.nodeList(target)) {
-        return listenNodeList(target, type, callback);
-    }
-    else if (is.string(target)) {
-        return listenSelector(target, type, callback);
-    }
-    else {
-        throw new TypeError('First argument must be a String, HTMLElement, HTMLCollection, or NodeList');
-    }
-}
-
-/**
- * Adds an event listener to a HTML element
- * and returns a remove listener function.
- *
- * @param {HTMLElement} node
- * @param {String} type
- * @param {Function} callback
- * @return {Object}
- */
-function listenNode(node, type, callback) {
-    node.addEventListener(type, callback);
-
-    return {
-        destroy: function() {
-            node.removeEventListener(type, callback);
-        }
-    }
-}
-
-/**
- * Add an event listener to a list of HTML elements
- * and returns a remove listener function.
- *
- * @param {NodeList|HTMLCollection} nodeList
- * @param {String} type
- * @param {Function} callback
- * @return {Object}
- */
-function listenNodeList(nodeList, type, callback) {
-    Array.prototype.forEach.call(nodeList, function(node) {
-        node.addEventListener(type, callback);
-    });
-
-    return {
-        destroy: function() {
-            Array.prototype.forEach.call(nodeList, function(node) {
-                node.removeEventListener(type, callback);
-            });
-        }
-    }
-}
-
-/**
- * Add an event listener to a selector
- * and returns a remove listener function.
- *
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @return {Object}
- */
-function listenSelector(selector, type, callback) {
-    return delegate(document.body, selector, type, callback);
-}
-
-module.exports = listen;
-
 
 /***/ }),
 
@@ -858,7 +685,7 @@ module.exports.TinyEmitter = E;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(747);
+/******/ 	return __webpack_require__(137);
 /******/ })()
 .default;
 });
