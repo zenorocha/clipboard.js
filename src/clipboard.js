@@ -68,7 +68,7 @@ class Clipboard extends Emitter {
    * @param {Event} e
    */
   onClick(e) {
-    const trigger = e.delegateTarget || e.currentTarget;
+    const trigger = e.delegateTarget || e.currentTarget || e.target;
     const selectedText = ClipboardActionDefault({
       action: this.action(trigger),
       container: this.container,
