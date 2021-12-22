@@ -185,7 +185,7 @@ You can also check if clipboard.js is supported or not by running `ClipboardJS.i
 
 A browser extension that adds a "copy to clipboard" button to every code block on _GitHub, MDN, Gist, StackOverflow, StackExchange, npm, and even Medium._
 
-Install for [Chrome](https://chrome.google.com/webstore/detail/codecopy/fkbfebkcoelajmhanocgppanfoojcdmg) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/codecopy/).
+Install for [Chrome](https://chrome.google.com/webstore/detail/code-copy/dpjielkchgfmkcimgpphdmofdfohehap) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/codecopy/).
 
 ## License
 
