@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v2.0.8
+ * clipboard.js v2.0.9
  * https://clipboardjs.com/
  *
  * Licensed MIT © Zeno Rocha
@@ -17,7 +17,7 @@
 return /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 747:
+/***/ 686:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49,12 +49,12 @@ function command(type) {
     return false;
   }
 }
-;// CONCATENATED MODULE: ./src/clipboard-action-cut.js
+;// CONCATENATED MODULE: ./src/actions/cut.js
 
 
 /**
  * Cut action wrapper.
- * @param {HTMLElement} target
+ * @param {String|HTMLElement} target
  * @return {String}
  */
 
@@ -64,7 +64,7 @@ var ClipboardActionCut = function ClipboardActionCut(target) {
   return selectedText;
 };
 
-/* harmony default export */ var clipboard_action_cut = (ClipboardActionCut);
+/* harmony default export */ var actions_cut = (ClipboardActionCut);
 ;// CONCATENATED MODULE: ./src/common/create-fake-element.js
 /**
  * Creates a fake textarea element with a value.
@@ -90,7 +90,7 @@ function createFakeElement(value) {
   fakeElement.value = value;
   return fakeElement;
 }
-;// CONCATENATED MODULE: ./src/clipboard-action-copy.js
+;// CONCATENATED MODULE: ./src/actions/copy.js
 
 
 
@@ -121,8 +121,8 @@ var ClipboardActionCopy = function ClipboardActionCopy(target) {
   return selectedText;
 };
 
-/* harmony default export */ var clipboard_action_copy = (ClipboardActionCopy);
-;// CONCATENATED MODULE: ./src/clipboard-action-default.js
+/* harmony default export */ var actions_copy = (ClipboardActionCopy);
+;// CONCATENATED MODULE: ./src/actions/default.js
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 
@@ -163,20 +163,20 @@ var ClipboardActionDefault = function ClipboardActionDefault() {
 
 
   if (text) {
-    return clipboard_action_copy(text, {
+    return actions_copy(text, {
       container: container
     });
   } // Defines which selection strategy based on `target` property.
 
 
   if (target) {
-    return action === 'cut' ? clipboard_action_cut(target) : clipboard_action_copy(target, {
+    return action === 'cut' ? actions_cut(target) : actions_copy(target, {
       container: container
     });
   }
 };
 
-/* harmony default export */ var clipboard_action_default = (ClipboardActionDefault);
+/* harmony default export */ var actions_default = (ClipboardActionDefault);
 ;// CONCATENATED MODULE: ./src/clipboard.js
 function clipboard_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { clipboard_typeof = function _typeof(obj) { return typeof obj; }; } else { clipboard_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return clipboard_typeof(obj); }
 
@@ -241,8 +241,6 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
     _classCallCheck(this, Clipboard);
 
     _this = _super.call(this);
-    _this.ClipboardActionCut = clipboard_action_cut.bind(_assertThisInitialized(_this));
-    _this.ClipboardActionCopy = clipboard_action_copy.bind(_assertThisInitialized(_this));
 
     _this.resolveOptions(options);
 
@@ -289,7 +287,7 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
     key: "onClick",
     value: function onClick(e) {
       var trigger = e.delegateTarget || e.currentTarget;
-      var selectedText = clipboard_action_default({
+      var selectedText = actions_default({
         action: this.action(trigger),
         container: this.container,
         target: this.target(trigger),
@@ -334,6 +332,13 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
         return document.querySelector(selector);
       }
     }
+    /**
+     * Allow fire programmatically a copy action
+     * @param {String|HTMLElement} target
+     * @param {Object} options
+     * @returns Text copied.
+     */
+
   }, {
     key: "defaultText",
 
@@ -359,12 +364,18 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
       var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
         container: document.body
       };
-      return clipboard_action_copy(target, options);
+      return actions_copy(target, options);
     }
+    /**
+     * Allow fire programmatically a cut action
+     * @param {String|HTMLElement} target
+     * @returns Text cutted.
+     */
+
   }, {
     key: "cut",
     value: function cut(target) {
-      return clipboard_action_cut(target);
+      return actions_cut(target);
     }
     /**
      * Returns the support of the given action, or all actions if no action is
@@ -858,7 +869,7 @@ module.exports.TinyEmitter = E;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(747);
+/******/ 	return __webpack_require__(686);
 /******/ })()
 .default;
 });
