@@ -287,16 +287,17 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
     key: "onClick",
     value: function onClick(e) {
       var trigger = e.delegateTarget || e.currentTarget;
-      var selectedText = actions_default({
-        action: this.action(trigger),
+      var action = this.action(trigger) || 'copy';
+      var text = actions_default({
+        action: action,
         container: this.container,
         target: this.target(trigger),
         text: this.text(trigger)
       }); // Fires an event based on the copy operation result.
 
-      this.emit(selectedText ? 'success' : 'error', {
-        action: this.action,
-        text: selectedText,
+      this.emit(text ? 'success' : 'error', {
+        action: action,
+        text: text,
         trigger: trigger,
         clearSelection: function clearSelection() {
           if (trigger) {
