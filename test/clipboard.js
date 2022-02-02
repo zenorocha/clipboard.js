@@ -158,6 +158,7 @@ describe('Clipboard', () => {
 
       clipboard.on('success', (e) => {
         assert.property(e, 'action');
+        assert.equal(e.action, 'copy');
         assert.property(e, 'text');
         assert.property(e, 'trigger');
         assert.property(e, 'clearSelection');
