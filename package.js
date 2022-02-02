@@ -3,7 +3,7 @@
 Package.describe({
   name: 'zenorocha:clipboard',
   summary: 'Modern copy to clipboard. No Flash. Just 3kb.',
-  version: '2.0.9',
+  version: '2.0.10',
   git: 'https://github.com/zenorocha/clipboard.js',
 });
 
