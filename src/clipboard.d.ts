@@ -39,7 +39,7 @@ declare class ClipboardJS {
   /**
    * Fires a copy action
    */
-   static copy(target: string | Element, options: CopyActionOptions): string;
+  static copy(target: string | Element, options?: CopyActionOptions): string;
 
    /**
    * Fires a cut action
