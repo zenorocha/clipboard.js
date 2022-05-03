@@ -54,10 +54,10 @@ describe('ClipboardActionCopy', () => {
 
     it('should select its value in a input number based on text', () => {
       const value = 1;
-      document.querySelector('input').setAttribute('type', 'number');
-      document.querySelector('input').setAttribute('value', value);
+      document.querySelector('#input').setAttribute('type', 'number');
+      document.querySelector('#input').setAttribute('value', value);
       const selectedText = ClipboardActionCopy(
-        document.querySelector('input'),
+        document.querySelector('#input'),
         {
           container: document.body,
         }

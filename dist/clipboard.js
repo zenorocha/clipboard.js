@@ -125,7 +125,7 @@ var ClipboardActionCopy = function ClipboardActionCopy(target) {
 
   if (typeof target === 'string') {
     selectedText = fakeCopyAction(target, options);
-  } else if (!['text', 'search', 'url', 'tel', 'password'].includes(target === null || target === void 0 ? void 0 : target.type)) {
+  } else if (target instanceof HTMLInputElement && !['text', 'search', 'url', 'tel', 'password'].includes(target === null || target === void 0 ? void 0 : target.type)) {
     // If input type doesn't support `setSelectionRange`. Simulate it. https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
     selectedText = fakeCopyAction(target.value, options);
   } else {
