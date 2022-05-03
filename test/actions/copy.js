@@ -52,7 +52,7 @@ describe('ClipboardActionCopy', () => {
       assert.equal(selectedText, text);
     });
 
-    it.only('should select its value based on text', () => {
+    it('should select its value in a input number based on text', () => {
       const value = 1;
       document.querySelector('input').setAttribute('type', 'number');
       document.querySelector('input').setAttribute('value', value);
