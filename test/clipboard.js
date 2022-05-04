@@ -171,16 +171,16 @@ describe('Clipboard', () => {
   });
 
   describe('#clearSelection', () => {
-    it('should remove focus from target and text selection', (done) => {
+    it('should clear text selection without moving focus', (done) => {
       let clipboard = new Clipboard('.btn');
 
       clipboard.on('success', (e) => {
+        e.clearSelection();
+
         let selectedElem = document.activeElement;
         let selectedText = window.getSelection().toString();
 
-        e.clearSelection();
-
-        assert.equal(selectedElem, document.body);
+        assert.equal(selectedElem, e.trigger);
         assert.equal(selectedText, '');
 
         done();

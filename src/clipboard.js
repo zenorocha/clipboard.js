@@ -86,7 +86,6 @@ class Clipboard extends Emitter {
         if (trigger) {
           trigger.focus();
         }
-        document.activeElement.blur();
         window.getSelection().removeAllRanges();
       },
     });
