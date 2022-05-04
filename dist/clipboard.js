@@ -1,5 +1,5 @@
 /*!
- * clipboard.js v2.0.10
+ * clipboard.js v2.0.11
  * https://clipboardjs.com/
  *
  * Licensed MIT © Zeno Rocha
@@ -319,7 +319,6 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
             trigger.focus();
           }
 
-          document.activeElement.blur();
           window.getSelection().removeAllRanges();
         }
       });

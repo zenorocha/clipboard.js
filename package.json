@@ -1,6 +1,6 @@
 {
   "name": "clipboard",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "Modern copy to clipboard. No Flash. Just 2kb",
   "homepage": "https://clipboardjs.com",
   "repository": "zenorocha/clipboard.js",
