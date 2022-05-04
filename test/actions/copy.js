@@ -51,5 +51,19 @@ describe('ClipboardActionCopy', () => {
 
       assert.equal(selectedText, text);
     });
+
+    it('should select its value in a input number based on text', () => {
+      const value = 1;
+      document.querySelector('#input').setAttribute('type', 'number');
+      document.querySelector('#input').setAttribute('value', value);
+      const selectedText = ClipboardActionCopy(
+        document.querySelector('#input'),
+        {
+          container: document.body,
+        }
+      );
+
+      assert.equal(Number(selectedText), value);
+    });
   });
 });
