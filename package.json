@@ -39,7 +39,7 @@
     "mocha": "^10.1.0",
     "prettier": "2.2.1",
     "sinon": "^9.2.3",
-    "tsd": "^0.7.2",
+    "tsd": "^0.25.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^5.15.0",
     "webpack-cli": "^4.4.0"
