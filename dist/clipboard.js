@@ -53,14 +53,31 @@ function command(type) {
 
 
 /**
- * Cut action wrapper.
+ * Cut action wrapper. Writes the selected text to the clipboard using the async
+ * Clipboard API when available (emulating "cut" by clearing the editable
+ * source), falling back to `document.execCommand('cut')` otherwise.
  * @param {String|HTMLElement} target
  * @return {String}
  */
 
 var ClipboardActionCut = function ClipboardActionCut(target) {
-  var selectedText = select_default()(target);
-  command('cut');
+  var selectedText = select_default()(target); // Prefer the async Clipboard API, falling back to `execCommand`.
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(selectedText).then(function () {
+      // The Clipboard API has no "cut", so remove the copied text from the
+      // editable source to emulate it.
+      if ('value' in target) {
+        // eslint-disable-next-line no-param-reassign
+        target.value = '';
+      }
+    })["catch"](function () {
+      return command('cut');
+    });
+  } else {
+    command('cut');
+  }
+
   return selectedText;
 };
 
@@ -95,22 +112,23 @@ function createFakeElement(value) {
 
 
 /**
- * Create fake copy action wrapper using a fake element.
- * @param {String} target
+ * Fallback copy using a fake element and `document.execCommand`, used when the
+ * async Clipboard API is unavailable (e.g. an insecure context or an older
+ * browser).
+ * @param {String} value
  * @param {Object} options
- * @return {String}
  */
 
 var fakeCopyAction = function fakeCopyAction(value, options) {
   var fakeElement = createFakeElement(value);
   options.container.appendChild(fakeElement);
-  var selectedText = select_default()(fakeElement);
+  select_default()(fakeElement);
   command('copy');
   fakeElement.remove();
-  return selectedText;
 };
 /**
- * Copy action wrapper.
+ * Copy action wrapper. Writes to the clipboard using the async Clipboard API
+ * when available, falling back to `document.execCommand` otherwise.
  * @param {String|HTMLElement} target
  * @param {Object} options
  * @return {String}
@@ -124,13 +142,21 @@ var ClipboardActionCopy = function ClipboardActionCopy(target) {
   var selectedText = '';
 
   if (typeof target === 'string') {
-    selectedText = fakeCopyAction(target, options);
+    selectedText = target;
   } else if (target instanceof HTMLInputElement && !['text', 'search', 'url', 'tel', 'password'].includes(target === null || target === void 0 ? void 0 : target.type)) {
     // If input type doesn't support `setSelectionRange`. Simulate it. https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange
-    selectedText = fakeCopyAction(target.value, options);
+    selectedText = target.value;
   } else {
     selectedText = select_default()(target);
-    command('copy');
+  } // Prefer the async Clipboard API, falling back to `execCommand`.
+
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(selectedText)["catch"](function () {
+      return fakeCopyAction(selectedText, options);
+    });
+  } else {
+    fakeCopyAction(selectedText, options);
   }
 
   return selectedText;
@@ -402,7 +428,13 @@ var Clipboard = /*#__PURE__*/function (_Emitter) {
     key: "isSupported",
     value: function isSupported() {
       var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['copy', 'cut'];
-      var actions = typeof action === 'string' ? [action] : action;
+      var actions = typeof action === 'string' ? [action] : action; // The async Clipboard API can write text (copy) and lets us emulate cut,
+      // so treat its presence as support for both actions.
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return true;
+      }
+
       var support = !!document.queryCommandSupported;
       actions.forEach(function (action) {
         support = support && !!document.queryCommandSupported(action);
