@@ -137,6 +137,13 @@ class Clipboard extends Emitter {
    */
   static isSupported(action = ['copy', 'cut']) {
     const actions = typeof action === 'string' ? [action] : action;
+
+    // The async Clipboard API can write text (copy) and lets us emulate cut,
+    // so treat its presence as support for both actions.
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return true;
+    }
+
     let support = !!document.queryCommandSupported;
 
     actions.forEach((action) => {
